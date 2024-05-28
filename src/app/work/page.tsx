@@ -94,7 +94,7 @@ function Page() {
                         <Link href={"./work/" + project._id} key={index} >
 
                             <article className="relative  isolate flex flex-col just    ify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 ">
-                                <Image src={project.thumbnail} _ alt="University of Southern California" className="absolute inset-0 h-full w-full object-cover" width={200} height={200} ></Image>
+                                <Image src={project.thumbnail}  alt="University of Southern California" className="absolute inset-0 h-full w-full object-cover" width={200} height={200} ></Image>
                                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
                                 <h3 className="z-10 mt-3 text-3xl font-bold text-white">{project.title}</h3>
                                 <div className="z-10 gap-y-1 text-red-400 overflow-hidden text-sm leading-6 text- font-bold"> {"for " + project.projectCompanyName + " company"} </div>
