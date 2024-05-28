@@ -139,8 +139,8 @@ async function page({ params }: RouteParams) {
                         <div className='pl-10 flex flex-row gap-2'>
 
                             {
-                                res.work.map((name:string) => (
-                                    <div>
+                                res.work.map((name:string, index:any) => (
+                                    <div key={index}>
                                         <div className=' pb-0 lg:text-2xl  font-bold'>{name + " "}</div>
                                         <div> </div>
                                     </div>
@@ -157,7 +157,7 @@ async function page({ params }: RouteParams) {
 
                     {/* right */}
                     <div className='h-[470px] md:w-[50%] w-[100%]  flex flex-row justify-center items-center'>
-                        <Image className=' h-[400px] w-max  -rotate-12 mt-2' alt="am " src={phone}>
+                        <Image height={400} width={400} className=' h-[400px] w-max  -rotate-12 mt-2' alt="am " src={phone}>
                         </Image>
                     </div>
                 </div>
@@ -194,9 +194,9 @@ async function page({ params }: RouteParams) {
 
             <div className='flex flex-row  flex-wrap gap-10 justify-center m-10 '>
 
-                {res.projectGoal.map((goal) => (
+                {res.projectGoal.map((goal:string,index:any) => (
 
-                    <div className='h-[180px] w-[230px] bg-blue-600 text-2xl font-bold text-white flex flex-col justify-center items-center p-4 '>
+                    <div key={index} className='h-[180px] w-[230px] bg-blue-600 text-2xl font-bold text-white flex flex-col justify-center items-center p-4 '>
                         {goal}
                     </div>
                 ))}
@@ -264,7 +264,7 @@ async function page({ params }: RouteParams) {
 
             <div className="container mx-auto py-16 px-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    {res.resultStatistics.map((stat, index) => (
+                    {res.resultStatistics.map((stat: { percentage: string; description: string }, index:any) => (
                         <div key={index} className="flex flex-col items-center">
                             <div className="text-5xl font-bold text-red-500 mb-2">{stat.percentage}</div>
                             <div className="text-lg text-gray-700">{stat.description}</div>

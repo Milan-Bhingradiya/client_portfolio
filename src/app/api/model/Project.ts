@@ -1,6 +1,7 @@
 import { Schema, model, models } from 'mongoose';
 
 interface Project {
+  thumbnail: string;
   title: string;
   desc: string;
   projectCompanyName: string;
@@ -18,6 +19,10 @@ interface Project {
 }
 
 const projectSchema = new Schema<Project>({
+  thumbnail: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -84,6 +89,7 @@ const projectSchema = new Schema<Project>({
 
 export function validateProject(data: any): data is Project {
   // Validate each field
+  if (typeof data.thumbnail !== 'string') return false;
   if (typeof data.title !== 'string') return false;
   console.log(1)
   if (typeof data.desc !== 'string') return false;

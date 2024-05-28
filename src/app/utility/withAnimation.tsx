@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const withAnimation = (WrappedComponent) => {
+const withAnimation = (WrappedComponent:any) => {
     const animationVariant = {
         initial: {
             opacity: 0,
@@ -17,7 +17,8 @@ const withAnimation = (WrappedComponent) => {
         },
     };
 
-    return (props) => (
+    // eslint-disable-next-line react/display-name
+    return (props:any):any => (
         <motion.div
             variants={animationVariant}
             initial="initial"

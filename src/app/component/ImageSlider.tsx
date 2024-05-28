@@ -22,10 +22,10 @@ const ImageSlider = ({ screens }: { screens: string[] }) => {
      
         {screens.map((screen, index) => (
 
-          <div>
+          <div key={index}>
             <div className=" h-[90vh] w-[90vw] flex justify-center items-center">
-              <img src={screen} alt="Image" className="h-full  object-cover">
-              </img>
+              <Image height={400} width={400} src={screen} alt="Image" className="h-full  object-cover">
+              </Image>
             </div>
           </div>
         ))}

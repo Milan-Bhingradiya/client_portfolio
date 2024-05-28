@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['*'],
+        domains: ['picsum.photos','imgs.search.brave.com'],
       }
     
 };

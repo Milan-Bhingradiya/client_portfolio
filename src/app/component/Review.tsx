@@ -1,5 +1,9 @@
 import React from 'react'
-
+import Image from 'next/image'
+import reviewer1 from "../../../public/reviewer1.jpg"
+import reviewer2 from "../../../public/reviewer2.jpg"
+import reviewer3 from "../../../public/reviewer3.jpg"
+import reviewer4 from "../../../public/reviewer4.jpg"
 function Review() {
     return (
         <div>
@@ -15,10 +19,10 @@ function Review() {
                             </div>
 
                             <h1 className="mb-2 text-3xl font-semibold  md:text-center md:text-5xl">
-                                It's not just us.
+                                Its not just us.
                             </h1>
                             <p className="text-xl  md:text-center md:text-2xl">
-                                Here's what others have to say about us.
+                                Heres what others have to say about us.
                             </p>
                         </div>
                     </div>
@@ -35,9 +39,9 @@ function Review() {
                                     </div><a href="https://twitter.com/kanyewest" className="cursor-pointer">
                                         <div
                                             className="relative p-6 space-y-6 leading-none rounded-lg bg-slate-800 ring-1 ring-gray-900/5">
-                                            <div className="flex items-center space-x-4"><img
-                                                src="https://pbs.twimg.com/profile_images/1276461929934942210/cqNhNk6v_400x400.jpg"
-                                                className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Kanye West"></img>
+                                            <div className="flex items-center space-x-4"> <Image
+                                              src={reviewer1}
+                                              className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Kanye West"></Image>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">Kanye West</h3>
                                                     <p className="text-gray-500 text-md">Rapper &amp; Entrepreneur</p>
@@ -55,9 +59,9 @@ function Review() {
                                     </div><a href="https://twitter.com/tim_cook" className="cursor-pointer">
                                         <div
                                             className="relative p-6 space-y-6 leading-none rounded-lg bg-slate-800 ring-1 ring-gray-900/5">
-                                            <div className="flex items-center space-x-4"><img
-                                                src="https://pbs.twimg.com/profile_images/1535420431766671360/Pwq-1eJc_400x400.jpg"
-                                                className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Tim Cook"></img>
+                                            <div className="flex items-center space-x-4"> <Image
+                                                src={reviewer2}
+                                               className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Tim Cook"></Image>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">Tim Cook</h3>
                                                     <p className="text-gray-500 text-md">CEO of Apple</p>
@@ -77,9 +81,9 @@ function Review() {
                                     </div><a href="https://twitter.com/kanyewest" className="cursor-pointer">
                                         <div
                                             className="relative p-6 space-y-6 leading-none rounded-lg bg-slate-800 ring-1 ring-gray-900/5">
-                                            <div className="flex items-center space-x-4"><img
-                                                src="https://pbs.twimg.com/profile_images/1276461929934942210/cqNhNk6v_400x400.jpg"
-                                                className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Kanye West"></img>
+                                            <div className="flex items-center space-x-4"> <Image
+                                               src={reviewer3}
+                                              className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Kanye West"></Image>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">Kanye West</h3>
                                                     <p className="text-gray-500 text-md">Rapper &amp; Entrepreneur</p>
@@ -90,7 +94,7 @@ function Review() {
                                     </a>
                                 </div>
                             </li>
-                           
+
                         </ul>
 
 
@@ -102,9 +106,9 @@ function Review() {
                                     </div><a href="https://twitter.com/paraga" className="cursor-pointer">
                                         <div
                                             className="relative p-6 space-y-6 leading-none rounded-lg bg-slate-800 ring-1 ring-gray-900/5">
-                                            <div className="flex items-center space-x-4"><img
-                                                src="https://pbs.twimg.com/profile_images/1375285353146327052/y6jeByyD_400x400.jpg"
-                                                className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Parag Agrawal"></img>
+                                            <div className="flex items-center space-x-4"> <Image
+                                                src={reviewer4}
+                                                 className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Parag Agrawal"></Image>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">Parag Agrawal</h3>
                                                     <p className="text-gray-500 text-md">CEO of Twitter</p>
@@ -124,9 +128,9 @@ function Review() {
                                     </div><a href="https://twitter.com/tim_cook" className="cursor-pointer">
                                         <div
                                             className="relative p-6 space-y-6 leading-none rounded-lg bg-slate-800 ring-1 ring-gray-900/5">
-                                            <div className="flex items-center space-x-4"><img
-                                                src="https://pbs.twimg.com/profile_images/1535420431766671360/Pwq-1eJc_400x400.jpg"
-                                                className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Tim Cook"></img>
+                                            <div className="flex items-center space-x-4"> <Image
+                                              src={reviewer1}
+                                                 className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Tim Cook"></Image>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">Tim Cook</h3>
                                                     <p className="text-gray-500 text-md">CEO of Apple</p>
@@ -146,9 +150,8 @@ function Review() {
                                     </div><a href="https://twitter.com/paraga" className="cursor-pointer">
                                         <div
                                             className="relative p-6 space-y-6 leading-none rounded-lg bg-slate-800 ring-1 ring-gray-900/5">
-                                            <div className="flex items-center space-x-4"><img
-                                                src="https://pbs.twimg.com/profile_images/1375285353146327052/y6jeByyD_400x400.jpg"
-                                                className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Parag Agrawal"></img>
+                                            <div className="flex items-center space-x-4"> <Image
+                                             src={reviewer2}    className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Parag Agrawal"></Image>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">Parag Agrawal</h3>
                                                     <p className="text-gray-500 text-md">CEO of Twitter</p>
@@ -161,7 +164,7 @@ function Review() {
                                     </a>
                                 </div>
                             </li>
-                            
+
                         </ul>
 
 
@@ -173,9 +176,8 @@ function Review() {
                                     </div><a href="https://twitter.com/satyanadella" className="cursor-pointer">
                                         <div
                                             className="relative p-6 space-y-6 leading-none rounded-lg bg-slate-800 ring-1 ring-gray-900/5">
-                                            <div className="flex items-center space-x-4"><img
-                                                src="https://pbs.twimg.com/profile_images/1221837516816306177/_Ld4un5A_400x400.jpg"
-                                                className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Satya Nadella"></img>
+                                            <div className="flex items-center space-x-4"> <Image
+                                               src={reviewer3}  className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Satya Nadella"></Image>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">Satya Nadella</h3>
                                                     <p className="text-gray-500 text-md">CEO of Microsoft</p>
@@ -195,9 +197,9 @@ function Review() {
                                     </div><a href="https://twitter.com/dan_schulman" className="cursor-pointer">
                                         <div
                                             className="relative p-6 space-y-6 leading-none rounded-lg bg-slate-800 ring-1 ring-gray-900/5">
-                                            <div className="flex items-center space-x-4"><img
-                                                src="https://pbs.twimg.com/profile_images/516916920482672641/3jCeLgFb_400x400.jpeg"
-                                                className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Dan Schulman"></img>
+                                            <div className="flex items-center space-x-4"> <Image
+                                              src={reviewer4}
+                                              className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Dan Schulman"></Image>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">Dan Schulman</h3>
                                                     <p className="text-gray-500 text-md">CEO of PayPal</p>
@@ -216,9 +218,8 @@ function Review() {
                                     </div><a href="https://twitter.com/satyanadella" className="cursor-pointer">
                                         <div
                                             className="relative p-6 space-y-6 leading-none rounded-lg bg-slate-800 ring-1 ring-gray-900/5">
-                                            <div className="flex items-center space-x-4"><img
-                                                src="https://pbs.twimg.com/profile_images/1221837516816306177/_Ld4un5A_400x400.jpg"
-                                                className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Satya Nadella"></img>
+                                            <div className="flex items-center space-x-4"> <Image
+                                              src={reviewer1}   className="w-12 h-12 bg-center bg-cover border rounded-full" alt="Satya Nadella"></Image>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">Satya Nadella</h3>
                                                     <p className="text-gray-500 text-md">CEO of Microsoft</p>
@@ -231,7 +232,7 @@ function Review() {
                                     </a>
                                 </div>
                             </li>
-                         
+
                         </ul>
 
 

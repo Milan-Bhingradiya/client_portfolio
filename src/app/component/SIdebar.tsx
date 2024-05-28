@@ -1,3 +1,5 @@
+"use client"
+
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
@@ -38,7 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [isOpen, toggleSidebar]);
+    }, [isOpen, sidebarRef, toggleSidebar]);
     return (
         <div
             ref={sidebarRef}
@@ -54,13 +56,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                         Work
                     </Link>
                     <div className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleServicesMenu}>
-                    <span>Services</span>
-                            {isServicesOpen ? <ExpandLess /> : <ExpandMore />}
-                        </div>
+                        <span>Services</span>
+                        {isServicesOpen ? <ExpandLess /> : <ExpandMore />}
+                    </div>
 
 
 
-                    {isServicesOpen&& (
+                    {isServicesOpen && (
                         <div className="flex flex-col top-full left-0 border-1 border-blue-gray-300 bg-white shadow-md rounded-md w-full overflow-hidden">
                             <Link href="/service/design" className="p-3 hover:bg-blue-gray-50" onClick={toggleSidebar}>
                                 Design
