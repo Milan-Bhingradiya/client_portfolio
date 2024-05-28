@@ -57,7 +57,8 @@ function page() {
                 <div className="text-center mb-8">
                     <h2 className="text-purple-500 text-lg font-semibold mb-2">What Do We Serve?</h2>
                     <h1 className="text-3xl sm:text-5xl font-bold mb-4">
-                        Comprehensive technology services that integrate digital craftsmanship and business goals.</h1>
+                        End-to-end neuromarketing services and branding strategies of the digital world.
+                    </h1>
 
                 </div>
                 <div className="relative flex flex-col items-center">
@@ -74,7 +75,7 @@ function page() {
                         ))}
 
                     </div>
-                   
+
                 </div>
             </div>
 
