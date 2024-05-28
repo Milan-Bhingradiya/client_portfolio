@@ -49,6 +49,7 @@ const ScopeOfWork = () => {
         <div className="container mx-auto py-16 px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {features.map((feature, index) => (
+                
                     <div key={index} className="text-center">
                         <div className="mb-4  flex justify-center items-center">
                            <Image src={img[i++]} alt={feature.title} width={100} height={100} />

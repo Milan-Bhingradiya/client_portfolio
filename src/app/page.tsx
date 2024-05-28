@@ -11,7 +11,6 @@ import five from '../../public/5.svg'
 import Card from "./component/Card";
 import Foundercard from "./component/Foundercard";
 import Review from "./component/Review";
-import Footer from "./component/Footer";
 import Sidebar from "./component/SIdebar";
 import { motion } from "framer-motion";
 import Animated_text from "./component/Animated_text";
@@ -29,7 +28,7 @@ export default function Home() {
     <div>
       {/* part 1 before footer all ting in this with mx-10 */}
       <div className=" mx-5 sm:mx-20 md:mx-26 lg:mx-32 " >
-        <div className="flex flex-col justify-center items-center sm:flex-row justify-evenly ">
+        <div className="flex flex-col justify-center items-center sm:flex-row  ">
           {/* section one */}
 
           <div className="mt-10 h-1/2 w-1/2 sm:h-1/3 sm:w-1/3 ">
@@ -174,7 +173,7 @@ export default function Home() {
         </div>
 
 
-        <div className=" flex justify-center text-4xl m-10 mt-20 superBold"> 260+ Projects Delivered</div>
+        <div className=" flex justify-center text-4xl m-10 mt-20 superBold"> 30+ Projects Delivered</div>
 
 
         <div className="flex flex-row flex-wrap justify-center gap-10  ">
@@ -191,7 +190,7 @@ export default function Home() {
 
       </div>
       {/* part 2  footer in this with mx-0 */}
-      <Footer></Footer>
+ 
 
     </div>
   );

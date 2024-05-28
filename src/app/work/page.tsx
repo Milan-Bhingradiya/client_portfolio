@@ -13,7 +13,7 @@ import Link from 'next/link';
 
 
 function page() {
-    const [response, setResponse] = useState(null);
+    const [response, setResponse] = useState([]);
 
 
     const variants = {
@@ -82,7 +82,7 @@ function page() {
 
                     For Over 260 Projects.
                 </motion.div>
-            </div> */}
+            </div> */}  
 
 
             <div className='flex flex-row flex-wrap mt-5' >
@@ -97,7 +97,7 @@ function page() {
                                 <img src={"https://picsum.photos/200/300"} alt="University of Southern California" className="absolute inset-0 h-full w-full object-cover" width={200} height={200} />
                                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
                                 <h3 className="z-10 mt-3 text-3xl font-bold text-white">{project.title}</h3>
-                                <div className="z-10 gap-y-1 text-red-400 overflow-hidden text-sm leading-6 text-gray-300 font-bold"> {"for " + project.projectCompanyName + " company"} </div>
+                                <div className="z-10 gap-y-1 text-red-400 overflow-hidden text-sm leading-6 text- font-bold"> {"for " + project.projectCompanyName + " company"} </div>
                             </article>
                         </Link>
                     </div>

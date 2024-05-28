@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 
-const ImageSlider = ({ screens }) => {
+const ImageSlider = ({ screens }: { screens: string[] }) => {
   const settings = {
     dots: true,
     // speed: 500,

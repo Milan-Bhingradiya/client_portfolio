@@ -96,7 +96,7 @@ async function page({ params }: RouteParams) {
         )
     } else {
 
-        res.keepTakeAway.forEach((label, index) => {
+        res.keepTakeAway.forEach((label:string, index:any) => {
             // Ensure unique IDs (important for rendering or identification)
             steps[index].id = index + 1; // Update ID directly in the steps array
 
@@ -139,7 +139,7 @@ async function page({ params }: RouteParams) {
                         <div className='pl-10 flex flex-row gap-2'>
 
                             {
-                                res.work.map((name) => (
+                                res.work.map((name:string) => (
                                     <div>
                                         <div className=' pb-0 lg:text-2xl  font-bold'>{name + " "}</div>
                                         <div> </div>

@@ -12,6 +12,13 @@ const Navbar: React.FC = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
+
+    const [selectedMenu, setSelectedMenu] = useState('');
+
+
+    const handleMenuSelect = (menuName: string) => {
+        setSelectedMenu(menuName);
+    }
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
@@ -28,16 +35,17 @@ const Navbar: React.FC = () => {
 
             <div className=' mx-5 sm:mx-20 md:mx-26 lg:mx-32  w-[100%]   flex flex-row justify-between items-center'>
                 <Link href={"./"} className='m-2  text-2xl superBold'>
-                    Leo
+                    Meu
                 </Link>
 
                 <div className='hidden sm:block  '>
                     <div className='flex flex-row gap-4 md:gap-8 lg:gap-10  items-center'>
-                        <Link href={"/work"} >Work</Link>
+                        <Link href={"/work"} className={selectedMenu === 'Work' ? 'font-bold' : ''} onClick={() => handleMenuSelect('Work')} >Work</Link>
                         <div
                             onMouseEnter={toggleServicesMenu}
                             onMouseLeave={toggleServicesMenu}
-                            className={`relative ${isServicesOpen ? 'text-blue-700' : 'text-gray-700'
+                            onClick={() => handleMenuSelect('Services')} 
+                            className={selectedMenu === 'Work' ? 'font-bold' : ''+`relative  p-2 rounded-lg ${isServicesOpen ? 'text-blue-700' : 'text-gray-700'
                                 }`}
                         >
                             Services
@@ -55,12 +63,13 @@ const Navbar: React.FC = () => {
                                 </ul>
                             )}
                         </div>
-                        <Link href={"/clients"} >Clients</Link>
+                        <Link href={"/clients"} className={selectedMenu === 'Clients' ? 'font-bold' : ''} onClick={() => handleMenuSelect('Clients')} >Clients</Link>
 
                         <div
                             onMouseEnter={toggleAboutMenu}
                             onMouseLeave={toggleAboutMenu}
-                            className={`relative ${isAboutOpen ? 'text-blue-700' : 'text-gray-700'
+                            onClick={() => handleMenuSelect('About')} 
+                            className={ selectedMenu === 'About' ? 'font-bold' : ''+  `relative ${isAboutOpen ? 'text-blue-700' : 'text-gray-700'
                                 }`}
                         >
                             About

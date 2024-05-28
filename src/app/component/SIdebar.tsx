@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+
 
 interface SidebarProps {
     isOpen: boolean; // Flag indicating whether the sidebar is open
@@ -7,7 +9,11 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
-    const sidebarRef =  React.createRef<HTMLDivElement>();;
+    const sidebarRef = React.createRef<HTMLDivElement>();;
+    const [isServicesOpen, setIsServicesOpen] = useState(false);
+    const toggleServicesMenu = () => setIsServicesOpen(!isServicesOpen);
+
+
 
     useEffect(() => {
         const handleClickOutside = (event: any) => {
@@ -18,9 +24,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             if (sidebarRef.current) {
                 const element = sidebarRef.current as HTMLElement; // Assert as HTMLElement
                 if (!element.contains(event.target)) {
-                  toggleSidebar();
+                    toggleSidebar();
                 }
-              }
+            }
         };
 
         if (isOpen) {
@@ -44,23 +50,44 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             </div>
             <nav className="p-2 text-base font-normal text-blue-gray-700">
                 <div className="flex flex-col gap-1">
-                    <Link href={"./work"}  className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleSidebar}>
-                    Work
+                    <Link href={"./work"} className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleSidebar}>
+                        Work
+                    </Link>
+                    <div className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleServicesMenu}>
+                    <span>Services</span>
+                            {isServicesOpen ? <ExpandLess /> : <ExpandMore />}
+                        </div>
+
+
+
+                    {isServicesOpen&& (
+                        <div className="flex flex-col top-full left-0 border-1 border-blue-gray-300 bg-white shadow-md rounded-md w-full overflow-hidden">
+                            <Link href="/service/design" className="p-3 hover:bg-blue-gray-50" onClick={toggleSidebar}>
+                                Design
+                            </Link>
+                            <Link href="/service/technology" className="p-3 hover:bg-blue-gray-50" onClick={toggleSidebar}>
+                                Technology
+                            </Link>
+                            <Link href="/service/marketing" className="p-3 hover:bg-blue-gray-50" onClick={toggleSidebar}>
+                                Marketing
+                            </Link>
+                        </div>
+                    )}
+
+
+
+
+
+
+                    <Link href={"/clients"} className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleSidebar}>
+                        Clients
+                    </Link>
+                    <Link href={"/aboutus"} className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleSidebar}>
+                        About
                     </Link>
 
-                    <div className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleSidebar}>
-                    Services
-                    </div>
-                    <div className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleSidebar}>
-                    Clients
-                    </div>
-                    <div className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleSidebar}>
-                    About
-                    </div>
-                    <div className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleSidebar}>
-                    Knowledge
-                    </div>
-                    
+
+
                 </div>
             </nav>
         </div>

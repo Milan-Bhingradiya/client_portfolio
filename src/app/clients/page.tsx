@@ -97,7 +97,7 @@ function page() {
 
     </div>
 
-    <ReviewCard> </ReviewCard>
+<ReviewCard></ReviewCard>
   
 
     </div >
