@@ -1,113 +1,198 @@
+"use client"
+
 import Image from "next/image";
+import { Player } from '@lottiefiles/react-lottie-player';
+import { Typography } from "@mui/material";
+import one from '../../public/1.png'
+import two from '../../public/2.png'
+import three from '../../public/3.svg'
+import four from '../../public/4.png'
+import five from '../../public/5.svg'
+import Card from "./component/Card";
+import Foundercard from "./component/Foundercard";
+import Review from "./component/Review";
+import Footer from "./component/Footer";
+import Sidebar from "./component/SIdebar";
+import { motion } from "framer-motion";
+import Animated_text from "./component/Animated_text";
+import connectDB from "./api/utility/connectDB";
+import useConnect from "./api/utility/useConnect";
 
 export default function Home() {
+
+  //   const isConnected = useConnect();
+
+  // if (!isConnected) {
+  //   return <div>Connecting to database...</div>;
+  // }
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div>
+      {/* part 1 before footer all ting in this with mx-10 */}
+      <div className=" mx-5 sm:mx-20 md:mx-26 lg:mx-32 " >
+        <div className="flex flex-col justify-center items-center sm:flex-row justify-evenly ">
+          {/* section one */}
+
+          <div className="mt-10 h-1/2 w-1/2 sm:h-1/3 sm:w-1/3 ">
+            <Player
+              src='https://lottie.host/bc9da579-94ae-4970-a4e9-06f11848e96f/Vv6ttESKhP.json'
+              className="player"
+              loop
+              autoplay
+
+            />  
+          </div>
+
+          <div className="flex flex-col mt-10 justify-center superBold">
+
+            <div >
+
+              <Animated_text text={"Design | Transform | Accelerate"} mode="single" weight="superBold" size={'text-4xl sm:text-5xl '} space={false}> </Animated_text>
+            </div>
+
+
+            <div className="h-4"></div>
+
+
+
+
+            <Animated_text text={"We Revolutionize User Experience |  Using Behavioural Science."} mode={"multi"} weight={"font-extrabold"} size={' text-lg sm:text-2xl'} space={true}></Animated_text>
+
+          </div>
         </div>
+
+        <div className="flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image src={one} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image src={two} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image src={three} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image className="hidden sm:block" src={four} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image className="hidden sm:block" src={five} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+
+
+        </div>
+
+
+
+
+        <div className="mx-6 sm:mx-20 mt-20 " >
+          <Animated_text text={" We are a global creative agency that combines design expertise with technology and intelligence."} mode={"multi"} weight={"ont-extrabold  "} size={' text-lg sm:text-2xl'} space={true}></Animated_text>
+        </div>
+
+
+        <div className="flex flex-row   justify-evenly">
+
+
+          <div className="flex flex-col  m-10">
+            <div className="text-3xl superBold">
+              Design
+            </div>
+
+            <ul className="list-disc space-y-2 mx-10 m-2">
+            <Animated_text text={"    UI Design | UX Consultancy | Design System | Animation | Illustrations"} mode={"multi"} weight={"ont-extrabold  "} size={' text-lg'} space={true}></Animated_text>
+      
+              {/* <li>
+                UI Design</li>
+              <li>UX Consultancy
+              </li>
+              <li>
+                Design System</li>
+              <li>
+                Design System</li>
+              <li>
+                Animation</li>
+              <li>
+                Illustrations</li> */}
+            </ul>
+
+
+
+
+            <div className="text-3xl superBold mt-6">
+              Technology
+            </div>
+            <ul className="list-disc space-y-2 mx-10 m-2">
+            <Animated_text text={"    web Design | Softwares (Custom Software Development) | Mobile Apps | Web Apps | Front-End Development | Back-End Development"} mode={"multi"} weight={"ont-extrabold  "} size={' text-lg'} space={true}></Animated_text>
+      
+              {/* <li>Web Design</li>
+              <li>Softwares (Custom Software Development)</li>
+              <li>Mobile Apps</li>
+              <li>Web Apps</li>
+              <li>Front-End Development</li>
+              <li>Back-End Development</li> */}
+            </ul>
+
+
+            <div className="text-3xl superBold mt-6 m-2">
+              Businees
+            </div>
+            <ul className="list-disc space-y-2 mx-10">
+            <Animated_text text={"   Branding Strategy | Brand Name Development | Brand Guidelines Creation | Digital Marketing Services | SEO (Search Engine Optimization)"} mode={"multi"} weight={"ont-extrabold  "} size={' text-lg'} space={true}></Animated_text>
+      
+              {/* <li>Branding Strategy</li>
+              <li>Brand Name Development</li>
+              <li>Brand Guidelines Creation</li>
+              <li>Digital Marketing Services</li>
+              <li>SEO (Search Engine Optimization)</li> */}
+            </ul>
+          </div>
+
+
+
+          <div className="hidden sm:block h-1/3 w-1/3  m-10">
+            <Player
+              // src='https://lottie.host/6ee4d5fc-4a27-4f56-96c2-40c5c0440fbf/jvysS84Gc9.json'
+              src='https://lottie.host/3dac4db4-374a-48d1-a3e2-e705001a512e/FA8Be7ZiIf.json'
+              className="player"
+              loop
+              autoplay
+
+            />
+          </div>
+        </div>
+
+        {/* ---------------------- */}
+        <div className="m-10 mt-20">
+        <Animated_text text={"As global leaders in UX UI, technology, and business solutions, we partner with clients to simplify, strengthen, and transform their businesses.  "} mode={"multi"} weight={"font-bold"} size={'text-lg sm:text-2xl'} space={true}></Animated_text>
+
+          </div>
+        {/* ---------------------- */}
+
+        <div className=" flex justify-center text-4xl m-10 mt-20 superBold"> Our Project</div>
+        <div className="flex flex-row justify-center flex-wrap  ">
+
+          <Card></Card>
+          <Card></Card>
+        </div>
+
+
+        <div className=" flex justify-center text-4xl m-10 mt-20 superBold"> 260+ Projects Delivered</div>
+
+
+        <div className="flex flex-row flex-wrap justify-center gap-10  ">
+
+          <Foundercard></Foundercard>
+          <Foundercard></Foundercard>
+
+        </div>
+
+
+
+        <Review></Review>
+
+
       </div>
+      {/* part 2  footer in this with mx-0 */}
+      <Footer></Footer>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
