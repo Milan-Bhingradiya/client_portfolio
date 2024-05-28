@@ -30,6 +30,9 @@ const Navbar: React.FC = () => {
     const [isAboutOpen, setIsAboutOpen] = useState(false);
 
     const toggleAboutMenu = () => setIsAboutOpen(!isAboutOpen);
+
+    // const showAboutMenu = () => setIsAboutOpen(true);
+    // const hideAboutMenu = () => setIsAboutOpen(true);
     return (
         <div className='h-[90px] w-[100%] items-center flex '>
 
@@ -69,7 +72,7 @@ const Navbar: React.FC = () => {
                             onMouseEnter={toggleAboutMenu}
                             onMouseLeave={toggleAboutMenu}
                             onClick={() => handleMenuSelect('About')} 
-                            className={ selectedMenu === 'About' ? 'font-bold' : ''+  `relative ${isAboutOpen ? 'text-blue-700' : 'text-gray-700'
+                            className={   `relative ${isAboutOpen ? 'text-blue-700' : 'text-gray-700' + selectedMenu === 'About' ? 'font-bold' :' '
                                 }`}
                         >
                             About

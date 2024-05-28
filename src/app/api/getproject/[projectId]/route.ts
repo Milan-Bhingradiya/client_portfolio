@@ -16,7 +16,7 @@ export async function GET(request: Request, context: any) {
 }
 
 
-export async function post(request: Request, context: any) {
+export async function POST(request: Request, context: any) {
     // await connectDB();
     console.log(request)
     let { projectId } = context.params;
