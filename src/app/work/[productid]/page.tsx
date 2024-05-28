@@ -157,8 +157,10 @@ async function page({ params }: RouteParams) {
 
                     {/* right */}
                     <div className='h-[470px] md:w-[50%] w-[100%]  flex flex-row justify-center items-center'>
-                        <Image height={400} width={400} className=' h-[400px] w-max  -rotate-12 mt-2' alt="am " src={phone}>
+                        <Image   priority height={200} width={200} className='  -rotate-12 mt-2' alt="am " src={phone}>
                         </Image>
+                        {/* <Image style={{ width: '100%', height: 'auto' }}  className=' h-[400px] w-max  -rotate-12 mt-2' alt="am " src={phone}>
+                        </Image> */}
                     </div>
                 </div>
             </div>
@@ -245,7 +247,7 @@ async function page({ params }: RouteParams) {
             <OpicityAnimateText text="Screenshots." size="text-3xl" font="font-bold"></OpicityAnimateText>
 
             <div className='overflow-hidden border-2 border-gray-300 rounded-lg m-2' >
-                <ImageSlider screens={res.screens}></ImageSlider>
+                {/* <ImageSlider screens={res.screens}></ImageSlider> */}
             </div>
 
 
