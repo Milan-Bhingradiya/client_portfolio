@@ -10,6 +10,7 @@ import OpicityAnimateText from '@/app/utility/OpicityAnimateText';
 import ImageSlider from '@/app/component/ImageSlider';
 import withAnimation from '@/app/utility/withAnimation';
 import ScopeOfWork from '@/app/component/ScopeOfWork';
+import dbConnect from '@/app/api/utility/dbConnect';
 
 // const AnimatedImageSlider = withAnimation(ImageSlider);
 
@@ -62,6 +63,7 @@ interface RouteParams {
 }
 
 const getProjectById = async (id: string) => {
+    await dbConnect();
     let res = null;
     try {
         res = await Project.findById(id);
@@ -96,7 +98,7 @@ async function page({ params }: RouteParams) {
         )
     } else {
 
-        res.keepTakeAway.forEach((label:string, index:any) => {
+        res.keepTakeAway.forEach((label: string, index: any) => {
             // Ensure unique IDs (important for rendering or identification)
             steps[index].id = index + 1; // Update ID directly in the steps array
 
@@ -139,7 +141,7 @@ async function page({ params }: RouteParams) {
                         <div className='pl-10 flex flex-row gap-2'>
 
                             {
-                                res.work.map((name:string, index:any) => (
+                                res.work.map((name: string, index: any) => (
                                     <div key={index}>
                                         <div className=' pb-0 lg:text-2xl  font-bold'>{name + " "}</div>
                                         <div> </div>
@@ -157,7 +159,7 @@ async function page({ params }: RouteParams) {
 
                     {/* right */}
                     <div className='h-[470px] md:w-[50%] w-[100%]  flex flex-row justify-center items-center'>
-                        <Image   priority height={200} width={200} className='  -rotate-12 mt-2' alt="am " src={phone}>
+                        <Image priority height={200} width={200} className='  -rotate-12 mt-2' alt="am " src={phone}>
                         </Image>
                         {/* <Image style={{ width: '100%', height: 'auto' }}  className=' h-[400px] w-max  -rotate-12 mt-2' alt="am " src={phone}>
                         </Image> */}
@@ -196,7 +198,7 @@ async function page({ params }: RouteParams) {
 
             <div className='flex flex-row  flex-wrap gap-10 justify-center m-10 '>
 
-                {res.projectGoal.map((goal:string,index:any) => (
+                {res.projectGoal.map((goal: string, index: any) => (
 
                     <div key={index} className='h-[180px] w-[230px] bg-blue-600 text-2xl font-bold text-white flex flex-col justify-center items-center p-4 '>
                         {goal}
@@ -243,11 +245,11 @@ async function page({ params }: RouteParams) {
             {/* ---------------------------------------- */}
             {/* section 5  Screenshots*/}
             {/* ---------------------------------------- */}
-     
+
             <OpicityAnimateText text="Screenshots." size="text-3xl" font="font-bold"></OpicityAnimateText>
 
             <div className='overflow-hidden border-2 border-gray-300 rounded-lg m-2' >
-                {/* <ImageSlider screens={res.screens}></ImageSlider> */}
+                <ImageSlider screens={res.screens}></ImageSlider>
             </div>
 
 
@@ -266,7 +268,7 @@ async function page({ params }: RouteParams) {
 
             <div className="container mx-auto py-16 px-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    {res.resultStatistics.map((stat: { percentage: string; description: string }, index:any) => (
+                    {res.resultStatistics.map((stat: { percentage: string; description: string }, index: any) => (
                         <div key={index} className="flex flex-col items-center">
                             <div className="text-5xl font-bold text-red-500 mb-2">{stat.percentage}</div>
                             <div className="text-lg text-gray-700">{stat.description}</div>
