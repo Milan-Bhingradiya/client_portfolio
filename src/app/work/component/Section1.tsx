@@ -40,25 +40,7 @@ function Section1() {
                 </div>
             </div>
             
-            <div className="flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
-          <motion.div whileHover={{ scale: 1.2 }} >
-            <Image src={one} alt="ms" width={60} height={80}></Image>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} >
-            <Image src={two} alt="ms" width={60} height={80}></Image>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} >
-            <Image src={three} alt="ms" width={60} height={80}></Image>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} >
-            <Image className="hidden sm:block" src={four} alt="ms" width={60} height={80}></Image>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} >
-            <Image className="hidden sm:block" src={five} alt="ms" width={60} height={80}></Image>
-          </motion.div>
-
-
-        </div>
+        
         </div>
     )
 }

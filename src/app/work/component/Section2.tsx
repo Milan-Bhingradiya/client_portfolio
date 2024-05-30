@@ -12,9 +12,10 @@ import { mystore } from '@/app/store/mystore';
 function Section2({ designRef, technologyRef, businessRef, designPointRef, technologyPointRef, businessPointRef }: any) {
     // console.log("useEffect");
 
-    const setballShouldFollow = mystore((state:any) => state.setballShouldFollow)
-    const setBallSize = mystore((state:any) => state.setballSize)
-    const ballShouldFollow = mystore((state:any) => state.ballShouldFollow)
+    const setballShouldFollow = mystore((state: any) => state.setballShouldFollow)
+    const setBallSize = mystore((state: any) => state.setballSize)
+    const ballShouldFollow = mystore((state: any) => state.ballShouldFollow)
+    const setballVisible = mystore((state: any) => state.setballVisible)
 
 
     const [showDesign, setshowDesign] = useState(false);
@@ -33,6 +34,7 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
 
 
 
+    const staticTitleBallVisible = mystore((state: any) => state.staticTitleBallVisible)
 
 
     useEffect(() => {
@@ -48,17 +50,23 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
 
                 if (isScrollingDown && rect.top <= 200) {
                     setshowImg(true);
-                    if(ballShouldFollow==="kpi"){
+                    if (ballShouldFollow === "kpi") {
 
                         setballShouldFollow("titles")
-                        setBallSize({height:50,width:50})
+                        setBallSize({ height: 50, width: 50 })
                     }
                 }
 
                 // if(isScrollingDown && rect.top <=300){
 
                 // }
-                if (isScrollingDown && rect.top <= 200 && rect.top >= 0) {
+
+                // ball animation start karo...
+                if (isScrollingDown && rect.top <= 250 && rect.top >= 0) {
+                    setballVisible(true);
+
+                }
+                if (isScrollingDown && rect.top <= 150 && rect.top >= 0) {
 
                     setshowDesign(true);
 
@@ -67,13 +75,13 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
                 } else if (!isScrollingDown && rect.top >= 200) {
                     setshowImg(false);
                     setshowDesign(false);
-                    
+
                 }
 
 
-                if (!isScrollingDown && rect.top <300 && rect.top >= 0) {
-                    if(ballShouldFollow==="titles"){
-                        setBallSize({height:100,width:100})
+                if (!isScrollingDown && rect.top < 300 && rect.top >= 0) {
+                    if (ballShouldFollow === "titles") {
+                        setBallSize({ height: 100, width: 100 })
                         setballShouldFollow("kpi")
 
                     }
@@ -154,8 +162,8 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
             <div className=" flex flex-row  px-6  mt-10   sm:px-28 ">
                 <div className={`flex flex-col w-[100%] sm:w-[50%]    ${showDesign ? 'sm:m-10' : 'sm:m-4'} `}>
                     <div ref={designRef} className="text-5xl superBold flex flex-row">
-                        <div ref={designPointRef} > { }</div>
-                        <div>
+                        <div ref={designPointRef}  className={`${staticTitleBallVisible?'':'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-red-300" : ""}`}> { }</div>
+                        <div className="flex flex-row justify-center items-center">
 
                             Design
                         </div>
@@ -181,10 +189,11 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
             <div className="flex flex-row  px-6    sm:px-28">
                 <div className={`flex flex-col w-[100%] sm:w-[50%]    ${showTechnology ? 'sm:m-10' : 'sm:m-4'} `}>
 
-                    <div ref={technologyRef} className="text-5xl superBold mt-6">
+                    <div ref={technologyRef} className="text-5xl superBold mt-6 flex flex-row">
 
-                        <div ref={technologyPointRef} > { }</div>
-                        <div>
+                        <div ref={technologyPointRef} className={`${staticTitleBallVisible?'':'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-blue-300" : ""}`}> { }</div>
+
+                        <div className="flex flex-row justify-center items-center">
 
                             Technology
                         </div>
@@ -205,9 +214,10 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
 
                 <div className={`flex flex-col w-[100%] sm:w-[50%]    ${showBusiness ? 'sm:m-10' : 'sm:m-4'} `}>
 
-                    <div ref={businessRef} className="text-5xl superBold mt-6 ">
-                        <div ref={businessPointRef} > { }</div>
-                        <div>
+                    <div ref={businessRef} className="text-5xl superBold mt-6 flex flex-row">
+                        <div ref={businessPointRef} className={` ${staticTitleBallVisible?'':'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-green-300" : ""}`}> { }</div>
+
+                        <div className="flex flex-row justify-center items-center" >
 
                             Businees
 

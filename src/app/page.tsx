@@ -13,6 +13,13 @@ import Section1 from "./work/component/Section1";
 import Section2 from "./work/component/Section2";
 import { mystore } from "./store/mystore";
 
+import one from "../../public/1.png"
+import two from "../../public/2.png"
+import three from "../../public/3.svg"
+import four from "../../public/4.png"
+import five from "../../public/5.svg" 
+import { motion } from "framer-motion";
+import Image from 'next/image';
 
 
 
@@ -43,15 +50,21 @@ export default function Home() {
   const designRef = useRef<HTMLDivElement>(null);
   const technologyRef = useRef<HTMLDivElement>(null);
   const businessRef = useRef<HTMLDivElement>(null);
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
   const k = useRef<HTMLDivElement>(null);
   const p = useRef<HTMLDivElement>(null);
   const i = useRef<HTMLDivElement>(null);
+  
+    const [positions, setPositions] = useState({
+      k: { top: -50, left: -50 },
+      p: { top: -50, left: -50 },
+      i: { top: -50, left: -50 },
+    });
 
 
   useEffect(() => {
@@ -71,15 +84,6 @@ export default function Home() {
       const kleft = k?.current?.getBoundingClientRect().left;
       const pleft = p?.current?.getBoundingClientRect().left;
       const ileft = i?.current?.getBoundingClientRect().left;
-
-
-      // console.log("k detail")
-      // console.log(ktop, kleft)
-      // console.log("p detail")
-      // console.log(ptop, pleft)
-      // console.log("i detail")
-      // console.log(itop, ileft)
-
       if (ballShouldFollow == "kpi") {
         // console.log("followinf " + ballShouldFollow)
         setPositions((prev): any => ({
@@ -87,57 +91,38 @@ export default function Home() {
           p: { top: ptop, left: pleft },
           i: { top: itop, left: ileft },
         }));
-
         // setballShouldFollow("titles");
       }
       if (ballShouldFollow == "titles") {
-
         // console.log("followinf " + ballShouldFollow)
         setPositions((prev): any => ({
-          k: { top: designPointRef.current?.getBoundingClientRect().top, left: designPointRef?.current?.getBoundingClientRect().left! - 80 },
-          p: { top: technologyPointRef.current?.getBoundingClientRect().top, left: technologyPointRef?.current?.getBoundingClientRect().left! - 80 },
-          i: { top: businessPointRef.current?.getBoundingClientRect().top, left: businessPointRef?.current?.getBoundingClientRect().left! - 80 },
+          k: { top: designPointRef.current?.getBoundingClientRect().top, left: designPointRef?.current?.getBoundingClientRect().left },
+          p: { top: technologyPointRef.current?.getBoundingClientRect().top, left: technologyPointRef?.current?.getBoundingClientRect().left},
+          i: { top: businessPointRef.current?.getBoundingClientRect().top, left: businessPointRef?.current?.getBoundingClientRect().left },
         }));
-
       }
-
       setLastScrollY(currentScrollY);
-
     }
     setAnimate(true);
 
-
-
-
-
-
-
     window.addEventListener('scroll', handleScroll);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-
-
-
-
-
-
   }, [lastScrollY]);
 
 
 
+  const [isColored, setIsColored] = useState(false);
+useEffect(() => {
+ const timer = setTimeout(() => {
+      setIsColored(true);
+    }, 1000); 
+
+ 
+}, [])
 
 
-
-
-
-
-  const [positions, setPositions] = useState({
-    k: { top: -50, left: -50 },
-    p: { top: -50, left: -50 },
-    i: { top: -50, left: -50 },
-  });
 
 
 
@@ -159,13 +144,58 @@ console.log(ballShouldFollow)
 }}></button> */}
         {/* ----------------------------------------------------------------------------------- */}
 
+        {/* <div className="flex flex-row w-[100%] justify-center  m-4 sm:m-10 mb-14 ">
+          <div id="k" ref={k} className="text-3xl sm:text-5xl h-[100px] w-[100px] z-10 font-bold m-4 mx-6 px-6">k</div>
+          <div id="p" ref={p} className="text-3xl sm:text-5xl h-[100px] w-[100px] z-10 font-bold m-4 mx-6 px-6">p</div>
+          <div id="i" ref={i} className="text-3xl sm:text-5xl h-[100px] w-[100px] z-10 font-bold m-4 mx-6 px-6">i</div>
+        </div> */}
         <div className="flex flex-row w-[100%] justify-center  m-4 sm:m-10 mb-14 ">
-          <div id="k" ref={k} className="text-3xl sm:text-5xl z-10 font-bold m-4 mx-6 px-6">k</div>
-          <div id="p" ref={p} className="text-3xl sm:text-5xl z-10 font-bold m-4 mx-6 px-6">p</div>
-          <div id="i" ref={i} className="text-3xl sm:text-5xl z-10 font-bold m-4 mx-6 px-6">i</div>
+          <div id="k" ref={k} className={`text-3xl sm:text-5xl h-[100px] w-[100px] z-10 ${isColored ? "bg-red-300" : ""} font-bold rounded-[50%] m-4 mx-6 px-6 flex justify-center items-center`}>k</div>
+          <div id="p"  ref={p} className={`text-3xl sm:text-5xl h-[100px] w-[100px] z-10  ${isColored ? "bg-blue-300" : ""}   rounded-[50%] font-bold m-4 mx-6 px-6 flex justify-center items-center `}>p</div>
+          <div id="i" ref={i} className={`text-3xl sm:text-5xl h-[100px] w-[100px] z-10  ${isColored ? "bg-green-300" : ""}  rounded-[50%] font-bold m-4 mx-6 px-6 flex justify-center items-center`}>i</div>
         </div>
 
 
+
+
+        <div className="flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image src={one} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image src={two} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image src={three} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image className="hidden sm:block" src={four} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image className="hidden sm:block" src={five} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+
+
+        </div>
+        <div className="flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image src={one} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image src={two} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image src={three} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image className="hidden sm:block" src={four} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }} >
+            <Image className="hidden sm:block" src={five} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+
+
+        </div>
 
         <Section2 designRef={designRef} technologyRef={technologyRef} businessRef={businessRef} designPointRef={designPointRef} technologyPointRef={technologyPointRef} businessPointRef={businessPointRef}></Section2>
 
@@ -189,13 +219,13 @@ console.log(ballShouldFollow)
             className="text-4xl font-bold"
           >
             Moving Text
-          </motion.div>
+          </motion.div> 
         </div> */}
 
 
-        <Ball top={animate ? (positions.k.top) - 10 : -50} left={animate ? positions.k.left - 10 : -50} delay={0} color={'bg-red-300'} />
-        <Ball top={animate ? positions.p.top - 10 : -50} left={animate ? positions.p.left - 10 : -50} delay={0.3} color={'bg-blue-300'} />
-        <Ball top={animate ? positions.i.top - 10 : -50} left={animate ? positions.i.left - 10 : -50} delay={0.7} color={'bg-green-300'} />
+        <Ball top={animate ? (positions.k.top) - 0 : -50} left={animate ? positions.k.left - 0 : -50} delay={0} color={'bg-red-300'} />
+        <Ball top={animate ? positions.p.top - 0 : -50} left={animate ? positions.p.left - 0 : -50} delay={0} color={'bg-blue-300'} />
+        <Ball top={animate ? positions.i.top - 0 : -50} left={animate ? positions.i.left - 0 : -50} delay={0} color={'bg-green-300'} />
 
 
         <div className="ml-4 sm:ml-14 mt-10 text-3xl superBold mt-6 m-2">

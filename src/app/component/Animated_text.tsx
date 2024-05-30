@@ -144,7 +144,7 @@ function AnimatedText({ text, mode, weight, size, space }: TextProps) {
 
   return (
     <div className="App">
-      {text}
+      {textSpans!}
     </div>
   );
 }
