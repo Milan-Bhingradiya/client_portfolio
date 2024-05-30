@@ -3,10 +3,10 @@ import { mystore } from '@/app/store/mystore';
 import React, { use, useState } from 'react';
 
 
-const Ball = ({ top, left, delay ,color, height, width }) => {
+const Ball = ({ top, left, delay ,color }:any) => {
 
 
-  const ballSize = mystore((state) => state.ballSize)
+  const ballSize = mystore((state:any) => state.ballSize)
   console.log(ballSize.height, ballSize.width)
   console.log(ballSize.height, ballSize.width)
     return (
