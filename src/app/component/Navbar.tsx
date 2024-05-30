@@ -7,6 +7,9 @@ import { start } from 'repl';
 import MenuIcon from '@mui/icons-material/Menu';
 import Sidebar from './SIdebar';
 import Link from 'next/link';
+import Image from 'next/image';
+import logo from '/public/logo.svg';
+
 
 const Navbar: React.FC = () => {
 
@@ -37,8 +40,8 @@ const Navbar: React.FC = () => {
         <div className='h-[90px] w-[100%] items-center flex '>
 
             <div className=' mx-5 sm:mx-20 md:mx-26 lg:mx-32  w-[100%]   flex flex-row justify-between items-center'>
-                <Link href={"./"} className='m-2  text-2xl superBold'>
-                    Meu
+                <Link href={"/"} className='m-2  text-2xl superBold'>
+                <Image src={logo} alt="Logo" width={100} height={100} ></Image>
                 </Link>
 
                 <div className='hidden sm:block  '>
@@ -62,6 +65,9 @@ const Navbar: React.FC = () => {
                                     </Link>
                                     <Link href={"/service/marketing"} >
                                         <li className="px-4 py-2 hover:bg-gray-200">Marketing</li>
+                                    </Link>
+                                    <Link href={"/service/marketing"} >
+                                        <li className="px-4 py-2 hover:bg-gray-200">Consultancy</li>
                                     </Link>
                                 </ul>
                             )}

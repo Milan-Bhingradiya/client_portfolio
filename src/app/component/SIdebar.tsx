@@ -52,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             </div>
             <nav className="p-2 text-base font-normal text-blue-gray-700">
                 <div className="flex flex-col gap-1">
-                    <Link href={"./work"} className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleSidebar}>
+                    <Link href={"/work"} className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleSidebar}>
                         Work
                     </Link>
                     <div className="p-3 hover:bg-blue-gray-50" role="button" onClick={toggleServicesMenu}>
