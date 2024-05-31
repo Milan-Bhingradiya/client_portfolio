@@ -56,7 +56,17 @@
   position: fixed;
 
   border-radius: 50%;
-  transition: all 0.5s ease-out;
+  transition: all 1s ease-out;
 }
 
 
+
+
+.move{
+  transform: translateX(-1000px) translateY(-2000px);
+}
+
+.mytransition{
+  transition: all 2s ease-out;
+  
+}

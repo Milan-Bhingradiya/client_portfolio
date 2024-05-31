@@ -32,27 +32,26 @@ const Ball = ({ top, left, delay, color }: any) => {
 
   useEffect(() => {
     const checkPosition = () => {
+      // const currentScrollY = window.scrollY;
+
       if (ballRef.current) {
         const ballRect = ballRef.current.getBoundingClientRect();
         if (Math.abs(ballRect.top - top) < 40 && Math.abs(ballRect.left - left) < 40) {
           setballVisible(false)
 
           //if jo ball ne title no pichho karvano hoy to title ni baju vala bal static visible karvana when animation stop..
-          if(ballShouldFollow==="titles"){
-
-            setTimeout(() => {
-              
-              setstaticTitleBallVisible(true)
-            }, 1000);
-          }
+         
 
 
         }
       }
     };
 
-    const interval = setInterval(checkPosition, 200);
+    const interval = setInterval(checkPosition,1000);
 
+
+
+    
     return () => clearInterval(interval);
   }, [top, left]);
 
@@ -68,13 +67,15 @@ const Ball = ({ top, left, delay, color }: any) => {
   return (
     <div
       ref={ballRef}
-      className={`ball duration-1000 ease-out ${color}`}
+      className={`ball   ${color}`}
       style={{
+        transition: `all 0.5s ease-out`,
         height: `${ballSize.height}px`,
         width: `${ballSize.width}px`,
-        top: `${top}px`,
-        left: `${left}px`,
-        transitionDelay: `${0}s`,
+        // top: `${top}px`,
+        // left: `${left}px`,
+        transform: `translateX(${left}px) translateY(${top}px)`,
+        transitionDelay: `${delay}s`,
       }}
     />
   );

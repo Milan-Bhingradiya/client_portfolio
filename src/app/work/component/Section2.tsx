@@ -16,9 +16,10 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
     const setBallSize = mystore((state: any) => state.setballSize)
     const ballShouldFollow = mystore((state: any) => state.ballShouldFollow)
     const setballVisible = mystore((state: any) => state.setballVisible)
+    const setstaticTitleBallVisible = mystore((state: any) => state.setstaticTitleBallVisible)
 
 
-    const [showDesign, setshowDesign] = useState(false);
+    const [showSubText, setshowSubText] = useState(false);
     const [showTechnology, setshowTechnology] = useState(false);
     const [showBusiness, setshowBusiness] = useState(false);
 
@@ -43,6 +44,8 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
 
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight; // Get window height
+
 
             if (designRef.current) {
                 const rect = designRef.current.getBoundingClientRect();
@@ -50,42 +53,44 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
 
                 if (isScrollingDown && rect.top <= 200) {
                     setshowImg(true);
-                    if (ballShouldFollow === "kpi") {
 
-                        setballShouldFollow("titles")
-                        setBallSize({ height: 50, width: 50 })
-                    }
+                        setstaticTitleBallVisible(true);
+                    //imp   
+                    // if (ballShouldFollow === "kpi") {
+                    //     setballShouldFollow("titles")
+                    //     setBallSize({ height: 50, width: 50 })
+                    //     setstaticTitleBallVisible(true);
+                    // }
+
                 }
 
-                // if(isScrollingDown && rect.top <=300){
-
-                // }
 
                 // ball animation start karo...
                 if (isScrollingDown && rect.top <= 250 && rect.top >= 0) {
                     setballVisible(true);
-
                 }
-                if (isScrollingDown && rect.top <= 150 && rect.top >= 0) {
 
-                    setshowDesign(true);
+                if (isScrollingDown && rect.top <= windowHeight/2 && rect.top >= 0) {
+
+                    setshowSubText(true);
 
                     setimgIndex(0);
 
                 } else if (!isScrollingDown && rect.top >= 200) {
                     setshowImg(false);
-                    setshowDesign(false);
+                    setshowSubText(false);
 
                 }
 
 
-                if (!isScrollingDown && rect.top < 300 && rect.top >= 0) {
-                    if (ballShouldFollow === "titles") {
-                        setBallSize({ height: 100, width: 100 })
-                        setballShouldFollow("kpi")
+                // if (!isScrollingDown && rect.top < 300 && rect.top >= 0) {
+                //     if (ballShouldFollow === "titles") {
+                //         setBallSize({ height: 100, width: 100 })
+                //         setballShouldFollow("kpi")
+                //         setstaticTitleBallVisible(false)
 
-                    }
-                }
+                //     }
+                // }
                 setLastScrollY(currentScrollY);
             }
 
@@ -95,7 +100,7 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
                 const rect = technologyRef.current.getBoundingClientRect();
                 const isScrollingDown = currentScrollY > lastScrollY;
 
-                if (isScrollingDown && rect.top <= 200 && rect.top >= 0) {
+                if (isScrollingDown && rect.top <=  windowHeight/2 && rect.top >= 0) {
                     setshowTechnology(true);
 
                     setimgIndex(1);
@@ -121,7 +126,7 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
                     setshowImg(false);
                 }
 
-                if (isScrollingDown && rect.top <= 200 && rect.top >= 0) {
+                if (isScrollingDown && rect.top <=  windowHeight/2 && rect.top >= 0) {
 
                     setimgIndex(2);
 
@@ -153,16 +158,18 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
 
 
     return (
-        <div className='ml-10'>
+        <div className=''>
 
 
 
 
             {/* 11----------------------------------------------------------------------------------- */}
-            <div className=" flex flex-row  px-6  mt-10   sm:px-28 ">
-                <div className={`flex flex-col w-[100%] sm:w-[50%]    ${showDesign ? 'sm:m-10' : 'sm:m-4'} `}>
-                    <div ref={designRef} className="text-5xl superBold flex flex-row">
-                        <div ref={designPointRef}  className={`${staticTitleBallVisible?'':'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-red-300" : ""}`}> { }</div>
+            <div className=" flex flex-row    mt-10   sm:px-28 ">
+                <div className={`flex flex-col w-[100%] sm:w-[50%]    ${showSubText ? 'sm:m-10' : 'sm:m-4'} `}>
+                    <div ref={designRef} className=" text-4xl sm:text-5xl superBold flex flex-row">
+                        {/* <div ref={designPointRef} className={`${staticTitleBallVisible ? '' : 'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-red-300" : ""}`}> { }</div> */}
+                        <div className={`border-dotted animate-spin border-4 border-red-800 rounded-[50%] h-[30px] sm:h-[50px] w-[30px] sm:w-[50px] m-2 bg-red-300`}> { }</div>
+
                         <div className="flex flex-row justify-center items-center">
 
                             Design
@@ -170,8 +177,8 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
 
                     </div>
 
-                    <ul className={`list-disc space-y-2 sm:h-[80vh] expandable ${showDesign ? 'show' : ''}`}>
-                        {showDesign &&
+                    <ul className={`list-disc ml-12 space-y-2 h-[50vh] sm:h-[80vh] expandable ${showSubText ? 'show' : ''}`}>
+                        {showSubText &&
 
                             <Animated_text text={"    UI Design | UX Consultancy | Design System | Animation | Illustrations"} mode={"multi"} weight={"  "} size={' text-[25px]'} space={true}></Animated_text>
 
@@ -186,12 +193,13 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
 
 
             {/*22 ----------------------------------------------------------------------------------- */}
-            <div className="flex flex-row  px-6    sm:px-28">
+            <div className="flex flex-row    sm:px-28">
                 <div className={`flex flex-col w-[100%] sm:w-[50%]    ${showTechnology ? 'sm:m-10' : 'sm:m-4'} `}>
 
-                    <div ref={technologyRef} className="text-5xl superBold mt-6 flex flex-row">
+                    <div ref={technologyRef} className="text-4xl sm:text-5xl superBold mt-6 flex flex-row">
 
-                        <div ref={technologyPointRef} className={`${staticTitleBallVisible?'':'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-blue-300" : ""}`}> { }</div>
+                        {/* <div ref={technologyPointRef} className={`${staticTitleBallVisible ? '' : 'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-blue-300" : ""}`}> { }</div> */}
+                        <div className={` border-dotted animate-spin border-4 border-blue-800 rounded-[50%] h-[30px] sm:h-[50px] w-[30px] sm:w-[50px]  m-2 bg-blue-300`}> { }</div>
 
                         <div className="flex flex-row justify-center items-center">
 
@@ -199,7 +207,7 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
                         </div>
                     </div>
 
-                    <ul className={`list-disc space-y-2    sm:h-[80vh] expandable ${showTechnology ? 'show' : ''}`}>
+                    <ul className={`list-disc space-y-2  ml-12 h-[50vh]  sm:h-[80vh] expandable ${showTechnology ? 'show' : ''}`}>
                         {showTechnology &&
                             <Animated_text text={"    web Design | Softwares (Custom Software Development) | Mobile Apps | Web Apps | Front-End Development | Back-End Development"} mode={"multi"} weight={"ont-extrabold  "} size={'text-lg sm:text-[25px]'} space={true}></Animated_text>
                         }
@@ -210,12 +218,13 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
 
 
             {/* 33----------------------------------------------------------------------------------- */}
-            <div className="flex flex-row    px-6  sm:px-28">
+            <div className="flex flex-row sm:px-28">
 
                 <div className={`flex flex-col w-[100%] sm:w-[50%]    ${showBusiness ? 'sm:m-10' : 'sm:m-4'} `}>
 
-                    <div ref={businessRef} className="text-5xl superBold mt-6 flex flex-row">
-                        <div ref={businessPointRef} className={` ${staticTitleBallVisible?'':'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-green-300" : ""}`}> { }</div>
+                    <div ref={businessRef} className="text-4xl sm:text-5xl superBold mt-6 flex flex-row">
+                        {/* <div ref={businessPointRef} className={` ${staticTitleBallVisible ? '' : 'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-green-300" : ""}`}> { }</div> */}
+                        <div className={` border-dotted animate-spin border-4 border-green-800 rounded-[50%]  h-[30px] sm:h-[50px] w-[30px] sm:w-[50px]  m-2 bg-green-300`}> { }</div>
 
                         <div className="flex flex-row justify-center items-center" >
 
@@ -224,7 +233,7 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
                         </div>
 
                     </div>
-                    <ul className={`list-disc space-y-2  sm:h-[60vh] expandable ${showBusiness ? 'show' : ''}`}>
+                    <ul className={`list-disc space-y-2 h-[30vh] ml-12 sm:h-[60vh] expandable ${showBusiness ? 'show' : ''}`}>
                         {showBusiness && (
                             <Animated_text
                                 text={"Branding Strategy | Brand Name Development | Brand Guidelines Creation | Digital Marketing Services | SEO (Search Engine Optimization)"}
@@ -245,8 +254,8 @@ function Section2({ designRef, technologyRef, businessRef, designPointRef, techn
 
             {showImg && <motion.div
 
-                className=" hidden sm:fixed top-[50px] right-[200px]  z-10 h-1/4   flex-row justify-center  m-10">
-                <div className="hidden sm:block h-1/4 w-[280px]  m-10">
+                className=" hidden md:block md:fixed top-[50px] right-[200px]  z-10 h-1/4   flex-row justify-center  m-10">
+                <div className="block h-1/4 w-[280px]  m-10">
                     <Player
                         // src='https://lottie.host/6ee4d5fc-4a27-4f56-96c2-40c5c0440fbf/jvysS84Gc9.json'
                         // src='https://lottie.host/3dac4db4-374a-48d1-a3e2-e705001a512e/FA8Be7ZiIf.json'

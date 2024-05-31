@@ -41,6 +41,8 @@ export default function Home() {
 
 
   const [lastScrollY, setLastScrollY] = useState(0);
+  // let lastScrollY=0;
+  // const setLastScrollY =(num)=>{lastScrollY = num} 
 
 
   const setballShouldFollow = mystore((state: any) => state.setballShouldFollow)
@@ -68,7 +70,7 @@ export default function Home() {
 
 
   useEffect(() => {
-    // console.log("useEffect");
+    console.log("useEffect");
     const handleScroll = () => {
 
 
@@ -93,14 +95,14 @@ export default function Home() {
         }));
         // setballShouldFollow("titles");
       }
-      if (ballShouldFollow == "titles") {
-        // console.log("followinf " + ballShouldFollow)
-        setPositions((prev): any => ({
-          k: { top: designPointRef.current?.getBoundingClientRect().top, left: designPointRef?.current?.getBoundingClientRect().left },
-          p: { top: technologyPointRef.current?.getBoundingClientRect().top, left: technologyPointRef?.current?.getBoundingClientRect().left},
-          i: { top: businessPointRef.current?.getBoundingClientRect().top, left: businessPointRef?.current?.getBoundingClientRect().left },
-        }));
-      }
+      // if (ballShouldFollow == "titles") {
+      //   // console.log("followinf " + ballShouldFollow)
+      //   setPositions((prev): any => ({
+      //     k: { top: designPointRef.current?.getBoundingClientRect().top, left: designPointRef?.current?.getBoundingClientRect().left },
+      //     p: { top: technologyPointRef.current?.getBoundingClientRect().top, left: technologyPointRef?.current?.getBoundingClientRect().left},
+      //     i: { top: businessPointRef.current?.getBoundingClientRect().top, left: businessPointRef?.current?.getBoundingClientRect().left },
+      //   }));
+      // }
       setLastScrollY(currentScrollY);
     }
     setAnimate(true);
@@ -114,16 +116,20 @@ export default function Home() {
 
 
   const [isColored, setIsColored] = useState(false);
+
+
+const [isOneSecDone, setisOneSecDone] = useState(false);
+
+
 useEffect(() => {
  const timer = setTimeout(() => {
       setIsColored(true);
+
+      setisOneSecDone(true);
     }, 1000); 
 
  
 }, [])
-
-
-
 
 
 
@@ -139,8 +145,11 @@ useEffect(() => {
 
         {/* <button className='h-[100px] w-[100px] bg-red-500 rounded-full fixed bottom-10 right-10' onClick={() => {
 
-setballShouldFollow("titles")
-console.log(ballShouldFollow)
+// setballShouldFollow("titles")
+// console.log(isclick)
+setisOneSecDone(!isOneSecDone);
+// console.log(isclick)
+
 }}></button> */}
         {/* ----------------------------------------------------------------------------------- */}
 
@@ -149,16 +158,23 @@ console.log(ballShouldFollow)
           <div id="p" ref={p} className="text-3xl sm:text-5xl h-[100px] w-[100px] z-10 font-bold m-4 mx-6 px-6">p</div>
           <div id="i" ref={i} className="text-3xl sm:text-5xl h-[100px] w-[100px] z-10 font-bold m-4 mx-6 px-6">i</div>
         </div> */}
-        <div className="flex flex-row w-[100%] justify-center  m-4 sm:m-10 mb-14 ">
-          <div id="k" ref={k} className={`text-3xl sm:text-5xl h-[100px] w-[100px] z-10 ${isColored ? "bg-red-300" : ""} font-bold rounded-[50%] m-4 mx-6 px-6 flex justify-center items-center`}>k</div>
-          <div id="p"  ref={p} className={`text-3xl sm:text-5xl h-[100px] w-[100px] z-10  ${isColored ? "bg-blue-300" : ""}   rounded-[50%] font-bold m-4 mx-6 px-6 flex justify-center items-center `}>p</div>
-          <div id="i" ref={i} className={`text-3xl sm:text-5xl h-[100px] w-[100px] z-10  ${isColored ? "bg-green-300" : ""}  rounded-[50%] font-bold m-4 mx-6 px-6 flex justify-center items-center`}>i</div>
+
+        <div className="flex flex-row w-[100%] justify-center  m-4 sm:m-10 mb-14  ">
+          <div id="k"  className={`animate-bounce text-3xl sm:text-5xl h-[60px] sm:h-[100px] w-[60px] sm:w-[100px] z-10  ${isOneSecDone?'':'move'} mytransition ${isOneSecDone ? "bg-red-300" : ""} font-bold rounded-[50%] m-4 sm:mx-6 px-6 flex justify-center items-center`}>k</div>
+          <div id="p"  className={` animate-bounce text-3xl sm:text-5xl h-[60px] sm:h-[100px] w-[60px] sm:w-[100px]  z-10 ${isOneSecDone?'':'move'}  mytransition  ${isOneSecDone ? "bg-blue-300" : ""}   rounded-[50%] font-bold m-4 sm:mx-6 px-6 flex justify-center items-center `}>p</div>
+          <div id="i"  className={` animate-bounce text-3xl sm:text-5xl h-[60px] sm:h-[100px] w-[60px] sm:w-[100px]  z-10 ${isOneSecDone?'':'move'}  mytransition ${isOneSecDone ? "bg-green-300" : ""}  rounded-[50%] font-bold m-4 sm:mx-6 px-6 flex justify-center items-center`}>i</div>
         </div>
 
 
 
+        <div className=" flex justify-center text-4xl m-10 mt-20 superBold"> Out Clients</div>
 
-        <div className="flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
+
+
+     
+
+
+        <div className="  flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
           <motion.div whileHover={{ scale: 1.2 }} >
             <Image src={one} alt="ms" width={60} height={80}></Image>
           </motion.div>
@@ -168,33 +184,30 @@ console.log(ballShouldFollow)
           <motion.div whileHover={{ scale: 1.2 }} >
             <Image src={three} alt="ms" width={60} height={80}></Image>
           </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} >
-            <Image className="hidden sm:block" src={four} alt="ms" width={60} height={80}></Image>
+          <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }} >
+            <Image src={four} alt="ms" width={60} height={80}></Image>
           </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} >
-            <Image className="hidden sm:block" src={five} alt="ms" width={60} height={80}></Image>
+          <motion.div  className="hidden sm:block"  whileHover={{ scale: 1.2 }} >
+            <Image src={five} alt="ms" width={60} height={80}></Image>
           </motion.div>
-
-
         </div>
-        <div className="flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
+
+        <div className=" mb-32 flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
+          <motion.div  className="hidden sm:block"  whileHover={{ scale: 1.2 }} >
+            <Image src={five} alt="ms" width={60} height={80}></Image>
+          </motion.div>
           <motion.div whileHover={{ scale: 1.2 }} >
             <Image src={one} alt="ms" width={60} height={80}></Image>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} >
-            <Image src={two} alt="ms" width={60} height={80}></Image>
           </motion.div>
           <motion.div whileHover={{ scale: 1.2 }} >
             <Image src={three} alt="ms" width={60} height={80}></Image>
           </motion.div>
           <motion.div whileHover={{ scale: 1.2 }} >
-            <Image className="hidden sm:block" src={four} alt="ms" width={60} height={80}></Image>
+            <Image src={two} alt="ms" width={60} height={80}></Image>
           </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }} >
-            <Image className="hidden sm:block" src={five} alt="ms" width={60} height={80}></Image>
+          <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }} >
+            <Image src={four} alt="ms" width={60} height={80}></Image>
           </motion.div>
-
-
         </div>
 
         <Section2 designRef={designRef} technologyRef={technologyRef} businessRef={businessRef} designPointRef={designPointRef} technologyPointRef={technologyPointRef} businessPointRef={businessPointRef}></Section2>
@@ -223,10 +236,20 @@ console.log(ballShouldFollow)
         </div> */}
 
 
-        <Ball top={animate ? (positions.k.top) - 0 : -50} left={animate ? positions.k.left - 0 : -50} delay={0} color={'bg-red-300'} />
-        <Ball top={animate ? positions.p.top - 0 : -50} left={animate ? positions.p.left - 0 : -50} delay={0} color={'bg-blue-300'} />
-        <Ball top={animate ? positions.i.top - 0 : -50} left={animate ? positions.i.left - 0 : -50} delay={0} color={'bg-green-300'} />
-
+        {/* <Ball top={animate ? (positions.k.top) - 0 : -50} left={animate ? positions.k.left - 0 : -50} delay={0} color={'bg-red-300'} /> */}
+        {/* <Ball top={animate ? positions.p.top - 0 : -50} left={animate ? positions.p.left - 0 : -50} delay={0} color={'bg-blue-300'} /> */}
+        {/* <Ball top={animate ? positions.i.top - 0 : -50} left={animate ? positions.i.left - 0 : -50} delay={0} color={'bg-green-300'} /> */}
+        <div
+      className={`ball bg-black`}
+      style={{
+        transition: `all 0.5s ease-out`,
+        height: `${positions.k.top}px`,
+        width: `${positions.k.left}px`,
+        // top: `${top}px`,
+        // left: `${left}px`,
+        transform: `translateX(${positions.k.top}px translateY(${positions.k.left}px)`,
+      }}
+    />
 
         <div className="ml-4 sm:ml-14 mt-10 text-3xl superBold mt-6 m-2">
           Consultant

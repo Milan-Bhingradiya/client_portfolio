@@ -34,7 +34,7 @@ function Section1() {
                         <Animated_text text={"Design | Transform | Accelerate"} mode="single" weight="superBold" size={'text-4xl sm:text-5xl '} space={false}> </Animated_text>
                     </div>
 
-                    <div className="m-4">
+                    <div className="m-6 sm:m-8 ml-0">
                         <Animated_text text={"We Revolutionize User Experience |  Using Behavioural Science."} mode={"multi"} weight={"font-extrabold"} size={' text-lg sm:text-2xl'} space={true}></Animated_text>
                     </div>
                 </div>
