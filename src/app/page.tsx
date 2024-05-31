@@ -119,14 +119,21 @@ export default function Home() {
 
 
 const [isOneSecDone, setisOneSecDone] = useState(false);
+const [isTwoSecDone, setisTwoSecDone] = useState(false);
 
 
 useEffect(() => {
  const timer = setTimeout(() => {
+  console.log("jjjjjjjjjjjjjjj")
       setIsColored(true);
 
       setisOneSecDone(true);
     }, 1000); 
+
+ const timer2 = setTimeout(() => {
+
+      setisTwoSecDone(true);
+    }, 2000); 
 
  
 }, [])
@@ -160,9 +167,9 @@ setisOneSecDone(!isOneSecDone);
         </div> */}
 
         <div className="flex flex-row w-[100%] justify-center  m-4 sm:m-10 mb-14  ">
-          <div id="k"  className={`animate-bounce text-3xl sm:text-5xl h-[60px] sm:h-[100px] w-[60px] sm:w-[100px] z-10  ${isOneSecDone?'':'move'} mytransition ${isOneSecDone ? "bg-red-300" : ""} font-bold rounded-[50%] m-4 sm:mx-6 px-6 flex justify-center items-center`}>k</div>
-          <div id="p"  className={` animate-bounce text-3xl sm:text-5xl h-[60px] sm:h-[100px] w-[60px] sm:w-[100px]  z-10 ${isOneSecDone?'':'move'}  mytransition  ${isOneSecDone ? "bg-blue-300" : ""}   rounded-[50%] font-bold m-4 sm:mx-6 px-6 flex justify-center items-center `}>p</div>
-          <div id="i"  className={` animate-bounce text-3xl sm:text-5xl h-[60px] sm:h-[100px] w-[60px] sm:w-[100px]  z-10 ${isOneSecDone?'':'move'}  mytransition ${isOneSecDone ? "bg-green-300" : ""}  rounded-[50%] font-bold m-4 sm:mx-6 px-6 flex justify-center items-center`}>i</div>
+          <div id="k"  className={` text-3xl sm:text-5xl h-[60px] sm:h-[100px] w-[60px] sm:w-[100px] z-10  ${isOneSecDone?'':'move'}  ${isTwoSecDone?'animate-bounce':''} mytransition ${isOneSecDone ? "bg-red-300" : ""} font-bold rounded-[50%] m-4 sm:mx-6 px-6 flex justify-center items-center`}>k</div>
+          <div id="p"  className={`  text-3xl sm:text-5xl h-[60px] sm:h-[100px] w-[60px] sm:w-[100px]  z-10 ${isOneSecDone?'':'move'} ${isTwoSecDone?'animate-bounce':''} mytransition  ${isOneSecDone ? "bg-blue-300" : ""}   rounded-[50%] font-bold m-4 sm:mx-6 px-6 flex justify-center items-center `}>p</div>
+          <div id="i"  className={`  text-3xl sm:text-5xl h-[60px] sm:h-[100px] w-[60px] sm:w-[100px]  z-10 ${isOneSecDone?'':'move'}  ${isTwoSecDone?'animate-bounce':''} mytransition ${isOneSecDone ? "bg-green-300" : ""}  rounded-[50%] font-bold m-4 sm:mx-6 px-6 flex justify-center items-center`}>i</div>
         </div>
 
 
