@@ -15,8 +15,8 @@ function Page() {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
   }
-  const [response, setResponse] = useState([])
-
+  // const [response, setResponse] = useState([])
+  const [response, setResponse] = useState<{ id: string }[]>([])
   useEffect(() => {
     const getAllProject = async () => {
       const collectionref = collection(firestoreInstance, "projects")
