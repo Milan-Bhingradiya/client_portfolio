@@ -21,6 +21,14 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/work/[id].tsx", "src/app/api/users/[userId]", "src/app/api/getproject/[projectId]"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/work/[id].tsx",
+    "src/app/api/users/[userId]",
+    "src/app/api/getproject/[projectId]"
+  ],
   "exclude": ["node_modules"]
 }
