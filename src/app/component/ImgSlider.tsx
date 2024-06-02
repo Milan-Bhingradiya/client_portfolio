@@ -2,7 +2,7 @@
 import React from "react"
 import useEmblaCarousel from "embla-carousel-react"
 import Image from "next/image"
-function ImgSlider({ screens }) {
+function ImgSlider({ screens }: { screens: string[] }) {
   const [emblaRef] = useEmblaCarousel()
 
   return (
