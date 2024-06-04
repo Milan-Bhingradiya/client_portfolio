@@ -86,7 +86,7 @@ f
                       height={200}
                     ></Image>
                     <div className="absolute inset-0 bottom-[0px] bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
-                    <h3 className="z-10 mt-8 text-3xl font-bold text-white">
+                    <h3 className="z-10 mt-8  text-3xl font-bold text-white">
                       {"project.title"}
                     </h3>
                     <div className="z-10 bottom-0 text-red-400 overflow-hidden text-sm  text- font-bold">

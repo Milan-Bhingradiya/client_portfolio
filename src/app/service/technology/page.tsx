@@ -1,11 +1,14 @@
+"use client";
 // src/components/ServiceList.js
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import branding from "../../../../public/branding.png";
 import ux from "../../../../public/UIUX.png";
 import ui from "../../../../public/UI.png";
 import development from "../../../../public/devlopment.png";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 
 const services = [
   "Development",
@@ -64,7 +67,38 @@ const steps = [
   },
 ];
 
-function page() {
+function Page() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const { ref: ref1, inView: ref1View } = useInView({
+    threshold: 0.3,
+  });
+  const { ref: ref2, inView: ref2View } = useInView({
+    threshold: 0.3,
+  });
+  const { ref: ref3, inView: ref3View } = useInView({
+    threshold: 0.3,
+  });
+
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const variants = {
+    initial: { x: -500, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+  };
   return (
     <div className=" m-2 sm:m-10">
       <div className="container mx-auto px-4 py-16">
@@ -72,47 +106,93 @@ function page() {
           <h2 className="text-blue-500 text-lg font-semibold mb-2">
             What Do We Serve?
           </h2>
-          <h1 className="text-3xl sm:text-5xl font-bold mb-4">
-            Comprehensive technology services that integrate digital
-            craftsmanship and business goals.
-          </h1>
+
+          <div ref={ref1}>
+            <motion.div
+              className="animated-text"
+              initial={{ x: -100, opacity: 0 }}
+              animate={{
+                opacity: ref1View && isScrolled ? 1 : 0,
+                x: ref1View && isScrolled ? 0 : -100,
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <h1 className="text-3xl sm:text-5xl font-bold mb-4">
+                Comprehensive technology services that integrate digital
+                craftsmanship and business goals.
+              </h1>
+            </motion.div>
+          </div>
         </div>
-        <div className="relative flex flex-col items-center">
-          <div className="animate-ping fixed  left-[28%] sm:left-[40%] top-[40%] w-48 h-48 bg-blue-200 rounded-full -z-10"></div>
-          <div className=" m-10 text-3xl text-blue-500 font-bold">Web</div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
-            {services.map((service, index) => (
-              <div key={index} className="relative">
-                <p className="font-semibold text-lg">{service}</p>
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-24 border-b-2 border-dotted border-black mt-2"></div>
+
+        <div ref={ref2}>
+          <motion.div
+            className="animated-text"
+            initial={{ x: -100, opacity: 0 }}
+            animate={{
+              opacity: ref2View && isScrolled ? 1 : 0,
+              x: ref2View && isScrolled ? 0 : -100,
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="relative flex flex-col items-center">
+              <div className="animate-ping fixed  left-[28%] sm:left-[40%] top-[40%] w-48 h-48 bg-blue-200 rounded-full -z-10"></div>
+              <div className=" m-10 text-3xl text-blue-500 font-bold">Web</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
+                {services.map((service, index) => (
+                  <div key={index} className="relative">
+                    <p className="font-semibold text-lg">{service}</p>
+                    <div className="absolute left-1/2 transform -translate-x-1/2 w-24 border-b-2 border-dotted border-black mt-2"></div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className=" m-10 text-3xl text-blue-500 font-bold">App</div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
-            {services.map((service, index) => (
-              <div key={index} className="relative">
-                <p className="font-semibold text-lg">{service}</p>
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-24 border-b-2 border-dotted border-black mt-2"></div>
+              <div className=" m-10 text-3xl text-blue-500 font-bold">App</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
+                {services.map((service, index) => (
+                  <div key={index} className="relative">
+                    <p className="font-semibold text-lg">{service}</p>
+                    <div className="absolute left-1/2 transform -translate-x-1/2 w-24 border-b-2 border-dotted border-black mt-2"></div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {steps.map((step, index) => (
-            <div key={index} className="flex flex-col items-center text-center">
-              <Image src={branding} alt={step.title} width={80} height={80} />
-              <h3 className="text-2xl font-bold mt-4 mb-2">{step.title}</h3>
-              <p className="text-gray-700">{step.description}</p>
+      <div ref={ref3}>
+        <motion.div
+          className="animated-text"
+          initial={{ x: -100, opacity: 0 }}
+          animate={{
+            opacity: ref3View && isScrolled ? 1 : 0,
+            x: ref3View && isScrolled ? 0 : -100,
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="container mx-auto px-4 py-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {steps.map((step, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col items-center text-center"
+                >
+                  <Image
+                    src={branding}
+                    alt={step.title}
+                    width={80}
+                    height={80}
+                  />
+                  <h3 className="text-2xl font-bold mt-4 mb-2">{step.title}</h3>
+                  <p className="text-gray-700">{step.description}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
 }
 
-export default page;
+export default Page;

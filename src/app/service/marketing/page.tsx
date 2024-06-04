@@ -57,9 +57,6 @@ const steps = [
 function Page() {
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { ref: textRef, inView: textInView } = useInView({
-    threshold: 0,
-  });
   const { ref: textRef1, inView: textInView1 } = useInView({
     threshold: 0.3,
   });
@@ -87,19 +84,22 @@ function Page() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const variants = {
+    initial: { x: -1000, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+  };
   return (
     <div className=" m-2 sm:m-10">
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-8">
-          <div ref={textRef} className="text-container">
+          <div className="text-container">
             <motion.div
-              className="animated-text"
-              initial={{ x: 0, opacity: 0 }}
-              animate={{
-                opacity: textInView && isScrolled ? 1 : 1,
-                x: textInView && isScrolled ? 0 : 0,
-              }}
-              transition={{ duration: 0.3 }}
+              key="text"
+              initial="initial"
+              animate="animate"
+              variants={variants}
+              transition={{ duration: 1 }}
             >
               <h2 className=" text-purple-500 text-lg font-semibold mb-2">
                 What Do We Serve?
