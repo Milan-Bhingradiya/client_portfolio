@@ -1,6 +1,43 @@
-import React from "react"
+"use client";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import React, { useState } from "react";
+import { firestoreInstance } from "../../../firebase-config";
+import Loading from "../utility/Loading";
+import { title } from "process";
 
-function page() {
+function Page() {
+  const [formData, setFormData] = useState({
+    title: "",
+    email: "",
+    message: "",
+    timestamp: "",
+  });
+
+  const handleInputChange = (event: any) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+    console.log(formData); // Dynamic property update
+  };
+
+  const [isLoading, setisLoading] = useState(false);
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setisLoading(true);
+
+    addDoc(collection(firestoreInstance, "messages"), {
+      ...formData,
+      createdAt: serverTimestamp(),
+    })
+      .then(() => {
+        alert("we will reach to you soon");
+        setisLoading(false);
+      })
+      .catch((error) => {
+        alert(" Try Again " + error);
+        setisLoading(false);
+      });
+  };
+
   return (
     <div>
       <section className="m-4  " id="contact">
@@ -33,9 +70,9 @@ function page() {
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         className="h-6 w-6"
                       >
                         <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
@@ -61,9 +98,9 @@ function page() {
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         className="h-6 w-6"
                       >
                         <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"></path>
@@ -90,9 +127,9 @@ function page() {
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         className="h-6 w-6"
                       >
                         <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
@@ -117,67 +154,74 @@ function page() {
                 <h2 className="mb-4 text-2xl font-bold ">
                   Ready to Get Started?
                 </h2>
-                <form id="contactForm">
-                  <div className="mb-6">
-                    <div className="mx-0 mb-1 sm:mb-4">
+                {isLoading && <Loading></Loading>}
+                {!isLoading && (
+                  <div>
+                    <div className="mb-6">
                       <div className="mx-0 mb-1 sm:mb-4">
-                        <label
-                          htmlFor="name"
-                          className="pb-1 text-xs uppercase tracking-wider"
-                        ></label>
-                        <input
-                          type="text"
-                          id="name"
-                          placeholder="Your name"
-                          className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
-                          name="name"
-                        />
+                        <div className="mx-0 mb-1 sm:mb-4">
+                          <label
+                            htmlFor="name"
+                            className="pb-1 text-xs uppercase tracking-wider"
+                          ></label>
+                          <input
+                            name="title"
+                            type="text"
+                            id="name"
+                            onChange={handleInputChange}
+                            placeholder="Your title"
+                            className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
+                          />
+                        </div>
+                        <div className="mx-0 mb-1 sm:mb-4">
+                          <label
+                            htmlFor="email"
+                            className="pb-1 text-xs uppercase tracking-wider"
+                          ></label>
+                          <input
+                            name="email"
+                            type="text"
+                            id="email"
+                            onChange={handleInputChange}
+                            placeholder="Your email address"
+                            className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
+                          />
+                        </div>
                       </div>
                       <div className="mx-0 mb-1 sm:mb-4">
                         <label
-                          htmlFor="email"
+                          htmlFor="textarea"
                           className="pb-1 text-xs uppercase tracking-wider"
                         ></label>
-                        <input
-                          type="email"
-                          id="email"
-                          placeholder="Your email address"
+                        <textarea
+                          id="textarea"
+                          onChange={handleInputChange}
+                          name="message"
+                          cols={30}
+                          rows={5}
+                          placeholder="Write your message..."
                           className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
-                          name="email"
-                        />
+                        ></textarea>
                       </div>
                     </div>
-                    <div className="mx-0 mb-1 sm:mb-4">
-                      <label
-                        htmlFor="textarea"
-                        className="pb-1 text-xs uppercase tracking-wider"
-                      ></label>
-                      <textarea
-                        id="textarea"
-                        name="textarea"
-                        cols={30}
-                        rows={5}
-                        placeholder="Write your message..."
-                        className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
-                      ></textarea>
+                    <div className="text-center">
+                      <button
+                        type="submit"
+                        onClick={handleSubmit}
+                        className="w-full bg-blue-800 text-white px-6 py-3 font-xl rounded-md sm:mb-0"
+                      >
+                        Send Message
+                      </button>
                     </div>
                   </div>
-                  <div className="text-center">
-                    <button
-                      type="submit"
-                      className="w-full bg-blue-800 text-white px-6 py-3 font-xl rounded-md sm:mb-0"
-                    >
-                      Send Message
-                    </button>
-                  </div>
-                </form>
+                )}
               </div>
             </div>
           </div>
         </div>
       </section>
     </div>
-  )
+  );
 }
 
-export default page
+export default Page;

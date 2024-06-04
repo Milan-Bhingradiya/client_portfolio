@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import Foundercard from "./component/Foundercard"
-import Review from "./component/Review"
-import Animated_text from "./component/Animated_text"
+import Foundercard from "./component/Foundercard";
+import Review from "./component/Review";
+import Animated_text from "./component/Animated_text";
 
-import { useCallback, useEffect, useRef, useState } from "react"
-import Consultancy_card from "./work/component/Consultancy_card"
+import { useCallback, useEffect, useRef, useState } from "react";
+import Consultancy_card from "./work/component/Consultancy_card";
 
-import Ball from "@/ball/page"
-import Section1 from "./work/component/Section1"
-import Section2 from "./work/component/Section2"
-import Loading from "./component/Loading"
-import { mystore } from "./store/mystore"
+import Ball from "@/ball/page";
+import Section1 from "./work/component/Section1";
+import Section2 from "./work/component/Section2";
+import Loading from "./component/Loading";
+import { mystore } from "./store/mystore";
 
-import one from "../../public/1.png"
-import two from "../../public/2.png"
-import three from "../../public/3.svg"
-import four from "../../public/4.png"
-import five from "../../public/5.svg"
-import { motion } from "framer-motion"
-import Image from "next/image"
-import { collection, doc, getDoc, getDocs, query } from "firebase/firestore"
-import { firestoreInstance } from "../../firebase-config"
-import Link from "next/link"
+import one from "../../public/1.png";
+import two from "../../public/2.png";
+import three from "../../public/3.png";
+import four from "../../public/4.png";
+import five from "../../public/5.png";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { firestoreInstance } from "../../firebase-config";
+import Link from "next/link";
 
 export default function Home() {
   //   const isConnected = useConnect();
@@ -31,54 +31,56 @@ export default function Home() {
   //   return <div>Connecting to database...</div>;
   // }
 
-  const designPointRef = useRef<HTMLDivElement>(null)
-  const technologyPointRef = useRef<HTMLDivElement>(null)
-  const businessPointRef = useRef<HTMLDivElement>(null)
+  const designPointRef = useRef<HTMLDivElement>(null);
+  const technologyPointRef = useRef<HTMLDivElement>(null);
+  const businessPointRef = useRef<HTMLDivElement>(null);
 
-  const [animate, setAnimate] = useState(false)
+  const [animate, setAnimate] = useState(false);
 
-  const [lastScrollY, setLastScrollY] = useState(0)
+  const [lastScrollY, setLastScrollY] = useState(0);
   // let lastScrollY=0;
   // const setLastScrollY =(num)=>{lastScrollY = num}
 
-  const setballShouldFollow = mystore((state: any) => state.setballShouldFollow)
-  const ballShouldFollow = mystore((state: any) => state.ballShouldFollow)
+  const setballShouldFollow = mystore(
+    (state: any) => state.setballShouldFollow
+  );
+  const ballShouldFollow = mystore((state: any) => state.ballShouldFollow);
 
   // section 2 ma ue thay chhe
-  const designRef = useRef<HTMLDivElement>(null)
-  const technologyRef = useRef<HTMLDivElement>(null)
-  const businessRef = useRef<HTMLDivElement>(null)
+  const designRef = useRef<HTMLDivElement>(null);
+  const technologyRef = useRef<HTMLDivElement>(null);
+  const businessRef = useRef<HTMLDivElement>(null);
 
-  const k = useRef<HTMLDivElement>(null)
-  const p = useRef<HTMLDivElement>(null)
-  const i = useRef<HTMLDivElement>(null)
+  const k = useRef<HTMLDivElement>(null);
+  const p = useRef<HTMLDivElement>(null);
+  const i = useRef<HTMLDivElement>(null);
 
   const [positions, setPositions] = useState({
     k: { top: -50, left: -50 },
     p: { top: -50, left: -50 },
     i: { top: -50, left: -50 },
-  })
+  });
 
   useEffect(() => {
-    console.log("useEffect")
+    console.log("useEffect");
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      const isScrollingDown = currentScrollY > lastScrollY
+      const currentScrollY = window.scrollY;
+      const isScrollingDown = currentScrollY > lastScrollY;
 
-      const ktop = k?.current?.getBoundingClientRect().top
-      const ptop = p?.current?.getBoundingClientRect().top
-      const itop = i?.current?.getBoundingClientRect().top
+      const ktop = k?.current?.getBoundingClientRect().top;
+      const ptop = p?.current?.getBoundingClientRect().top;
+      const itop = i?.current?.getBoundingClientRect().top;
 
-      const kleft = k?.current?.getBoundingClientRect().left
-      const pleft = p?.current?.getBoundingClientRect().left
-      const ileft = i?.current?.getBoundingClientRect().left
+      const kleft = k?.current?.getBoundingClientRect().left;
+      const pleft = p?.current?.getBoundingClientRect().left;
+      const ileft = i?.current?.getBoundingClientRect().left;
       if (ballShouldFollow == "kpi") {
         // console.log("followinf " + ballShouldFollow)
         setPositions((prev): any => ({
           k: { top: ktop, left: kleft },
           p: { top: ptop, left: pleft },
           i: { top: itop, left: ileft },
-        }))
+        }));
         // setballShouldFollow("titles");
       }
       // if (ballShouldFollow == "titles") {
@@ -89,90 +91,90 @@ export default function Home() {
       //     i: { top: businessPointRef.current?.getBoundingClientRect().top, left: businessPointRef?.current?.getBoundingClientRect().left },
       //   }));
       // }
-      setLastScrollY(currentScrollY)
-    }
-    setAnimate(true)
+      setLastScrollY(currentScrollY);
+    };
+    setAnimate(true);
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [lastScrollY])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
 
-  const [isColored, setIsColored] = useState(false)
+  const [isColored, setIsColored] = useState(false);
 
-  const [isOneSecDone, setisOneSecDone] = useState(false)
-  const [isTwoSecDone, setisTwoSecDone] = useState(false)
+  const [isOneSecDone, setisOneSecDone] = useState(false);
+  const [isTwoSecDone, setisTwoSecDone] = useState(false);
 
-  const [response, setResponse] = useState<{ id: any }[]>([])
+  const [response, setResponse] = useState<{ id: any }[]>([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      console.log("jjjjjjjjjjjjjjj")
-      setIsColored(true)
+      console.log("jjjjjjjjjjjjjjj");
+      setIsColored(true);
 
-      setisOneSecDone(true)
-    }, 1000)
+      setisOneSecDone(true);
+    }, 1000);
 
     const timer2 = setTimeout(() => {
-      setisTwoSecDone(true)
-    }, 2000)
+      setisTwoSecDone(true);
+    }, 2000);
 
-    getProjectData()
-  }, [])
+    getProjectData();
+  }, []);
 
   const getThreeProjectId = async () => {
     const docRef = doc(
       firestoreInstance,
       "homepageprojects",
       "JTq65eBOyyf8mMUSkR1S"
-    )
-    const docSnapshot = await getDoc(docRef)
-    console.log(docSnapshot.data())
+    );
+    const docSnapshot = await getDoc(docRef);
+    console.log(docSnapshot.data());
 
     if (docSnapshot.exists()) {
       let ids = [
         docSnapshot.data().first,
         docSnapshot.data().second,
         docSnapshot.data().third,
-      ]
-      console.log("ids")
-      console.log(ids)
-      return ids
+      ];
+      console.log("ids");
+      console.log(ids);
+      return ids;
     } else {
-      return false
-      console.log("Document not found")
+      return false;
+      console.log("Document not found");
     }
-  }
+  };
   const getThreeDocuments = async (documentIdList: any) => {
-    const documents = []
-    console.log(documentIdList)
+    const documents = [];
+    console.log(documentIdList);
     for (const documentId of documentIdList) {
       try {
-        const docRef = doc(firestoreInstance, "projects", documentId)
-        const docSnapshot = await getDoc(docRef)
+        const docRef = doc(firestoreInstance, "projects", documentId);
+        const docSnapshot = await getDoc(docRef);
         if (docSnapshot.exists()) {
           documents.push({
             id: documentId,
             ...docSnapshot.data(),
-          })
+          });
         } else {
-          console.log("Document not found:", documentId)
+          console.log("Document not found:", documentId);
         }
       } catch (error) {
-        console.log("Error getting document:", error)
+        console.log("Error getting document:", error);
       }
     }
-    return documents
-  }
+    return documents;
+  };
 
   const getProjectData = async () => {
-    const documentIdList = await getThreeProjectId()
-    if (!documentIdList) return
-    const documents = await getThreeDocuments(documentIdList)
+    const documentIdList = await getThreeProjectId();
+    if (!documentIdList) return;
+    const documents = await getThreeDocuments(documentIdList);
     // console.log(documents)
-    setResponse(documents)
-  }
+    setResponse(documents);
+  };
 
   return (
     <div className="relative">
@@ -387,5 +389,5 @@ setisOneSecDone(!isOneSecDone);
       </div>
       {/* part 2  footer in this with mx-0 */}
     </div>
-  )
+  );
 }

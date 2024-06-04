@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import React, { useEffect, useState } from "react"
-import { ExpandLess, ExpandMore } from "@mui/icons-material"
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
 interface SidebarProps {
-  isOpen: boolean // Flag indicating whether the sidebar is open
-  toggleSidebar: () => void // Function to toggle the sidebar's visibility
+  isOpen: boolean; // Flag indicating whether the sidebar is open
+  toggleSidebar: () => void; // Function to toggle the sidebar's visibility
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
-  const sidebarRef = React.createRef<HTMLDivElement>()
-  const [isServicesOpen, setIsServicesOpen] = useState(false)
-  const toggleServicesMenu = () => setIsServicesOpen(!isServicesOpen)
+  const sidebarRef = React.createRef<HTMLDivElement>();
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const toggleServicesMenu = () => setIsServicesOpen(!isServicesOpen);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -21,23 +21,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       // }
 
       if (sidebarRef.current) {
-        const element = sidebarRef.current as HTMLElement // Assert as HTMLElement
+        const element = sidebarRef.current as HTMLElement; // Assert as HTMLElement
         if (!element.contains(event.target)) {
-          toggleSidebar()
+          toggleSidebar();
         }
       }
-    }
+    };
 
     if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside)
+      document.addEventListener("mousedown", handleClickOutside);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside)
+      document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [isOpen, sidebarRef, toggleSidebar])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, sidebarRef, toggleSidebar]);
   return (
     <div
       ref={sidebarRef}
@@ -92,6 +92,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
               >
                 Marketing
               </Link>
+              <Link
+                href="/service/consultancy"
+                className="p-3 hover:bg-blue-gray-50"
+                onClick={toggleSidebar}
+              >
+                Consultancy
+              </Link>
             </div>
           )}
 
@@ -122,7 +129,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         </div>
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

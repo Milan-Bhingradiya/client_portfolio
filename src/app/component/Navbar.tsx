@@ -1,34 +1,34 @@
-"use client"
+"use client";
 
-import React, { useState } from "react"
-import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material"
-import { red } from "@mui/material/colors"
-import { start } from "repl"
-import MenuIcon from "@mui/icons-material/Menu"
-import Sidebar from "./SIdebar"
-import Link from "next/link"
-import Image from "next/image"
-import logo from "/public/logo.svg"
+import React, { useState } from "react";
+import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import { red } from "@mui/material/colors";
+import { start } from "repl";
+import MenuIcon from "@mui/icons-material/Menu";
+import Sidebar from "./SIdebar";
+import Link from "next/link";
+import Image from "next/image";
+import logo from "/public/logo.svg";
 
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
-  const [selectedMenu, setSelectedMenu] = useState("")
+  const [selectedMenu, setSelectedMenu] = useState("");
 
   const handleMenuSelect = (menuName: string) => {
-    setSelectedMenu(menuName)
-  }
+    setSelectedMenu(menuName);
+  };
   const toggleSidebar = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
-  const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
 
-  const toggleServicesMenu = () => setIsServicesOpen(!isServicesOpen)
+  const toggleServicesMenu = () => setIsServicesOpen(!isServicesOpen);
 
-  const [isAboutOpen, setIsAboutOpen] = useState(false)
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
 
-  const toggleAboutMenu = () => setIsAboutOpen(!isAboutOpen)
+  const toggleAboutMenu = () => setIsAboutOpen(!isAboutOpen);
 
   // const showAboutMenu = () => setIsAboutOpen(true);
   // const hideAboutMenu = () => setIsAboutOpen(true);
@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
             >
               Services
               {isServicesOpen && (
-                <ul className="absolute top-full text-black left-0 bg-white shadow-md rounded-md w-40 overflow-hidden">
+                <ul className="absolute z-10   top-full text-black left-0 bg-white shadow-md rounded-md w-40 overflow-hidden">
                   <Link href={"/service/design"}>
                     <li className="px-4 py-2 hover:bg-gray-200">Design</li>
                   </Link>
@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
                   <Link href={"/service/marketing"}>
                     <li className="px-4 py-2 hover:bg-gray-200">Marketing</li>
                   </Link>
-                  <Link href={"/service/marketing"}>
+                  <Link href={"/service/consultancy"}>
                     <li className="px-4 py-2 hover:bg-gray-200">Consultancy</li>
                   </Link>
                 </ul>
@@ -129,7 +129,7 @@ const Navbar: React.FC = () => {
       </div>
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar}></Sidebar>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
