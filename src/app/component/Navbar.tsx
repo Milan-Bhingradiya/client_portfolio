@@ -102,13 +102,13 @@ const Navbar: React.FC = () => {
               About
               {isAboutOpen && (
                 <ul className="absolute top-full text-black left-0 bg-white shadow-md rounded-md w-40 overflow-hidden">
-                  <Link href={"./aboutus"}>
+                  <Link href={"/aboutus"}>
                     <li className="px-4 py-2 hover:bg-gray-200">About us</li>
                   </Link>
-                  <Link href={"./aboutteam"}>
+                  <Link href={"/aboutteam"}>
                     <li className="px-4 py-2 hover:bg-gray-200">Team</li>
                   </Link>
-                  <Link href={"./career"}>
+                  <Link href={"/career"}>
                     <li className="px-4 py-2 hover:bg-gray-200">Career</li>
                   </Link>
                 </ul>
