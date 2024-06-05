@@ -7,17 +7,16 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDGxO9zeNAuS0u8re6bhP595mukn08YeH0",
-    authDomain: "smitshah-portfolio.firebaseapp.com",
-    projectId: "smitshah-portfolio",
-    storageBucket: "smitshah-portfolio.appspot.com",
-    messagingSenderId: "598574473734",
-    appId: "1:598574473734:web:e452e749eac8f84d195987"
-  };
-  
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: "smitshah-portfolio.firebaseapp.com",
+  projectId: "smitshah-portfolio",
+  storageBucket: "smitshah-portfolio.appspot.com",
+  messagingSenderId: "598574473734",
+  appId: "1:598574473734:web:e452e749eac8f84d195987",
+};
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 
 export const storage = getStorage(app);
 export const firestoreInstance = getFirestore(app);

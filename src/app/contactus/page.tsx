@@ -22,6 +22,25 @@ function Page() {
   const [isLoading, setisLoading] = useState(false);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    // Check if any field is empty
+    for (const key in formData) {
+      if (formData.hasOwnProperty(key)) {
+        if (key != "timestamp") {
+          if ((formData as any)[key].trim() === "") {
+            alert("Please fill in all fields");
+            return;
+          }
+        }
+      }
+    }
+
     setisLoading(true);
 
     addDoc(collection(firestoreInstance, "messages"), {
