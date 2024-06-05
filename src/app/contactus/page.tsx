@@ -25,7 +25,7 @@ function Page() {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      alert("Please enter a valid email address");
+      alert("Please enter a valid  email address");
       return;
     }
 

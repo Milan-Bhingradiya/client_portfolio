@@ -15,7 +15,7 @@ function Section1() {
       <div className="flex flex-col justify-center items-center sm:flex-row  ">
         {/* section one */}
 
-        <div className="mt-10 h-1/4 w-1/4 sm:h-1/4 sm:w-1/4 ">
+        <div className="mt-10 h-1/2 w-1/2 sm:h-1/3 sm:w-1/3 ">
           <Player
             // src='https://lottie.host/bc9da579-94ae-4970-a4e9-06f11848e96f/Vv6ttESKhP.json'
             src={triangle}

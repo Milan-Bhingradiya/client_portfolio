@@ -23,6 +23,10 @@ import Image from "next/image";
 import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
 import { firestoreInstance } from "../../firebase-config";
 import Link from "next/link";
+import { useInView } from "react-intersection-observer";
+import TestimonialSlider from "./component/TestimonialSlider";
+import Testimonial from "./component/Testimonial";
+import ProjectCardSlider from "./component/ProjectCardSlider";
 
 export default function Home() {
   //   const isConnected = useConnect();
@@ -208,7 +212,7 @@ setisOneSecDone(!isOneSecDone);
           <div id="i" ref={i} className="text-3xl sm:text-5xl h-[100px] w-[100px] z-10 font-bold m-4 mx-6 px-6">i</div>
         </div> */}
 
-        <div className="flex flex-row w-[100%] justify-center  m-4 sm:m-10 mb-14  ">
+        {/* <div className="flex flex-row w-[100%] justify-center  m-4 sm:m-10 mb-14  ">
           <div
             id="k"
             className={` text-3xl sm:text-5xl h-[60px] sm:h-[100px] w-[60px] sm:w-[100px] z-10  ${
@@ -239,7 +243,7 @@ setisOneSecDone(!isOneSecDone);
           >
             i
           </div>
-        </div>
+        </div> */}
 
         <div className=" flex justify-center text-4xl m-10 mt-20 superBold">
           {" "}
@@ -362,12 +366,22 @@ setisOneSecDone(!isOneSecDone);
         </div>
  */}
 
-        <div className=" flex justify-center text-4xl m-10 mt-20 superBold">
+        <div className=" flex justify-center text-2xl sm:text-4xl  mt-20 superBold">
           {" "}
-          30+ Projects Delivered
+          260+ Projects Delivered
+        </div>
+        <div className=" flex justify-center text-lg mb-10 ">
+          {" "}
+          and counting more..
         </div>
 
-        <div className="flex flex-row flex-wrap lg:grid lg:grid-cols-3 justify-center gap-6 lg:gap-8  ">
+        {/* start */}
+
+        <ProjectCardSlider response={response}></ProjectCardSlider>
+
+        {/* end */}
+
+        {/* <div className="flex flex-row flex-wrap lg:grid lg:grid-cols-3 justify-center gap-4  ">
           {response &&
             response.map((project: any, index: number) => (
               <Link href={"./work/" + project.id} key={index}>
@@ -378,16 +392,26 @@ setisOneSecDone(!isOneSecDone);
                 ></Foundercard>
               </Link>
             ))}
+        </div> */}
 
-          {/* project card... pela founder card hatu..
-          <Foundercard></Foundercard>
-          <Foundercard></Foundercard>
-          <Foundercard></Foundercard> */}
+        {/* part 2  footer in this with mx-0 */}
+        <div className="transition mt-16 duration-500 ease-in-out transform scale-100 translate-x-0 translate-y-0 opacity-100">
+          <div className="mb-8 space-y-2 md:mb-16 md:text-center">
+            <div className="text-xl  md:text-center md:text-2xl">
+              Words from Others
+            </div>
+
+            <h1 className="mb-2 text-3xl font-semibold  md:text-center md:text-5xl">
+              Its not just us.
+            </h1>
+            <p className="text-xl  md:text-center md:text-2xl">
+              Heres what others have to say about us.
+            </p>
+          </div>
         </div>
-
-        <Review></Review>
+        <TestimonialSlider></TestimonialSlider>
+        {/* <Review></Review> */}
       </div>
-      {/* part 2  footer in this with mx-0 */}
     </div>
   );
 }
