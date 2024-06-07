@@ -67,7 +67,7 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
       <div ref={cardsRef}>
         <div
           className="flex  transition-transform duration-500 gap-6"
-          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          style={{ transform: `translateX(-${currentSlide * 107}%)` }}
         >
           {response &&
             response.map((project: any, index: number) => (

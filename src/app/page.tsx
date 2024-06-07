@@ -416,7 +416,7 @@ setisOneSecDone(!isOneSecDone);
             </div>
           </div> */}
 
-        <div className="flex flex-row justify-center m-5  p-6 pb-32">
+        <div className="flex flex-row justify-center sm:m-5  p-6 pb-32">
           <div className=" gap-10  grid grid-cols-2 sm:grid-cols-4 text-3xl font-semibold ">
             <div className="">Foodtech</div>
             <div>Fintech</div>
