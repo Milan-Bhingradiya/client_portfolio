@@ -4,8 +4,8 @@ import Image from "next/image";
 
 function Testimonial() {
   return (
-    <div className="  min-w-full sm:p-20 rounded-xl sm:pt-8 sm:pb-8 ">
-      <div className="flex flex-col sm:flex-row rounded-xl text-black bg-[#DEDFE7]">
+    <div className="  min-w-full sm:p-20 rounded-xl sm:pt-8 sm:pb-8 rounded-lg bg-[#dedfe7] ">
+      <div className="flex flex-col sm:flex-row rounded-xl text-black rounded-lg">
         <figure className="snip1390">
           <figcaption>
             <h2>Eleanor Crisp</h2>
@@ -24,7 +24,7 @@ function Testimonial() {
             alt="m"
             width={300}
             height={300}
-            className="m-4 sm:m-10"
+            className="m-8 sm:m-10"
           ></Image>
         </div>
       </div>
