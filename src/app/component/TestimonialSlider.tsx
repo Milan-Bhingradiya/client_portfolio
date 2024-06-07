@@ -113,7 +113,7 @@ const TestimonialSlider = () => {
       className="   mx-auto overflow-hidden relative"
       {...handlers}
     >
-      <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-0 font-bold">
+      <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-10 font-bold">
         What client says
       </div>
       <div
@@ -128,8 +128,8 @@ const TestimonialSlider = () => {
         {testimonials.map((_, index) => (
           <span
             key={index}
-            className={`h-4 w-4 bg-gray-400 rounded-full mx-1 cursor-pointer ${
-              currentSlide === index ? "bg-blue-500" : ""
+            className={`h-3 w-3 bg-gray-400 rounded-full mx-1 cursor-pointer ${
+              currentSlide === index ? "bg-red-500" : ""
             }`}
             onClick={() => handleDotClick(index)}
           ></span>

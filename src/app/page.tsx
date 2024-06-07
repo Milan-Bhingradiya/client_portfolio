@@ -377,7 +377,7 @@ setisOneSecDone(!isOneSecDone);
 
         {/* start */}
 
-        <ProjectCardSlider  response={response}></ProjectCardSlider>
+        <ProjectCardSlider response={response}></ProjectCardSlider>
 
         {/* end */}
 
