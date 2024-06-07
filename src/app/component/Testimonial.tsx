@@ -4,7 +4,7 @@ import Image from "next/image";
 
 function Testimonial() {
   return (
-    <div className=" flex flex-row justify-center min-w-full sm:p-10  sm:pb-8 rounded-lg bg-[#dedfe7] ">
+    <div className=" flex flex-row justify-center min-w-full sm:p-10  sm:pb-8 rounded-lg ">
       <figure className="snip1390 ">
         <figcaption>
           <h2>Eleanor Crisp</h2>

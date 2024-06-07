@@ -6,7 +6,7 @@ import Link from "next/link";
 function Consultancy_card() {
   return (
     <div>
-      <div className="p-6 sm:p-12 rounded-lg bg-[#dedfe7]">
+      <div className="p-6 sm:p-12 rounded-lg bg-black text-white">
         <div className="flex flex-col justify-center space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
           {/* <Image
             src={smit}
@@ -17,7 +17,8 @@ function Consultancy_card() {
             {/* <h4 className="text-lg font-semibold text-center md:text-left">
               smit shah
             </h4> */}
-            <p className="dark:text-gray-600">
+            <p className="font-bold text-3xl my-4">Consultacy</p>
+            <p className="">
               Elevate your business strategy with our expert consultancy
               services. From insightful market analysis to tailored strategic
               planning, our consultants are dedicated to driving your success.

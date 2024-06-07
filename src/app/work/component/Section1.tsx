@@ -42,8 +42,8 @@ function Section1() {
             <Animated_text
               text={"We Help You Reach From Zero To Millions."}
               mode={"multi"}
-              weight={"font-extrabold"}
-              size={" text-lg sm:text-2xl"}
+              weight={"font-normal"}
+              size={" text-lg sm:text-lg"}
               space={true}
             ></Animated_text>
           </div>

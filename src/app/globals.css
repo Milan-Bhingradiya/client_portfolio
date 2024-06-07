@@ -176,3 +176,7 @@
     left: 0;
   } /* Reveal text from left to right */
 }
+
+.blackfilter {
+  filter: brightness(0%);
+}

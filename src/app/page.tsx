@@ -27,6 +27,7 @@ import { useInView } from "react-intersection-observer";
 import TestimonialSlider from "./component/TestimonialSlider";
 import Testimonial from "./component/Testimonial";
 import ProjectCardSlider from "./component/ProjectCardSlider";
+import ThreeCard from "./component/ThreeCard";
 
 export default function Home() {
   //   const isConnected = useConnect();
@@ -253,53 +254,74 @@ setisOneSecDone(!isOneSecDone);
 
         <div className=" flex justify-center text-4xl m-10 mt-20 superBold">
           {" "}
-          Out Clients
+          Our Clients
         </div>
 
         <div className="  flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
           <motion.div whileHover={{ scale: 1.2 }}>
-            <Image src={one} alt="ms" width={60} height={80}></Image>
+            <Image
+              className="blackfilter"
+              src={one}
+              alt="ms"
+              width={60}
+              height={80}
+            ></Image>
           </motion.div>
           <motion.div whileHover={{ scale: 1.2 }}>
-            <Image src={two} alt="ms" width={60} height={80}></Image>
+            <Image
+              className="blackfilter"
+              src={two}
+              alt="ms"
+              width={60}
+              height={80}
+            ></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }}>
+            <Image
+              className="blackfilter"
+              src={three}
+              alt="ms"
+              width={60}
+              height={80}
+            ></Image>
+          </motion.div>
+          <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }}>
+            <Image
+              className="blackfilter"
+              src={four}
+              alt="ms"
+              width={60}
+              height={80}
+            ></Image>
+          </motion.div>
+          <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }}>
+            <Image
+              className="blackfilter"
+              src={five}
+              alt="ms"
+              width={60}
+              height={80}
+            ></Image>
+          </motion.div>
+        </div>
+
+        {/* <div className=" mb-32 flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
+          <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }}>
+            <Image src={five} alt="ms" width={60} height={80}></Image>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2 }}>
+            <Image src={one} alt="ms" width={60} height={80}></Image>
           </motion.div>
           <motion.div whileHover={{ scale: 1.2 }}>
             <Image src={three} alt="ms" width={60} height={80}></Image>
           </motion.div>
-          <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }}>
-            <Image src={four} alt="ms" width={60} height={80}></Image>
-          </motion.div>
-          <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }}>
-            <Image src={five} alt="ms" width={60} height={80}></Image>
-          </motion.div>
-        </div>
-
-        <div className=" mb-32 flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
-          <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }}>
-            <Image src={five} alt="ms" width={60} height={80}></Image>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }}>
-            <Image src={one} alt="ms" width={60} height={80}></Image>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.2 }}>
-            <Image src={three} alt="ms" width={60} height={80}></Image>
-          </motion.div>
           <motion.div whileHover={{ scale: 1.2 }}>
             <Image src={two} alt="ms" width={60} height={80}></Image>
           </motion.div>
           <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }}>
             <Image src={four} alt="ms" width={60} height={80}></Image>
           </motion.div>
-        </div>
-
-        <Section2
-          designRef={designRef}
-          technologyRef={technologyRef}
-          businessRef={businessRef}
-          designPointRef={designPointRef}
-          technologyPointRef={technologyPointRef}
-          businessPointRef={businessPointRef}
-        ></Section2>
+        </div> */}
 
         <div className="mx-6 sm:mx-20 mt-20 ">
           <Animated_text
@@ -312,6 +334,16 @@ setisOneSecDone(!isOneSecDone);
             space={true}
           ></Animated_text>
         </div>
+
+        <Section2
+          designRef={designRef}
+          technologyRef={technologyRef}
+          businessRef={businessRef}
+          designPointRef={designPointRef}
+          technologyPointRef={technologyPointRef}
+          businessPointRef={businessPointRef}
+        ></Section2>
+        {/* <ThreeCard></ThreeCard> */}
 
         {/* <div className="flex items-center justify-center h-screen">
           <motion.div
@@ -343,10 +375,6 @@ setisOneSecDone(!isOneSecDone);
             transform: `translateX(${positions.k.top}px translateY(${positions.k.left}px)`,
           }}
         />
-
-        <div className="ml-4 sm:ml-14 mt-10 text-3xl superBold mt-6 m-2">
-          Consultant
-        </div>
 
         <Consultancy_card></Consultancy_card>
 
@@ -422,10 +450,10 @@ setisOneSecDone(!isOneSecDone);
             <div>Fintech</div>
             <div>Healthtech</div>
             <div>Aibots</div>
-            <div>Tranveltech</div>
             <div>ECom</div>
             <div>Realtech</div>
             <div>Edtech</div>
+            <div>Others..</div>
           </div>
         </div>
         {/*  */}
@@ -433,6 +461,10 @@ setisOneSecDone(!isOneSecDone);
         <ProjectCardSlider response={response}></ProjectCardSlider>
 
         {/* end */}
+
+        {/*  */}
+
+        {/*  */}
 
         {/* <div className="flex flex-row flex-wrap lg:grid lg:grid-cols-3 justify-center gap-4  ">
           {response &&

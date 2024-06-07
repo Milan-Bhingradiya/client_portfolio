@@ -110,12 +110,13 @@ const TestimonialSlider = () => {
   return (
     <div
       onMouseDown={handleMouseDown}
-      className="   mx-auto overflow-hidden relative"
+      className="   mx-auto overflow-hidden relative mb-32 border-2 border-red-800 bg-[#dedfe7] "
       {...handlers}
     >
       {/* <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-10 font-bold">
         What client says
       </div> */}
+
       <div
         className="flex transition-transform duration-500"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
