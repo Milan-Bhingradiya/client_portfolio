@@ -51,7 +51,7 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
     }
   };
   const { ref: cardsRef, inView: cardInView } = useInView({
-    threshold: 0.3,
+    threshold: 0.4,
   });
   return (
     <div
@@ -61,54 +61,57 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
     >
       {/* <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-0 font-bold">
         What client says
-      </div> */}
-      <div
-        className="flex transition-transform duration-500 gap-4"
-        style={{ transform: `translateX(-${currentSlide * 111}%)` }}
-      >
-        {response &&
-          response.map((project: any, index: number) => (
-            <div key={index} className="  min-w-full sm:min-w-[300px] ">
-              <Link href={"./work/" + project.id} className="">
-                {/*  */}
-                <div className=" ">
-                  <div
-                    ref={cardsRef}
-                    id="xx"
-                    className={` ${
-                      cardInView ? "card" + (Number(index) + 1) + "inview" : ""
-                    } rounded-xl ${"card" + (Number(index) + 1)}  `}
-                  >
-                    <div className="p-4 pl-0 flex flex-col items-center justify-center bottom-2 border-black">
-                      <h1 className="text-2xl font-bold text-center mb-4">
-                        {project.projectCompanyName}
-                      </h1>
-                      <p className="text-center mb-8">
-                        Optimized the effortless on-the-go lifestyle
-                      </p>
-                      <div className="flex justify-center space-x-4 ">
-                        <span className="text-gray-600">UX-UI</span>
-                        <span className="text-gray-600">•</span>
-                        <span className="text-gray-600">Web</span>
-                        <span className="text-gray-600">•</span>
-                        <span className="text-gray-600">Mobile</span>
+        </div> */}
+      <div ref={cardsRef}>
+        <div
+          className="flex transition-transform duration-500 gap-4"
+          style={{ transform: `translateX(-${currentSlide * 111}%)` }}
+        >
+          {response &&
+            response.map((project: any, index: number) => (
+              <div key={index} className="  min-w-full sm:min-w-[300px] ">
+                <Link href={"./work/" + project.id} className="">
+                  {/*  */}
+                  <div className=" ">
+                    <div
+                      id="xx"
+                      className={` ${
+                        cardInView
+                          ? "card" + (Number(index) + 1) + "inview"
+                          : ""
+                      } rounded-xl ${"card" + (Number(index) + 1)}  `}
+                    >
+                      <div className="p-4 pl-0 flex flex-col items-center justify-center bottom-2 border-black">
+                        <h1 className="text-2xl font-bold text-center mb-4">
+                          {project.projectCompanyName}
+                        </h1>
+                        <p className="text-center mb-8">
+                          Optimized the effortless on-the-go lifestyle
+                        </p>
+                        <div className="flex justify-center space-x-4 ">
+                          <span className="">UX-UI</span>
+                          <span className="">•</span>
+                          <span className="">Web</span>
+                          <span className="">•</span>
+                          <span className="">Mobile</span>
+                        </div>
+                      </div>
+                      <div className="  rounded-lg  h-[500px] ">
+                        <Image
+                          src={project.thumbnail}
+                          alt="BMW X1"
+                          className="w-full h-full  object-cover mb-2 rounded-b-xl "
+                          width={300}
+                          height={550}
+                        />
                       </div>
                     </div>
-                    <div className="  rounded-lg  h-[500px] ">
-                      <Image
-                        src={project.thumbnail}
-                        alt="BMW X1"
-                        className="w-full h-full  object-cover mb-2 rounded-b-xl "
-                        width={300}
-                        height={550}
-                      />
-                    </div>
                   </div>
-                </div>
-                {/*  */}
-              </Link>
-            </div>
-          ))}
+                  {/*  */}
+                </Link>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
