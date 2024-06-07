@@ -113,9 +113,9 @@ const TestimonialSlider = () => {
       className="   mx-auto overflow-hidden relative"
       {...handlers}
     >
-      <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-10 font-bold">
+      {/* <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-10 font-bold">
         What client says
-      </div>
+      </div> */}
       <div
         className="flex transition-transform duration-500"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}

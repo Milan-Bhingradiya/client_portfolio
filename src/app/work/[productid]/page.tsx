@@ -166,14 +166,12 @@ async function page({ params }: RouteParams) {
 
         {/* section 1 banner */}
 
-        <div className=" h-auto   bg-slate-200  overflow-hidden">
+        <div className=" h-[250px] sm:h-[450px] w-[100%] relative   bg-slate-200  overflow-hidden">
           <Image
             className=""
             src={res.thumbnail}
-            width="800"
-            height={300}
+            layout="fill"
             alt="banner"
-            objectFit="cover"
           ></Image>
         </div>
 
@@ -206,28 +204,25 @@ async function page({ params }: RouteParams) {
         {/* section 3  2 img*/}
         {/* ---------------------------------------- */}
 
-        <div className="flex flex-col sm:flex-row  justify-center gap-4">
+        <div className="flex flex-col sm:flex-row  h-[800px] sm:h-[400px] justify-center gap-4  w-[100%] border-2 border-black">
           {/* first img */}
-          <div className=" h-auto   bg-slate-200  overflow-hidden">
+          <div className="   relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 border-2 border-black">
             <Image
               className=""
               src={res.screens[0]}
-              width="600"
-              height={600}
               alt="banner"
+              layout="fill"
               objectFit="cover"
             ></Image>
           </div>
 
           {/* second img */}
-          <div className=" h-auto   bg-slate-200  overflow-hidden">
+          <div className="  relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 border-2 border-black">
             <Image
               className=""
-              src={res.screens[0]}
-              width="600"
-              height={600}
+              src={res.screens[1]}
+              layout="fill"
               alt="banner"
-              objectFit="cover"
             ></Image>
           </div>
         </div>
@@ -260,32 +255,28 @@ async function page({ params }: RouteParams) {
         {/* section 5   2 img
         {/* ---------------------------------------- */}
 
-        <div className="flex flex-col sm:flex-row  justify-center gap-4 ">
+        <div className="flex flex-col sm:flex-row  justify-center gap-4 h-[800px] sm:h-[400px] w-[100%] border-2 border-black">
           {/* first img */}
-          <div className=" h-auto   bg-slate-200  overflow-hidden">
+          <div className="   relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 border-2 border-black">
             <Image
               className=""
-              src={res.screens[0]}
-              width="600"
-              height={600}
+              src={res.screens[2]}
               alt="banner"
+              layout="fill"
               objectFit="cover"
             ></Image>
           </div>
 
           {/* second img */}
-          <div className=" h-auto   bg-slate-200  overflow-hidden">
+          <div className="  relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 border-2 border-black">
             <Image
               className=""
-              src={res.screens[0]}
-              width="600"
-              height={600}
+              src={res.screens[3]}
+              layout="fill"
               alt="banner"
-              objectFit="cover"
             ></Image>
           </div>
         </div>
-
         {/* ---------------------------------------- */}
         {/* section 6  3 LOGO*/}
         {/* ---------------------------------------- */}

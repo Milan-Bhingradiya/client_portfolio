@@ -180,6 +180,12 @@ export default function Home() {
     setResponse(documents);
   };
 
+  const res = [
+    { number: "250+", description: "Projects Delivered" },
+    { number: "100+", description: "Clients" },
+    { number: "6.5+", description: "Years of Experience" },
+  ];
+
   return (
     <div className="relative">
       {/* <div className="relative">
@@ -366,15 +372,34 @@ setisOneSecDone(!isOneSecDone);
         </div>
  */}
 
-        <div className=" flex justify-center text-2xl sm:text-4xl  mt-20 superBold">
-          {" "}
-          260+ Projects Delivered
-        </div>
-        <div className=" flex justify-center text-lg mb-10 ">
-          {" "}
-          and counting more..
-        </div>
+        {/* <div className=" flex justify-center gap-5 flex-col sm:flex-row">
+          <div className=" flex justify-center text-2xl font-bold">
+            260+ Projects Delivered
+          </div>
+          <div className=" flex justify-center   text-2xl   font-bold">
+            100+ Clients
+          </div>
+          <div className=" flex justify-center  text-2xl   font-bold ">
+            6.5 years of Experiences
+          </div>
+        </div> */}
 
+        <div className="container mx-auto my-14 sm:my-32 px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            {res.map(
+              (stat: { number: string; description: string }, index: any) => (
+                <div key={index} className="flex flex-col items-center">
+                  <div className="text-5xl font-bold text-red-500 mb-2">
+                    {stat.number}
+                  </div>
+                  <div className=" text-gray-700 text-2xl font-bold">
+                    {stat.description}
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </div>
         {/* start */}
 
         <ProjectCardSlider response={response}></ProjectCardSlider>

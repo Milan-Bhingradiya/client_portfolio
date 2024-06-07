@@ -28,7 +28,7 @@ function Section1() {
         <div className="flex flex-col mt-10 justify-center superBold">
           <div>
             <Animated_text
-              text={"Design | Transform | Accelerate"}
+              text={"Ideate | Connect | Automate"}
               mode="single"
               weight="superBold"
               size={"text-4xl sm:text-5xl "}
@@ -38,11 +38,9 @@ function Section1() {
             </Animated_text>
           </div>
 
-          <div className="m-6 sm:m-8 ml-0">
+          <div className="my-6   sm:my-8 ">
             <Animated_text
-              text={
-                "We Revolutionize User Experience |  Using Behavioural Science."
-              }
+              text={"We Help You Reach From Zero To Millions."}
               mode={"multi"}
               weight={"font-extrabold"}
               size={" text-lg sm:text-2xl"}

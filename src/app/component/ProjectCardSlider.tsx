@@ -53,10 +53,12 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
   const { ref: cardsRef, inView: cardInView } = useInView({
     threshold: 0.4,
   });
+
+  let x = ["#E94772", "#5a87c5", "#219f89"];
   return (
     <div
       onMouseDown={handleMouseDown}
-      className="  mx-auto sm:mx-0 overflow-hidden relative sm:flex"
+      className="  mx-auto sm:mx-0  sm:flex h-[600px]  overflow-hidden sm:block "
       {...handlers}
     >
       {/* <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-0 font-bold">
@@ -64,13 +66,23 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
         </div> */}
       <div ref={cardsRef}>
         <div
-          className="flex transition-transform duration-500 gap-4"
+          className="flex  transition-transform duration-500 gap-4"
           style={{ transform: `translateX(-${currentSlide * 111}%)` }}
         >
           {response &&
             response.map((project: any, index: number) => (
-              <div key={index} className="  min-w-full sm:min-w-[300px] ">
-                <Link href={"./work/" + project.id} className="">
+              <div
+                key={index}
+                className="rounded-lg relative min-w-full sm:min-w-[300px] h-[600px] overflow-hidden "
+              >
+                <div
+                  className={`absolute twosec top-[-80px] rounded-[50%]    ${
+                    cardInView
+                      ? "bg" + index + " w-[400px] h-[400px] left-[-40px]  "
+                      : "w-[0px] h-[0px]"
+                  }`}
+                ></div>
+                <Link href={"./work/" + project.id} className="absolute">
                   {/*  */}
                   <div className=" ">
                     <div
@@ -81,28 +93,20 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
                           : ""
                       } rounded-xl ${"card" + (Number(index) + 1)}  `}
                     >
-                      <div className="p-4 pl-0 flex flex-col items-center justify-center bottom-2 border-black">
-                        <h1 className="text-2xl font-bold text-center mb-4">
+                      <div className=" px-6 pl-0 flex flex-col items-center justify-center bottom-2 border-black">
+                        <h1 className="  text-lg sm:text-2xl font-bold text-center ">
                           {project.projectCompanyName}
                         </h1>
-                        <p className="text-center mb-8">
+                        <div className="text-sm flex flex-row justify-center pl-4 ">
                           Optimized the effortless on-the-go lifestyle
-                        </p>
-                        <div className="flex justify-center space-x-4 ">
-                          <span className="">UX-UI</span>
-                          <span className="">•</span>
-                          <span className="">Web</span>
-                          <span className="">•</span>
-                          <span className="">Mobile</span>
                         </div>
                       </div>
-                      <div className="  rounded-lg  h-[500px] ">
+                      <div className="  rounded-lg relative h-[500px] ">
                         <Image
                           src={project.thumbnail}
                           alt="BMW X1"
-                          className="w-full h-full  object-cover mb-2 rounded-b-xl "
-                          width={300}
-                          height={550}
+                          className="object-fill h-full   mb-2 rounded-b-xl "
+                          layout="fill"
                         />
                       </div>
                     </div>

@@ -6,8 +6,8 @@ import Link from "next/link";
 function Consultancy_card() {
   return (
     <div>
-      <div className="p-6 sm:p-12 dark:bg-gray-50 dark:text-gray-800">
-        <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
+      <div className="p-6 sm:p-12 rounded-lg bg-[#dedfe7]">
+        <div className="flex flex-col justify-center space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
           <Image
             src={smit}
             alt=""
@@ -28,7 +28,7 @@ function Consultancy_card() {
         </div>
 
         <Link href="/service/consultancy">
-          <button className=" m-4  ml-0 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+          <button className=" mt-4  ml-0 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
             More Detail
           </button>
         </Link>

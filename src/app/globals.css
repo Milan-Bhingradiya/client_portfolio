@@ -114,43 +114,19 @@
   height: 55px;
 }
 
-/* bottom to top */
-.card1 {
-  background: linear-gradient(to bottom, #e94772 50%, #fff 50%);
-  background-size: 100% 200%;
-  background-position: bottom left;
-  transition: all 0.5s ease-out;
+.twosec {
+  transition: all 1.2s;
+}
+.bg0 {
+  background-color: #e94772;
 }
 
-/*  */
-.card1inview {
-  background-position: top left;
-  color: #fff;
-}
-.card2 {
-  background: linear-gradient(to bottom, #5a87c5 50%, #fff 50%);
-  background-size: 100% 200%;
-  background-position: bottom left;
-  transition: all 0.5s ease-out;
+.bg1 {
+  background-color: #5a87c5;
 }
 
-/*  */
-.card2inview {
-  background-position: top left;
-  color: #fff;
-}
-
-.card3 {
-  @apply transition-all ease-out duration-500;
-  background: linear-gradient(to bottom, #219f89 50%, #fff 50%);
-  background-size: 100% 200%;
-  background-position: bottom left;
-}
-
-/*  */
-.card3inview {
-  background-position: top left;
-  color: #fff;
+.bg2 {
+  background-color: #219f89;
 }
 
 .x {
