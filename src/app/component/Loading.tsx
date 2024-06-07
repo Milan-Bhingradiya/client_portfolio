@@ -3,7 +3,7 @@ import "./m.css"
 
 function Loading() {
   return (
-    <div className="fixed top-0 border-2 border-black z-50 bg-white  ">
+    <div className="fixed top-0   border-2 border-black z-50 bg-white  ">
       <div className="canvas">
         <div className="hexagon">
           <div className="row">

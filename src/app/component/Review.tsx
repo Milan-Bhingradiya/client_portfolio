@@ -9,20 +9,7 @@ function Review() {
     <div>
       <section id="testimonies" className="py-20 ">
         <div className="max-w-6xl mx-8 md:mx-10 lg:mx-20 xl:mx-auto">
-          <div className="transition duration-500 ease-in-out transform scale-100 translate-x-0 translate-y-0 opacity-100">
-            <div className="mb-8 space-y-2 md:mb-16 md:text-center">
-              <div className="text-xl  md:text-center md:text-2xl">
-                Words from Others
-              </div>
-
-              <h1 className="mb-2 text-3xl font-semibold  md:text-center md:text-5xl">
-                Its not just us.
-              </h1>
-              <p className="text-xl  md:text-center md:text-2xl">
-                Heres what others have to say about us.
-              </p>
-            </div>
-          </div>
+         
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             <ul className="space-y-8">

@@ -9,11 +9,11 @@ import { useInView } from "react-intersection-observer";
 const ProjectCardSlider = ({ response }: { response: any }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const handleDotClick = (index) => {
+  const handleDotClick = (index:number) => {
     setCurrentSlide(index);
   };
 
-  const handleSwipe = (direction) => {
+  const handleSwipe = (direction:any) => {
     if (direction === "LEFT") {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % response.length);
     } else if (direction === "RIGHT") {
@@ -28,11 +28,11 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
     onSwipedRight: () => handleSwipe("RIGHT"),
   });
 
-  const handleMouseDown = (event) => {
+  const handleMouseDown = (event:any) => {
     event.preventDefault();
     const startX = event.clientX;
 
-    const handleMouseMove = (moveEvent) => {
+    const handleMouseMove = (moveEvent:any) => {
       const deltaX = moveEvent.clientX - startX;
       if (Math.abs(deltaX) > 50) {
         handleSwipe(deltaX > 0 ? "RIGHT" : "LEFT");

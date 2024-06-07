@@ -164,7 +164,7 @@
   transition: all 0.5s ease-out;
 }
 
-.neumorphism {
+/* .neumorphism {
   transition: all 0.5s ease-out;
   border-radius: 50px;
 }
@@ -172,4 +172,4 @@
   border-radius: 50px;
   background: #e0e0e0;
   box-shadow: -27px 27px 53px #bcbcbc, 27px -27px 53px #ffffff;
-}
+} */

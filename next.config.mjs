@@ -10,10 +10,7 @@ const nextConfig = {
       "firebasestorage.googleapis.com",
     ],
   },
-  backgroundImage: {
-    "custom-gradient":
-      "linear-gradient(-25deg, rgba(0, 0, 0, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%)",
-  },
+  
   sassOptions: {
     includePaths: [path.join(process.cwd(), "styles")],
   },
