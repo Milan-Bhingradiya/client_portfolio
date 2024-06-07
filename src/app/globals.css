@@ -149,3 +149,30 @@
   background: #e0e0e0;
   box-shadow: -27px 27px 53px #bcbcbc, 27px -27px 53px #ffffff;
 } */
+
+.text-animation {
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  letter-spacing: 0.1em; /* Optional spacing adjustment */
+  position: relative; /* Required for absolute positioning */
+}
+
+.text-animation::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%; /* Start from off-screen */
+  width: 100%;
+  height: 100%;
+  background-color: inherit; /* Inherit background color */
+  animation: typing 3s linear forwards; /* Animation duration and behavior */
+}
+@keyframes typing {
+  from {
+    left: -100%;
+  } /* Start from off-screen */
+  to {
+    left: 0;
+  } /* Reveal text from left to right */
+}

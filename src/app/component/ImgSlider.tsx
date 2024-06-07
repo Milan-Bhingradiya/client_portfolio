@@ -1,9 +1,9 @@
-"use client"
-import React from "react"
-import useEmblaCarousel from "embla-carousel-react"
-import Image from "next/image"
+"use client";
+import React from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
 function ImgSlider({ screens }: { screens: string[] }) {
-  const [emblaRef] = useEmblaCarousel()
+  const [emblaRef] = useEmblaCarousel();
 
   return (
     <div className="embla" ref={emblaRef}>
@@ -13,7 +13,7 @@ function ImgSlider({ screens }: { screens: string[] }) {
             <div key={index} className="embla__slide  border-1 border-gray-400">
               <Image
                 alt="ss"
-                className="p-2 sm:p-8 h-[300px] sm:h-[500px] w-screen"
+                className="p-2  sm:p-8 h-[300px] sm:h-[500px] w-screen"
                 height={200}
                 width={200}
                 priority
@@ -23,7 +23,7 @@ function ImgSlider({ screens }: { screens: string[] }) {
           ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default ImgSlider
+export default ImgSlider;

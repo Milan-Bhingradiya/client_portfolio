@@ -8,15 +8,15 @@ function Consultancy_card() {
     <div>
       <div className="p-6 sm:p-12 rounded-lg bg-[#dedfe7]">
         <div className="flex flex-col justify-center space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
-          <Image
+          {/* <Image
             src={smit}
             alt=""
             className="self-center flex-shrink-0 w-24 h-24 border rounded-full md:justify-self-start dark:bg-gray-500 dark:border-gray-300"
-          />
+          /> */}
           <div className="flex flex-col">
-            <h4 className="text-lg font-semibold text-center md:text-left">
+            {/* <h4 className="text-lg font-semibold text-center md:text-left">
               smit shah
-            </h4>
+            </h4> */}
             <p className="dark:text-gray-600">
               Elevate your business strategy with our expert consultancy
               services. From insightful market analysis to tailored strategic
@@ -28,7 +28,7 @@ function Consultancy_card() {
         </div>
 
         <Link href="/service/consultancy">
-          <button className=" mt-4  ml-0 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+          <button className="m-4 mt-4  ml-0 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
             More Detail
           </button>
         </Link>

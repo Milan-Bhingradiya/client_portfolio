@@ -45,6 +45,13 @@ function Section2({
     (state: any) => state.staticTitleBallVisible
   );
 
+  const arr = [
+    " UI Design ",
+    " UX Consultancy ",
+    " Design System ",
+    " Animation ",
+    " Illustrations",
+  ];
   useEffect(() => {
     // console.log("useEffect");
 
@@ -161,7 +168,7 @@ function Section2({
           >
             {/* <div ref={designPointRef} className={`${staticTitleBallVisible ? '' : 'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-red-300" : ""}`}> { }</div> */}
             <div
-              className={`border-dotted animate-spin  border-red-800 border-4 rounded-[50%]  m-2 `}
+              className={`border-dotted animate-spin  border-red-800 border-4 rounded-[50%] p-3 m-4  `}
             >
               <div className={`h-10 w-10 rounded-[50%] bg-red-300`}></div>
             </div>
@@ -179,7 +186,7 @@ function Section2({
             {showSubText && (
               <Animated_text
                 text={
-                  "    UI Design | UX Consultancy | Design System | Animation | Illustrations"
+                  " UI Design | UX Consultancy | Design System | Animation | Illustrations"
                 }
                 mode={"multi"}
                 weight={"  "}
@@ -205,13 +212,12 @@ function Section2({
             className="text-4xl sm:text-5xl superBold mt-6 flex flex-row"
           >
             {/* <div ref={technologyPointRef} className={`${staticTitleBallVisible ? '' : 'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-blue-300" : ""}`}> { }</div> */}
-            <div
-              className={` border-dotted animate-spin border-4 border-blue-800 rounded-[50%] h-[30px] sm:h-[50px] w-[30px] sm:w-[50px]  m-2 bg-blue-300`}
-            >
-              {" "}
-              {}
-            </div>
 
+            <div
+              className={`border-dotted animate-spin  border-blue-800 border-4 rounded-[50%] p-3 m-4  `}
+            >
+              <div className={`h-10 w-10 rounded-[50%] bg-blue-300`}></div>
+            </div>
             <div className="flex flex-row justify-center items-center">
               Technology
             </div>
@@ -250,11 +256,11 @@ function Section2({
             className="text-4xl sm:text-5xl superBold mt-6 flex flex-row"
           >
             {/* <div ref={businessPointRef} className={` ${staticTitleBallVisible ? '' : 'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-green-300" : ""}`}> { }</div> */}
+
             <div
-              className={` border-dotted animate-spin border-4 border-green-800 rounded-[50%]  h-[30px] sm:h-[50px] w-[30px] sm:w-[50px]  m-2 bg-green-300`}
+              className={`border-dotted animate-spin  border-green-800 border-4 rounded-[50%] p-3 m-4  `}
             >
-              {" "}
-              {}
+              <div className={`h-10 w-10 rounded-[50%] bg-green-300`}></div>
             </div>
 
             <div className="flex flex-row justify-center items-center">

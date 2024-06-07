@@ -58,7 +58,7 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
   return (
     <div
       onMouseDown={handleMouseDown}
-      className="  mx-auto sm:mx-0  sm:flex h-[600px]  overflow-hidden sm:block "
+      className="  mx-auto sm:mx-0   h-[600px]  overflow-hidden sm:block "
       {...handlers}
     >
       {/* <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-0 font-bold">
@@ -66,8 +66,8 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
         </div> */}
       <div ref={cardsRef}>
         <div
-          className="flex  transition-transform duration-500 gap-4"
-          style={{ transform: `translateX(-${currentSlide * 111}%)` }}
+          className="flex  transition-transform duration-500 gap-6"
+          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
           {response &&
             response.map((project: any, index: number) => (
@@ -78,11 +78,15 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
                 <div
                   className={`absolute twosec top-[-80px] rounded-[50%]    ${
                     cardInView
-                      ? "bg" + index + " w-[400px] h-[400px] left-[-40px]  "
+                      ? "bg" + index + " w-[500px] h-[400px] left-[-47px]  "
                       : "w-[0px] h-[0px]"
                   }`}
                 ></div>
-                <Link href={"./work/" + project.id} className="absolute">
+
+                <Link
+                  href={"./work/" + project.id}
+                  className="absolute min-w-full "
+                >
                   {/*  */}
                   <div className=" ">
                     <div
@@ -93,7 +97,7 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
                           : ""
                       } rounded-xl ${"card" + (Number(index) + 1)}  `}
                     >
-                      <div className=" px-6 pl-0 flex flex-col items-center justify-center bottom-2 border-black">
+                      <div className="p-2  pl-0 flex flex-col items-center justify-center bottom-2 border-black">
                         <h1 className="  text-lg sm:text-2xl font-bold text-center ">
                           {project.projectCompanyName}
                         </h1>
@@ -101,7 +105,7 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
                           Optimized the effortless on-the-go lifestyle
                         </div>
                       </div>
-                      <div className="  rounded-lg relative h-[500px] ">
+                      <div className="  rounded-lg relative h-[500px]  ">
                         <Image
                           src={project.thumbnail}
                           alt="BMW X1"
