@@ -204,9 +204,9 @@ async function page({ params }: RouteParams) {
         {/* section 3  2 img*/}
         {/* ---------------------------------------- */}
 
-        <div className="flex flex-col sm:flex-row  h-[800px] sm:h-[400px] justify-center gap-4  w-[100%] border-2 border-black">
+        <div className="flex flex-col sm:flex-row  h-[800px] sm:h-[400px] justify-center gap-4  w-[100%] ">
           {/* first img */}
-          <div className="   relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 border-2 border-black">
+          <div className="   relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 ">
             <Image
               className=""
               src={res.screens[0]}
@@ -217,7 +217,7 @@ async function page({ params }: RouteParams) {
           </div>
 
           {/* second img */}
-          <div className="  relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 border-2 border-black">
+          <div className="  relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 ">
             <Image
               className=""
               src={res.screens[1]}
@@ -255,9 +255,9 @@ async function page({ params }: RouteParams) {
         {/* section 5   2 img
         {/* ---------------------------------------- */}
 
-        <div className="flex flex-col sm:flex-row  justify-center gap-4 h-[800px] sm:h-[400px] w-[100%] border-2 border-black">
+        <div className="flex flex-col sm:flex-row  justify-center gap-4 h-[800px] sm:h-[400px] w-[100%] ">
           {/* first img */}
-          <div className="   relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 border-2 border-black">
+          <div className="   relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 ">
             <Image
               className=""
               src={res.screens[2]}
@@ -268,7 +268,7 @@ async function page({ params }: RouteParams) {
           </div>
 
           {/* second img */}
-          <div className="  relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 border-2 border-black">
+          <div className="  relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 ">
             <Image
               className=""
               src={res.screens[3]}
