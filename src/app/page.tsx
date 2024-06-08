@@ -17,7 +17,10 @@ import one from "../../public/1.png";
 import two from "../../public/2.png";
 import three from "../../public/3.png";
 import four from "../../public/4.png";
-import five from "../../public/5.png";
+import six from "../../public/6.png";
+import seven from "../../public/7.png";
+import end from "../../public/end.jpeg";
+
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
@@ -214,13 +217,13 @@ setisOneSecDone(!isOneSecDone);
           Our Clients
         </div>
 
-        <div className="  flex flex-row justify-center gap-8 md:gap-16 lg:gap-24 m-10 ">
+        <div className=" grid grid-cols-3 sm:grid-cols-6 gap-14 md:gap-16 lg:gap-24 m-10 ">
           <motion.div whileHover={{ scale: 1.2 }}>
             <Image
               className="blackfilter"
               src={one}
               alt="ms"
-              width={60}
+              width={80}
               height={80}
             ></Image>
           </motion.div>
@@ -229,7 +232,7 @@ setisOneSecDone(!isOneSecDone);
               className="blackfilter"
               src={two}
               alt="ms"
-              width={60}
+              width={80}
               height={80}
             ></Image>
           </motion.div>
@@ -238,23 +241,32 @@ setisOneSecDone(!isOneSecDone);
               className="blackfilter"
               src={three}
               alt="ms"
-              width={60}
+              width={80}
               height={80}
             ></Image>
           </motion.div>
-          <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }}>
+          <motion.div className="block" whileHover={{ scale: 1.2 }}>
             <Image
               className="blackfilter"
               src={four}
               alt="ms"
-              width={60}
+              width={80}
               height={80}
             ></Image>
           </motion.div>
-          <motion.div className="hidden sm:block" whileHover={{ scale: 1.2 }}>
+          <motion.div className="block" whileHover={{ scale: 1.2 }}>
             <Image
               className="blackfilter"
-              src={five}
+              src={six}
+              alt="ms"
+              width={80}
+              height={80}
+            ></Image>
+          </motion.div>
+          <motion.div className="block" whileHover={{ scale: 1.2 }}>
+            <Image
+              className="blackfilter"
+              src={seven}
               alt="ms"
               width={60}
               height={80}
@@ -280,14 +292,14 @@ setisOneSecDone(!isOneSecDone);
           </motion.div>
         </div> */}
 
-        <div className="mx-6 sm:mx-20 mt-20 ">
+        <div className="mx-6 sm:mx-20  mt-20 ">
           <Animated_text
             text={
               " We are a global creative agency that combines design expertise with technology and intelligence."
             }
             mode={"multi"}
-            weight={"ont-extrabold  "}
-            size={" text-lg sm:text-2xl"}
+            weight={"  font-extrabold"}
+            size={" text-3xl  sm:text-3xl"}
             space={true}
           ></Animated_text>
         </div>
@@ -458,6 +470,11 @@ setisOneSecDone(!isOneSecDone);
         </div>
         <TestimonialSlider></TestimonialSlider>
         {/* <Review></Review> */}
+        <div className=" flex flex-row justify-center ">
+          <div className="  relative w-[100%] sm:w-[500px] h-[400px] sm:h-[500px]">
+            <Image src={end} alt="image" layout="fill"></Image>
+          </div>
+        </div>
       </div>
     </div>
   );
