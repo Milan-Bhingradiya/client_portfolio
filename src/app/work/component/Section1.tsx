@@ -30,8 +30,8 @@ function Section1() {
             <Animated_text
               text={"Ideate | Connect | Automate"}
               mode="single"
-              weight="superBold"
-              size={"text-4xl sm:text-5xl "}
+              weight="font-[100px]"
+              size={"text-5xl "}
               space={false}
             >
               {" "}

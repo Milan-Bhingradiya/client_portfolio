@@ -17,7 +17,7 @@ function Consultancy_card() {
             {/* <h4 className="text-lg font-semibold text-center md:text-left">
               smit shah
             </h4> */}
-            <p className="font-bold text-3xl my-4">Consultacy</p>
+            <p className="font-bold text-3xl my-4">Consultancy</p>
             <p className="">
               Elevate your business strategy with our expert consultancy
               services. From insightful market analysis to tailored strategic
@@ -28,16 +28,17 @@ function Consultancy_card() {
           </div>
         </div>
 
+        <a href={`tel:${7678004443}`} className="my-4 mr-4 inline sm:hidden">
+          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            Call
+          </button>
+        </a>
         <Link href="/service/consultancy">
           <button className="m-4 mt-4  ml-0 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
             More Detail
           </button>
         </Link>
-        <a href={`tel:${7678004443}`} className=" inline sm:hidden">
-          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-            Call
-          </button>
-        </a>
+
         {/* <div className="flex justify-center pt-4 space-x-4 align-center">
 		<a rel="noopener noreferrer" href="#" aria-label="GitHub" className="p-2 rounded-md dark:text-gray-800 hover:dark:text-violet-600">
 			<svg viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 fill-current">

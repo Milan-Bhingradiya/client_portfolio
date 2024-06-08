@@ -57,7 +57,7 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
   return (
     <div
       onMouseDown={handleMouseDown}
-      className="  mx-auto sm:mx-0   h-[800px]  overflow-hidden sm:block "
+      className="  mx-auto sm:mx-0   h-[700px]  overflow-hidden sm:block "
       {...handlers}
     >
       {/* <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-0 font-bold">
@@ -66,7 +66,7 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
       <div ref={cardsRef}>
         <div
           className="flex   transition-transform duration-500  gap-4"
-          style={{ transform: `translateX(-${currentSlide * 107}%)` }}
+          style={{ transform: `translateX(-${currentSlide * 105}%)` }}
         >
           {response &&
             response.map((project: any, index: number) => (

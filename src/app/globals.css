@@ -180,3 +180,17 @@
 .blackfilter {
   filter: brightness(0%);
 }
+
+/*  */
+
+.notshow-left {
+  opacity: 0;
+  position: relative;
+  left: -100px;
+  transition: all 0.5s ease-out;
+}
+
+.show-right {
+  opacity: 1;
+  left: 0;
+}

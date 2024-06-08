@@ -2,64 +2,48 @@ import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import Image from "next/image";
 import Testimonial from "./Testimonial";
+import review1 from "../../../public/review1.jpeg";
+import review2 from "../../../public/review2.jpeg";
+import review3 from "../../../public/review3.jpeg";
+import review4 from "../../../public/review4.jpeg";
+import review5 from "../../../public/review5.jpeg";
+
 const testimonials = [
   {
-    image: "https://via.placeholder.com/80",
-    name: "Amit Singh",
+    image: review1,
+    name: "Sandip ",
     title: "C.E.O. - Investica",
     text: "Leo9 Studio is one of the few Design agencies that understand the financial services industry's inner workings. They're an incredible agency that \"knows it\". The team Leo9 is killing it and bringing UI/UX Designs to the forefront of a whole industry's digital transformation.",
     rating: 5,
   },
   {
-    image: "https://via.placeholder.com/80",
-    name: "John Doe",
+    image: review2,
+    name: "Bhavi Patel",
     title: "C.T.O. - FinTech Inc.",
     text: "The team at Leo9 Studio is fantastic. They really understand the nuances of the fintech space and have helped us significantly improve our user interface and overall user experience.",
     rating: 5,
   },
   {
-    image: "https://via.placeholder.com/80",
-    name: "Amit Singh",
+    image: review3,
+    name: "Bikash Garabadu",
     title: "C.E.O. - Investica",
     text: "Leo9 Studio is one of the few Design agencies that understand the financial services industry's inner workings. They're an incredible agency that \"knows it\". The team Leo9 is killing it and bringing UI/UX Designs to the forefront of a whole industry's digital transformation.",
     rating: 5,
   },
   {
-    image: "https://via.placeholder.com/80",
-    name: "John Doe",
+    image: review4,
+    name: "Sudheesh K",
     title: "C.T.O. - FinTech Inc.",
     text: "The team at Leo9 Studio is fantastic. They really understand the nuances of the fintech space and have helped us significantly improve our user interface and overall user experience.",
     rating: 5,
   },
   {
-    image: "https://via.placeholder.com/80",
-    name: "Amit Singh",
+    image: review5,
+    name: "unknown",
     title: "C.E.O. - Investica",
     text: "Leo9 Studio is one of the few Design agencies that understand the financial services industry's inner workings. They're an incredible agency that \"knows it\". The team Leo9 is killing it and bringing UI/UX Designs to the forefront of a whole industry's digital transformation.",
     rating: 5,
   },
-  {
-    image: "https://via.placeholder.com/80",
-    name: "John Doe",
-    title: "C.T.O. - FinTech Inc.",
-    text: "The team at Leo9 Studio is fantastic. They really understand the nuances of the fintech space and have helped us significantly improve our user interface and overall user experience.",
-    rating: 5,
-  },
-  {
-    image: "https://via.placeholder.com/80",
-    name: "Amit Singh",
-    title: "C.E.O. - Investica",
-    text: "Leo9 Studio is one of the few Design agencies that understand the financial services industry's inner workings. They're an incredible agency that \"knows it\". The team Leo9 is killing it and bringing UI/UX Designs to the forefront of a whole industry's digital transformation.",
-    rating: 5,
-  },
-  {
-    image: "https://via.placeholder.com/80",
-    name: "John Doe",
-    title: "C.T.O. - FinTech Inc.",
-    text: "The team at Leo9 Studio is fantastic. They really understand the nuances of the fintech space and have helped us significantly improve our user interface and overall user experience.",
-    rating: 5,
-  },
-  // Add more testimonials as needed
 ];
 
 const TestimonialSlider = () => {
@@ -110,7 +94,7 @@ const TestimonialSlider = () => {
   return (
     <div
       onMouseDown={handleMouseDown}
-      className="   mx-auto overflow-hidden relative mb-32 border-2 border-red-800 bg-[#dedfe7] "
+      className="   mx-auto overflow-hidden relative mb-32  bg-[#dedfe7] "
       {...handlers}
     >
       {/* <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-10 font-bold">
@@ -122,7 +106,7 @@ const TestimonialSlider = () => {
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
         {testimonials.map((testimonial, index) => (
-          <Testimonial key={index}></Testimonial>
+          <Testimonial key={index} data={testimonials[index]}></Testimonial>
         ))}
       </div>
       <div className="flex justify-center m-2 mb-10">

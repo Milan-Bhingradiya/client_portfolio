@@ -29,6 +29,7 @@ import Testimonial from "./component/Testimonial";
 import ProjectCardSlider from "./component/ProjectCardSlider";
 import ThreeCard from "./component/ThreeCard";
 
+import CountUp from "react-countup";
 export default function Home() {
   //   const isConnected = useConnect();
 
@@ -36,75 +37,10 @@ export default function Home() {
   //   return <div>Connecting to database...</div>;
   // }
 
-  const designPointRef = useRef<HTMLDivElement>(null);
-  const technologyPointRef = useRef<HTMLDivElement>(null);
-  const businessPointRef = useRef<HTMLDivElement>(null);
-
-  const [animate, setAnimate] = useState(false);
-
-  const [lastScrollY, setLastScrollY] = useState(0);
-  // let lastScrollY=0;
-  // const setLastScrollY =(num)=>{lastScrollY = num}
-
-  const setballShouldFollow = mystore(
-    (state: any) => state.setballShouldFollow
-  );
-  const ballShouldFollow = mystore((state: any) => state.ballShouldFollow);
-
   // section 2 ma ue thay chhe
   const designRef = useRef<HTMLDivElement>(null);
   const technologyRef = useRef<HTMLDivElement>(null);
   const businessRef = useRef<HTMLDivElement>(null);
-
-  const k = useRef<HTMLDivElement>(null);
-  const p = useRef<HTMLDivElement>(null);
-  const i = useRef<HTMLDivElement>(null);
-
-  const [positions, setPositions] = useState({
-    k: { top: -50, left: -50 },
-    p: { top: -50, left: -50 },
-    i: { top: -50, left: -50 },
-  });
-
-  useEffect(() => {
-    console.log("useEffect");
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const isScrollingDown = currentScrollY > lastScrollY;
-
-      const ktop = k?.current?.getBoundingClientRect().top;
-      const ptop = p?.current?.getBoundingClientRect().top;
-      const itop = i?.current?.getBoundingClientRect().top;
-
-      const kleft = k?.current?.getBoundingClientRect().left;
-      const pleft = p?.current?.getBoundingClientRect().left;
-      const ileft = i?.current?.getBoundingClientRect().left;
-      if (ballShouldFollow == "kpi") {
-        // console.log("followinf " + ballShouldFollow)
-        setPositions((prev): any => ({
-          k: { top: ktop, left: kleft },
-          p: { top: ptop, left: pleft },
-          i: { top: itop, left: ileft },
-        }));
-        // setballShouldFollow("titles");
-      }
-      // if (ballShouldFollow == "titles") {
-      //   // console.log("followinf " + ballShouldFollow)
-      //   setPositions((prev): any => ({
-      //     k: { top: designPointRef.current?.getBoundingClientRect().top, left: designPointRef?.current?.getBoundingClientRect().left },
-      //     p: { top: technologyPointRef.current?.getBoundingClientRect().top, left: technologyPointRef?.current?.getBoundingClientRect().left},
-      //     i: { top: businessPointRef.current?.getBoundingClientRect().top, left: businessPointRef?.current?.getBoundingClientRect().left },
-      //   }));
-      // }
-      setLastScrollY(currentScrollY);
-    };
-    setAnimate(true);
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [lastScrollY]);
 
   const [isColored, setIsColored] = useState(false);
 
@@ -182,10 +118,31 @@ export default function Home() {
   };
 
   const res = [
-    { number: "250+", description: "Projects Delivered" },
-    { number: "100+", description: "Clients" },
-    { number: "6.5+", description: "Years of Experience" },
+    { number: 250, description: "Projects Delivered" },
+    { number: 100, description: "Clients" },
+    { number: 6.5, description: "Years of Experience" },
   ];
+
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const windowHeight = window.innerHeight;
+      const scrollY = window.scrollY || window.pageYOffset;
+      const statsSection = document.getElementById("stats-section");
+
+      if (statsSection) {
+        const sectionTop = statsSection.offsetTop;
+        const sectionHeight = statsSection.offsetHeight;
+
+        if (scrollY > sectionTop - windowHeight + sectionHeight / 2) {
+          setIsVisible(true);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <div className="relative">
@@ -339,9 +296,6 @@ setisOneSecDone(!isOneSecDone);
           designRef={designRef}
           technologyRef={technologyRef}
           businessRef={businessRef}
-          designPointRef={designPointRef}
-          technologyPointRef={technologyPointRef}
-          businessPointRef={businessPointRef}
         ></Section2>
         {/* <ThreeCard></ThreeCard> */}
 
@@ -364,17 +318,6 @@ setisOneSecDone(!isOneSecDone);
         {/* <Ball top={animate ? (positions.k.top) - 0 : -50} left={animate ? positions.k.left - 0 : -50} delay={0} color={'bg-red-300'} /> */}
         {/* <Ball top={animate ? positions.p.top - 0 : -50} left={animate ? positions.p.left - 0 : -50} delay={0} color={'bg-blue-300'} /> */}
         {/* <Ball top={animate ? positions.i.top - 0 : -50} left={animate ? positions.i.left - 0 : -50} delay={0} color={'bg-green-300'} /> */}
-        <div
-          className={`ball bg-black`}
-          style={{
-            transition: `all 0.5s ease-out`,
-            height: `${positions.k.top}px`,
-            width: `${positions.k.left}px`,
-            // top: `${top}px`,
-            // left: `${left}px`,
-            transform: `translateX(${positions.k.top}px translateY(${positions.k.left}px)`,
-          }}
-        />
 
         <Consultancy_card></Consultancy_card>
 
@@ -400,7 +343,7 @@ setisOneSecDone(!isOneSecDone);
         </div>
  */}
 
-        {/* <div className=" flex justify-center gap-5 flex-col sm:flex-row">
+        {/* <div className=" flex justify-center gap-5 flex -col sm:flex-row">
           <div className=" flex justify-center text-2xl font-bold">
             260+ Projects Delivered
           </div>
@@ -412,20 +355,39 @@ setisOneSecDone(!isOneSecDone);
           </div>
         </div> */}
 
-        <div className="container mx-auto py-10 sm:py-20 px-4">
+        <div
+          className="container mx-auto py-10 sm:py-20 px-4"
+          id="stats-section"
+        >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-            {res.map(
-              (stat: { number: string; description: string }, index: any) => (
-                <div key={index} className="flex flex-col items-center">
-                  <div className="text-5xl font-bold text-red-500 mb-2">
-                    {stat.number}
-                  </div>
-                  <div className=" text-gray-700 text-2xl font-bold">
-                    {stat.description}
-                  </div>
+            {res.map((stat, index) => (
+              <div key={index} className="flex flex-col items-center">
+                <CountUp
+                  end={isVisible ? stat.number : 0}
+                  duration={3.5}
+                  decimals={index == 2 ? 1 : 0}
+                >
+                  {({ countUpRef }) => (
+                    <div>
+                      <div>
+                        <span
+                          ref={countUpRef}
+                          className="text-5xl font-bold text-red-500 mb-2"
+                        ></span>
+                        <span className="text-5xl font-bold text-red-500 mb-2">
+                          +
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </CountUp>
+                <div className="text-gray-700 text-2xl font-bold">
+                  {stat.description}
                 </div>
-              )
-            )}
+              </div>
+            ))}
+
+            <div id="stats-section"></div>
           </div>
         </div>
         {/* start */}
@@ -445,15 +407,15 @@ setisOneSecDone(!isOneSecDone);
           </div> */}
 
         <div className="flex flex-row justify-center sm:m-5  p-6 pb-32">
-          <div className=" gap-10  grid grid-cols-2 sm:grid-cols-4 text-3xl font-semibold ">
+          <div className=" gap-4 sm:gap-10  grid grid-cols-2 sm:grid-cols-4 text-2xl sm:text-3xl font-semibold ">
             <div className="">Foodtech</div>
-            <div>Fintech</div>
+            <div className="ml-4 sm:ml-0">Fintech</div>
             <div>Healthtech</div>
-            <div>Aibots</div>
+            <div className="ml-4 sm:ml-0">Aibots</div>
             <div>ECom</div>
-            <div>Realtech</div>
+            <div className="ml-4 sm:ml-0">Realtech</div>
             <div>Edtech</div>
-            <div>Others..</div>
+            <div className="ml-4 sm:ml-0">Others..</div>
           </div>
         </div>
         {/*  */}
