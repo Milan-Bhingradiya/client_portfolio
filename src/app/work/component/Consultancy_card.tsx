@@ -28,13 +28,17 @@ function Consultancy_card() {
           </div>
         </div>
 
-        <a href={`tel:${7678004443}`} className="my-4 mr-4 inline sm:hidden">
-          <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-            Call
+        <a
+          href={`https://calendly.com/hello-kpitotal`}
+          target="_blank"
+          className="my-4 mr-4 "
+        >
+          <button className="bg-white hover:bg-gray-100 text-sm text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            Book Free Consultation
           </button>
         </a>
         <Link href="/service/consultancy">
-          <button className="m-4 mt-4  ml-0 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+          <button className="my-4 mt-4  text-sm ml-0 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
             More Detail
           </button>
         </Link>
