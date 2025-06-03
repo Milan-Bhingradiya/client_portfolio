@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -66,7 +67,7 @@ function Section2({
   ];
   useEffect(() => {
     // console.log("useEffect");
-
+    if (typeof window === "undefined") return;
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const windowHeight =
@@ -159,11 +160,17 @@ function Section2({
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY]);
+  }, [
+    lastScrollY,
+    designRef,
+    technologyRef,
+    businessRef,
+    setballVisible,
+    setstaticTitleBallVisible,
+  ]);
 
   const designtext = [
     "UI Design",
@@ -189,6 +196,7 @@ function Section2({
   ];
 
   useEffect(() => {
+    if (typeof document === "undefined") return;
     let timeoutIds: NodeJS.Timeout[] = [];
     const listItems = document.querySelectorAll("#design-list li");
     const firstPlayer = document.getElementById("firstPlayer");
@@ -218,6 +226,7 @@ function Section2({
   }, [showSubText]);
 
   useEffect(() => {
+    if (typeof document === "undefined") return;
     let timeoutIds: NodeJS.Timeout[] = [];
     const listItems = document.querySelectorAll("#technology-list li");
     const secondPlayer = document.getElementById("secondPlayer");
@@ -246,6 +255,7 @@ function Section2({
   }, [showTechnology]);
 
   useEffect(() => {
+    if (typeof document === "undefined") return;
     let timeoutIds: NodeJS.Timeout[] = [];
     const listItems = document.querySelectorAll("#marketing-list li");
     const thirdPlayer = document.getElementById("thirdPlayer");

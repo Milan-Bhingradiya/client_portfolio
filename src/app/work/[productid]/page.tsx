@@ -55,9 +55,8 @@ function ProjectPage({ params }: RouteParams) {
     const interval = setInterval(() => {
       setColorIndex((prev) => (prev + 1) % gradientColors.length);
     }, 5000);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [gradientColors.length]);
 
   useEffect(() => {
     const getOneProject = async (id: string) => {

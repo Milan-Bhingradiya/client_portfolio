@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Animated_text from "./component/Animated_text";
 import Link from "next/link";
@@ -47,7 +47,10 @@ function Page() {
   });
 
   // Background animation colors
-  const colors = ["#FF5F6D", "#FFC371", "#4158D0", "#C850C0", "#38ef7d"];
+  const colors = useMemo(
+    () => ["#FF5F6D", "#FFC371", "#4158D0", "#C850C0", "#38ef7d"],
+    []
+  );
   const [bgColor, setBgColor] = useState(colors[0]);
 
   // Scroll progress
@@ -59,9 +62,8 @@ function Page() {
     const colorInterval = setInterval(() => {
       setBgColor(colors[Math.floor(Math.random() * colors.length)]);
     }, 3000);
-
     return () => clearInterval(colorInterval);
-  }, []);
+  }, [colors]);
 
   useEffect(() => {
     const getHomeProjects = async () => {
@@ -616,8 +618,8 @@ function Page() {
               What Clients Say
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Don't just take our word for it. Here's what our clients have to
-              say about working with us.
+              Don&apos;t just take our word for it. Here&apos;s what our clients
+              have to say about working with us.
             </p>
           </motion.div>
 
@@ -874,8 +876,8 @@ function Page() {
               Ready to Start Your Project?
             </h2>
             <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
-              Let's collaborate to bring your vision to life. Get in touch with
-              us today!
+              Let&apos;s collaborate to bring your vision to life. Get in touch
+              with us today!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button

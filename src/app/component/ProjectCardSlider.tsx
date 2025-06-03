@@ -29,6 +29,7 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
   });
 
   const handleMouseDown = (event: any) => {
+    if (typeof window === "undefined") return;
     event.preventDefault();
     const startX = event.clientX;
 
@@ -36,18 +37,18 @@ const ProjectCardSlider = ({ response }: { response: any }) => {
       const deltaX = moveEvent.clientX - startX;
       if (Math.abs(deltaX) > 50) {
         handleSwipe(deltaX > 0 ? "RIGHT" : "LEFT");
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
       }
     };
 
     const handleMouseUp = () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
     if (window.innerWidth <= 100) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
     }
   };
   const { ref: cardsRef, inView: cardInView } = useInView({

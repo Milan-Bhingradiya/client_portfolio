@@ -70,6 +70,7 @@ const TestimonialSlider = () => {
   });
 
   const handleMouseDown = (event: any) => {
+    if (typeof window === "undefined") return;
     event.preventDefault();
     const startX = event.clientX;
 
@@ -77,18 +78,18 @@ const TestimonialSlider = () => {
       const deltaX = moveEvent.clientX - startX;
       if (Math.abs(deltaX) > 50) {
         handleSwipe(deltaX > 0 ? "RIGHT" : "LEFT");
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
       }
     };
 
     const handleMouseUp = () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
 
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
   };
 
   return (

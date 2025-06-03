@@ -27,15 +27,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         }
       }
     };
-    if (isOpen) {
+    if (typeof window !== "undefined" && isOpen) {
       setTimeout(() => {
-        document.addEventListener("mousedown", handleClickOutside);
+        window.addEventListener("mousedown", handleClickOutside);
       }, 0); // Delay to avoid immediate close on open
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+    } else if (typeof window !== "undefined") {
+      window.removeEventListener("mousedown", handleClickOutside);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("mousedown", handleClickOutside);
+      }
     };
   }, [isOpen, sidebarRef, toggleSidebar]);
   return (
