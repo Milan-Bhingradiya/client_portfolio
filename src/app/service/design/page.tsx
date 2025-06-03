@@ -35,11 +35,11 @@ const tools = [
   },
   {
     name: "Zeplin",
-    img: "https://seeklogo.com/images/Z/zeplin-logo-CA3C558C6B-seeklogo.com.png",
+    img: "https://cdn.worldvectorlogo.com/logos/zeplin.svg",
   },
   {
     name: "InVision",
-    img: "https://upload.wikimedia.org/wikipedia/commons/6/6e/InVision-logo.svg",
+    img: "https://cdn.worldvectorlogo.com/logos/invision.svg",
   },
 ];
 

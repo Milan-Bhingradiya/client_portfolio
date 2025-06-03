@@ -318,14 +318,16 @@ function Page() {
               transition={{ delay: 1.2 }}
               className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <motion.button
-                className="group bg-black text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Start Your Project
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
+              <Link href="/contactus">
+                <motion.button
+                  className="group bg-black text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Start Your Project
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </motion.button>
+              </Link>
               <motion.button
                 className="group border-2 border-black text-black px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2"
                 whileHover={{ scale: 1.05 }}
@@ -548,7 +550,7 @@ function Page() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <Link href="/portfolio">
+            <Link href="/work">
               <motion.button
                 className="bg-black text-white px-8 py-4 rounded-full font-semibold flex items-center gap-2 mx-auto"
                 whileHover={{ scale: 1.05 }}

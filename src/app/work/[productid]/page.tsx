@@ -513,7 +513,7 @@ function ProjectPage({ params }: RouteParams) {
 
             {/* Here you would add a carousel or grid of other projects */}
             <div className="text-center py-8">
-              <Link href="/">
+              <Link href="/work">
                 <motion.button
                   className="group flex items-center gap-2 mx-auto bg-black text-white font-semibold py-3 px-6 rounded-full hover:bg-gray-800 transition-all"
                   whileHover={{ scale: 1.05 }}
