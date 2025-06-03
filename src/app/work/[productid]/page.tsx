@@ -477,8 +477,8 @@ function ProjectPage({ params }: RouteParams) {
                     viewport={{ once: true }}
                     transition={{ delay: 0.3 }}
                   >
-                    If you're looking for a holistic agency to work on your big
-                    dream, just say the magic words!
+                    If you&apos;re looking for a holistic agency to work on your
+                    big dream, just say the magic words!
                   </motion.p>
 
                   <motion.button
@@ -490,7 +490,7 @@ function ProjectPage({ params }: RouteParams) {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    LET'S COLLABORATE
+                    LET&apos;S COLLABORATE
                     <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                   </motion.button>
                 </div>
