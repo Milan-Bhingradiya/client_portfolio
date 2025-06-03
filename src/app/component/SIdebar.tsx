@@ -12,28 +12,28 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const sidebarRef = React.createRef<HTMLDivElement>();
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const toggleServicesMenu = () => setIsServicesOpen(!isServicesOpen);
+  const toggleServicesMenu = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation(); // Prevent click from bubbling to sidebar
+    setIsServicesOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
-      // if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-      //     toggleSidebar();
-      // }
-
       if (sidebarRef.current) {
-        const element = sidebarRef.current as HTMLElement; // Assert as HTMLElement
+        const element = sidebarRef.current as HTMLElement;
+        // Only close if click is outside the sidebar and not on any sidebar child
         if (!element.contains(event.target)) {
           toggleSidebar();
         }
       }
     };
-
     if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+      }, 0); // Delay to avoid immediate close on open
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };

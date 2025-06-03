@@ -1,60 +1,61 @@
 "use client";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useState } from "react";
-import { firestoreInstance } from "../../../firebase-config";
 import Loading from "../utility/Loading";
-import { title } from "process";
 
 function Page() {
   const [formData, setFormData] = useState({
     title: "",
     email: "",
     message: "",
-    timestamp: "",
   });
 
   const handleInputChange = (event: any) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-    console.log(formData); // Dynamic property update
   };
 
   const [isLoading, setisLoading] = useState(false);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       alert("Please enter a valid  email address");
       return;
     }
-
     // Check if any field is empty
     for (const key in formData) {
       if (formData.hasOwnProperty(key)) {
-        if (key != "timestamp") {
-          if ((formData as any)[key].trim() === "") {
-            alert("Please fill in all fields");
-            return;
-          }
+        if ((formData as any)[key].trim() === "") {
+          alert("Please fill in all fields");
+          return;
         }
       }
     }
-
     setisLoading(true);
-
-    addDoc(collection(firestoreInstance, "messages"), {
-      ...formData,
-      createdAt: serverTimestamp(),
-    })
-      .then(() => {
-        alert("we will reach to you soon");
-        setisLoading(false);
-      })
-      .catch((error) => {
-        alert(" Try Again " + error);
-        setisLoading(false);
-      });
+    try {
+      const res = await fetch(
+        "https://smit-shah-backend-80da1d71856d.herokuapp.com/message",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: formData.title,
+            description: formData.message,
+            email: formData.email,
+          }),
+        }
+      );
+      const data = await res.json();
+      if (res.ok) {
+        alert("We will reach out to you soon");
+        setFormData({ title: "", email: "", message: "" });
+      } else {
+        alert("Try Again: " + (data.error || "Unknown error"));
+      }
+    } catch (error) {
+      alert("Try Again: " + error);
+    }
+    setisLoading(false);
   };
 
   return (

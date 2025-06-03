@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { start } from "repl";
@@ -9,6 +9,7 @@ import Sidebar from "./SIdebar";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "/public/logo.svg";
+import { usePathname } from "next/navigation";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,14 +25,32 @@ const Navbar: React.FC = () => {
 
   const [isServicesOpen, setIsServicesOpen] = useState(false);
 
-  const toggleServicesMenu = () => setIsServicesOpen(!isServicesOpen);
+  // Track if the user has ever clicked the Services menu
+  const [servicesClicked, setServicesClicked] = useState(false);
+
+  const openServicesMenu = () => setIsServicesOpen(true);
+  const closeServicesMenu = () => setIsServicesOpen(false);
+
+  const handleServicesClick = () => {
+    setServicesClicked(true);
+    setIsServicesOpen(true); // Always open on click
+    handleMenuSelect("Services");
+  };
 
   const [isAboutOpen, setIsAboutOpen] = useState(false);
 
   const toggleAboutMenu = () => setIsAboutOpen(!isAboutOpen);
 
-  // const showAboutMenu = () => setIsAboutOpen(true);
-  // const hideAboutMenu = () => setIsAboutOpen(true);
+  const pathname = usePathname();
+  const isOnServicePage = pathname.startsWith("/service");
+
+  // Open submenu by default on /service/* pages
+  useEffect(() => {
+    if (isOnServicePage) {
+      setIsServicesOpen(true);
+    }
+  }, [isOnServicePage]);
+
   return (
     <div className="h-[90px] w-[100%] items-center flex ">
       <div className=" mx-5 sm:mx-20 md:mx-26 lg:mx-32  w-[100%]   flex flex-row justify-between items-center">
@@ -49,33 +68,51 @@ const Navbar: React.FC = () => {
               Work
             </Link>
             <div
-              onMouseEnter={toggleServicesMenu}
-              onMouseLeave={toggleServicesMenu}
-              onClick={() => handleMenuSelect("Services")}
+              onMouseEnter={openServicesMenu}
+              onMouseLeave={closeServicesMenu}
+              onClick={handleServicesClick}
               className={
-                selectedMenu === "Work"
-                  ? "font-bold"
-                  : "" +
-                    `relative  p-2 rounded-lg ${
-                      isServicesOpen ? "text-blue-700" : "text-gray-700"
-                    }`
+                (selectedMenu === "Services" ? "font-bold " : "") +
+                `relative p-2 rounded-lg ${
+                  isServicesOpen ? "text-blue-700" : "text-gray-700"
+                }`
               }
             >
               Services
               {isServicesOpen && (
-                <ul className="absolute z-10   top-full text-black left-0 bg-white shadow-md rounded-md w-40 overflow-hidden">
-                  <Link href={"/service/design"}>
-                    <li className="px-4 py-2 hover:bg-gray-200">Design</li>
-                  </Link>
-                  <Link href={"/service/technology"}>
-                    <li className="px-4 py-2 hover:bg-gray-200">Technology</li>
-                  </Link>
-                  <Link href={"/service/marketing"}>
-                    <li className="px-4 py-2 hover:bg-gray-200">Marketing</li>
-                  </Link>
-                  <Link href={"/service/consultancy"}>
-                    <li className="px-4 py-2 hover:bg-gray-200">Consultancy</li>
-                  </Link>
+                <ul className="absolute z-50 top-full text-black left-0 bg-white shadow-md rounded-md w-40 overflow-hidden">
+                  <li>
+                    <Link
+                      href={"/service/design"}
+                      className="block px-4 py-2 hover:bg-gray-200"
+                    >
+                      Design
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={"/service/technology"}
+                      className="block px-4 py-2 hover:bg-gray-200"
+                    >
+                      Technology
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={"/service/marketing"}
+                      className="block px-4 py-2 hover:bg-gray-200"
+                    >
+                      Marketing
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={"/service/consultancy"}
+                      className="block px-4 py-2 hover:bg-gray-200"
+                    >
+                      Consultancy
+                    </Link>
+                  </li>
                 </ul>
               )}
             </div>

@@ -8,9 +8,10 @@ const nextConfig = {
       "imgs.search.brave.com",
       "images.unsplash.com",
       "firebasestorage.googleapis.com",
+      "res.cloudinary.com"
     ],
   },
-  
+
   sassOptions: {
     includePaths: [path.join(process.cwd(), "styles")],
   },

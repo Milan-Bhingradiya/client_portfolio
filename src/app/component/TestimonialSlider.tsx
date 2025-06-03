@@ -94,7 +94,7 @@ const TestimonialSlider = () => {
   return (
     <div
       onMouseDown={handleMouseDown}
-      className="   mx-auto overflow-hidden relative mb-32  bg-[#dedfe7] "
+      className="   mx-auto overflow-hidden relative mb-32  "
       {...handlers}
     >
       {/* <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-10 font-bold">
@@ -113,7 +113,7 @@ const TestimonialSlider = () => {
         {testimonials.map((_, index) => (
           <span
             key={index}
-            className={`h-3 w-3 bg-gray-400 rounded-full mx-1 cursor-pointer ${
+            className={`h-3 w-3 rounded-full mx-1 cursor-pointer ${
               currentSlide === index ? "bg-red-500" : ""
             }`}
             onClick={() => handleDotClick(index)}

@@ -1,377 +1,535 @@
-// "use client"
+"use client";
 
-import React, { Suspense } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import OpicityAnimateText from "@/app/utility/OpicityAnimateText";
-
-import m1 from "@/../public/m_1.png";
-import m2 from "@/../public/m_2.png";
-import m3 from "@/../public/m_3.png";
 import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
-import { firestoreInstance } from "../../../../firebase-config";
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import Loading from "@/app/component/Loading";
-import { Interface } from "readline";
 import Link from "next/link";
-
-// const AnimatedImageSlider = withAnimation(ImageSlider);
-
-//   {
-//     "title": "SPS Canada",
-//     "desc": "SPS Canada is a team of independent and licensed professionals who have been trained on the latest legal and immigration processes and procedures to help individuals and families navigate smoothly to the complex process of migration to Canada.",
-//     "projectCompanyName": "SPS Canada",
-//     "projectCompanyDesc": " (removed per your request)",
-//     "work": [
-//         "UI/UX",
-//         "Web",
-//         "Branding",
-//         "Development"
-//     ],
-//     "scopeOfWorkLine": "We combined UI/UX design, illustration, and development to deliver a powerful digital solution.",
-//     "scopeOfWork": [
-//         "Deliverable 1",
-//         "Deliverable 2"
-//     ],
-//     "projectGoalLine": "Guide users through our services and capture leads for seamless migration support.",
-//     "projectGoal": [
-//         "Increase user engagement",
-//         "Improve conversion rate",
-//         "Brand Awareness"
-//     ],
-//     "screens": [
-//         "Homepage wireframe"
-//     ],
-//     "researchLine": "We conducted user research (18-55 age group) to identify pain points during the Canadian visa application process.",
-//     "keepTakeAway": [
-//         "Too many documents",
-//         "No idea about the process",
-//         "No guidance for applying",
-//         "Costly agent fees"
-//     ],
-//     "resultStatistics": [
-//         { percentage: "49%", description: "Increase In Conversion Rate" },
-//         { percentage: "17%", description: "Reduced Bounce Rate" },
-//         { percentage: "3200+", description: "Average Visitors On Site" }
-//     ]
-// }
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 interface RouteParams {
   params: {
-    [key: string]: string; // Dynamic string type for all parameters
+    [key: string]: string;
   };
 }
 
-// const getProjectById = async (id: string) => {
-//     await dbConnect();
-//     let res = null;
-//     try {
-//         res = await Project.findById(id);
-//         if (res == null) {
-//             return false;
-//         }
-//         return res;
-//     } catch (error) {
-//         console.log(error)
-//         return false;
-//     }
-// }
-
-const project = {
-  id: "ggn39j52Mp3b4jWI3fS8",
-  title: "UI/UX",
-  projectCompanyName: "Apple",
-  projectCompanyDesc:
-    "our company is mainly in web and mobile application devlopment using native and cross platform like flutter and firebase , we devlope efficient app .",
-  thumbnail:
-    "https://firebasestorage.googleapis.com/v0/b/smitshah-portfolio.appspot.com/o/Difi%20studd%2F101fcece-7ba2-432f-bf40-35252d09c8fa-Screenshot%20from%202024-06-05%2000-40-14.png?alt=media&token=7507a042-1e07-4ea9-9dd6-298a7f4507f8",
-  resultStatistics: [
-    { number: "500+", description: "Downloads" },
-    { number: "10000+", description: "Impressions" },
-    { description: "avg ad", number: "10+" },
-  ],
-  scopeOfWork: [],
-  projectDesc:
-    "our company is mainly in web and mobile application devlopment using native and cross platform like flutter and firebase , we devlope efficient app .",
-  industryName: "Mobile",
-  screens: [
-    "https://firebasestorage.googleapis.com/v0/b/smitshah-portfolio.appspot.com/o/Difi%20studd%2F07be82a1-1a63-4ac1-a540-2fa78b5dc93b-Screenshot%20from%202024-06-05%2000-40-44.png?alt=media&token=338a8265-74e1-46da-8c4c-b85faedaeaa2",
-    "https://firebasestorage.googleapis.com/v0/b/smitshah-portfolio.appspot.com/o/Difi%20studd%2Ff8a8ebd0-2b3e-44ae-b6e9-14be1a99b7ff-Screenshot%20from%202024-06-05%2000-41-08.png?alt=media&token=32bfd07a-7bb1-432a-9f1f-c3620f17a4d5",
-    "https://firebasestorage.googleapis.com/v0/b/smitshah-portfolio.appspot.com/o/Difi%20studd%2F0033f2e1-207a-40f8-a69d-55b86948b2c2-Screenshot%20from%202024-06-05%2000-41-22.png?alt=media&token=358393cf-1d52-4961-9582-8063f9bdcc1b",
-    "https://firebasestorage.googleapis.com/v0/b/smitshah-portfolio.appspot.com/o/Difi%20studd%2Fca609389-f81b-41a9-b545-3383f8d54f9a-Screenshot%20from%202024-06-05%2000-41-27.png?alt=media&token=890f15a9-82e4-4599-b91b-e30ba714142c",
-  ],
-};
-
-const getOneProject = async (id: string) => {
-  const docRef = doc(firestoreInstance, "projects", id); // Replace with your collection name
-  try {
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists!) {
-      return docSnap.data();
-    } else {
-      return false;
-      console.log("No document found with the provided ID.");
-    }
-  } catch (error) {
-    return false;
-    console.error("Error fetching document:", error);
-  }
-};
-
-// dynmaic get id and show in dive next js
-
-const challenges = [
-  "Deciphering and translating Peeyo’s essence into a cohesive visual identity.",
-  "Designing packaging that not only showcased the product but also communicated the brand’s essence.",
-  "Creating a harmonious colour palette to align with Peeyo’s unique canned mocktail packaging.",
-  "Balancing distinct flavour representations while maintaining a cohesive brand image across the product line.",
-];
-interface restype {
+interface IProject {
   title: string;
-  thumbnail: string;
+  client: string;
+  description: string;
+  images: string[];
   industryName: string;
-  projectCompanyName: string;
+  companyName: string;
   solution: string;
-  screens: string[];
-  chellenges: string[];
+  show_in_home_page: boolean;
+  challenges: string[];
 }
 
-async function page({ params }: RouteParams) {
-  let res = await getOneProject(params.productid);
-  if (!res) {
-    return <div>Project not found</div>;
+function ProjectPage({ params }: RouteParams) {
+  const [project, setProject] = useState<IProject | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [activeSection, setActiveSection] = useState(0);
+  const { scrollYProgress } = useScroll();
+
+  // Parallax effects
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  const headerY = useTransform(scrollYProgress, [0, 0.1], [0, -50]);
+
+  // Color animation
+  const gradientColors = [
+    ["#FF5F6D", "#FFC371"],
+    ["#4158D0", "#C850C0"],
+    ["#3EECAC", "#EE74E1"],
+    ["#FA8BFF", "#2BD2FF"],
+    ["#FF3CAC", "#784BA0"],
+  ];
+
+  const [colorIndex, setColorIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setColorIndex((prev) => (prev + 1) % gradientColors.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const getOneProject = async (id: string) => {
+      try {
+        setLoading(true);
+        const res = await fetch(
+          `https://smit-shah-backend-80da1d71856d.herokuapp.com/getproject/${id}`,
+          {
+            cache: "no-store",
+          }
+        );
+        if (!res.ok) {
+          setLoading(false);
+          return;
+        }
+        const data = await res.json();
+        setProject(data.project as IProject);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching project:", error);
+        setLoading(false);
+      }
+    };
+
+    getOneProject(params.productid);
+  }, [params.productid]);
+
+  if (loading) {
+    return <Loading />;
   }
 
-  console.log(res);
+  if (!project) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-3xl font-bold mb-4">Project not found</h1>
+        <Link href="/" className="text-blue-500 hover:underline">
+          Return to home
+        </Link>
+      </div>
+    );
+  }
 
   return (
-    <Suspense fallback={<Loading />}>
-      <div className="m-2 sm:m-16   ">
-        <div className="mx-2 sm:mx-10 mb-5  ">
-          <div className="sm:p-5 pb-0 text-2xl sm:text-4xl font-bold">
-            client
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="relative"
+      >
+        {/* Animated gradient background */}
+        <motion.div
+          className="fixed inset-0 -z-10"
+          animate={{
+            background: `linear-gradient(135deg, ${gradientColors[colorIndex][0]} 0%, ${gradientColors[colorIndex][1]} 100%)`,
+          }}
+          transition={{ duration: 2 }}
+          style={{ opacity: 0.05 }}
+        />
+
+        {/* Hero section */}
+        <motion.div
+          style={{ opacity: headerOpacity, y: headerY }}
+          className="relative h-[70vh] flex items-center justify-center overflow-hidden"
+        >
+          <div className="absolute inset-0 z-0">
+            {project.images && project.images[0] && (
+              <Image
+                src={project.images[0] || "/placeholder.svg"}
+                alt={project.title || "Project banner"}
+                layout="fill"
+                objectFit="cover"
+                className="opacity-70"
+                priority
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/20" />
           </div>
-          <div className="sm:pl-5 pt-4 text-3xl  sm:text-7xl  font-bold">
-            {res.projectCompanyName}
+
+          <div className="container mx-auto px-4 z-10 text-white">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-sm font-medium uppercase tracking-wider mb-2"
+            >
+              {project.industryName}
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 max-w-4xl"
+            >
+              {project.client || project.companyName}
+            </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="max-w-2xl text-lg text-white/80"
+            >
+              {project.description}
+            </motion.div>
           </div>
-        </div>
-        {/* ---------------------------------------- */}
-        {/* section 1  Main Banner  */}
-        {/* ---------------------------------------- */}
 
-        {/* section 1 banner */}
+          <motion.div
+            className="absolute bottom-10 left-0 right-0 flex justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5 }}
+            >
+              <ChevronDown className="w-8 h-8 text-white/70" />
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
-        <div className=" h-[250px] sm:h-[450px] w-[100%] relative   bg-slate-200  overflow-hidden">
-          <Image
-            className=""
-            src={res.thumbnail}
-            layout="fill"
-            alt="banner"
-          ></Image>
-        </div>
+        {/* Challenges section */}
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="max-w-3xl mx-auto"
+            >
+              <div className="inline-block px-3 py-1 rounded-full bg-red-50 text-red-500 font-medium text-sm mb-6">
+                Challenges
+              </div>
 
-        {/* ---------------------------------------- */}
-        {/* section 2   chelleges /}
-        {/* ---------------------------------------- */}
+              <h2 className="text-3xl md:text-4xl font-bold mb-12">
+                Overcoming obstacles to deliver exceptional results
+              </h2>
 
-        <div className=" text-black p-6 my-10 sm:m-10">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-3xl  font-bold text-red-500 m-5">
-              Chellenges
+              <div className="space-y-8">
+                {project.challenges &&
+                  project.challenges.map((challenge, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex gap-6 group"
+                    >
+                      <div className="flex-shrink-0">
+                        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-red-400 to-pink-500 text-white font-bold">
+                          {String(index + 1).padStart(2, "0")}
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-lg leading-relaxed">{challenge}</p>
+                        <motion.div
+                          className="h-px bg-gray-200 mt-6"
+                          initial={{ scaleX: 0 }}
+                          whileInView={{ scaleX: 1 }}
+                          viewport={{ once: true }}
+                          transition={{
+                            delay: index * 0.1 + 0.3,
+                            duration: 0.5,
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                  ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Image gallery section 1 */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row gap-6">
+              <motion.div
+                className="w-full md:w-1/2 h-[400px] relative rounded-2xl overflow-hidden"
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                {project.images && project.images[1] && (
+                  <Image
+                    src={project.images[1] || "/placeholder.svg"}
+                    alt="Project visual"
+                    layout="fill"
+                    objectFit="cover"
+                    className="transition-transform duration-700 hover:scale-105"
+                  />
+                )}
+              </motion.div>
+
+              <motion.div
+                className="w-full md:w-1/2 h-[400px] relative rounded-2xl overflow-hidden"
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                {project.images && project.images[2] && (
+                  <Image
+                    src={project.images[2] || "/placeholder.svg"}
+                    alt="Project visual"
+                    layout="fill"
+                    objectFit="cover"
+                    className="transition-transform duration-700 hover:scale-105"
+                  />
+                )}
+              </motion.div>
             </div>
-            <div className="border-gray-700">
-              {challenges.map((challenge, index) => (
-                <div
-                  key={index}
-                  className="challenge flex items-start py-4 border-b border-gray-700"
+          </div>
+        </section>
+
+        {/* Solution section */}
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="max-w-3xl mx-auto"
+            >
+              <div className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-500 font-medium text-sm mb-6">
+                Solution
+              </div>
+
+              <h2 className="text-3xl md:text-4xl font-bold mb-8">
+                Our approach
+              </h2>
+
+              <div className="prose prose-lg">
+                <p className="text-lg leading-relaxed text-gray-700">
+                  {project.solution}
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Image gallery section 2 */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <motion.div
+              className="w-full h-[500px] relative rounded-2xl overflow-hidden"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              {project.images && project.images[3] && (
+                <Image
+                  src={project.images[3] || "/placeholder.svg"}
+                  alt="Project visual"
+                  layout="fill"
+                  objectFit="cover"
+                  className="transition-transform duration-700 hover:scale-105"
+                />
+              )}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Results section */}
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16"
+            >
+              <div className="inline-block px-3 py-1 rounded-full bg-green-50 text-green-500 font-medium text-sm mb-6">
+                Results
+              </div>
+
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Measurable impact
+              </h2>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <motion.div
+                className="flex flex-col items-center text-center p-8 rounded-2xl hover:shadow-xl transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                whileHover={{ y: -5 }}
+              >
+                <div className="w-20 h-20 mb-6">
+                  <Image
+                    src="/m_1.png"
+                    alt="Brand Awareness"
+                    width={80}
+                    height={80}
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2">
+                  Increased Brand Awareness
+                </h3>
+                <p className="text-gray-600">
+                  Significant growth in brand recognition and market presence
+                </p>
+              </motion.div>
+
+              <motion.div
+                className="flex flex-col items-center text-center p-8 rounded-2xl hover:shadow-xl transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                whileHover={{ y: -5 }}
+              >
+                <div className="w-20 h-20 mb-6">
+                  <Image
+                    src="/m_2.png"
+                    alt="Improved Sales"
+                    width={80}
+                    height={80}
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Improved Sales</h3>
+                <p className="text-gray-600">
+                  Substantial increase in conversion rates and revenue
+                </p>
+              </motion.div>
+
+              <motion.div
+                className="flex flex-col items-center text-center p-8 rounded-2xl hover:shadow-xl transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                whileHover={{ y: -5 }}
+              >
+                <div className="w-20 h-20 mb-6">
+                  <Image
+                    src="/m_3.png"
+                    alt="Better Value"
+                    width={80}
+                    height={80}
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Better Value</h3>
+                <p className="text-gray-600">
+                  Enhanced customer satisfaction and long-term loyalty
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA section */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <motion.div
+              className="relative overflow-hidden rounded-3xl"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-600" />
+
+              <motion.div
+                className="absolute inset-0"
+                animate={{
+                  backgroundPosition: ["0% 0%", "100% 100%"],
+                  opacity: [0.1, 0.3, 0.1],
+                }}
+                transition={{
+                  duration: 10,
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatType: "reverse",
+                }}
+                style={{
+                  backgroundImage:
+                    'url("data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%23ffffff" fillOpacity="0.1" fillRule="evenodd"/%3E%3C/svg%3E")',
+                  backgroundSize: "30%",
+                }}
+              />
+
+              <div className="relative py-16 px-8 md:px-16 text-white">
+                <div className="max-w-3xl">
+                  <motion.h2
+                    className="text-3xl md:text-4xl font-bold mb-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    Make the Move
+                  </motion.h2>
+
+                  <motion.h3
+                    className="text-xl font-semibold mb-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    REACH OUT
+                  </motion.h3>
+
+                  <motion.p
+                    className="text-lg mb-8 text-white/90 max-w-2xl"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    If you're looking for a holistic agency to work on your big
+                    dream, just say the magic words!
+                  </motion.p>
+
+                  <motion.button
+                    className="group flex items-center gap-2 bg-white text-pink-600 font-semibold py-3 px-6 rounded-full hover:bg-opacity-90 transition-all"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    LET'S COLLABORATE
+                    <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* More projects section */}
+        <section className="py-24 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <motion.div
+              className="mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-2xl font-bold">More</h2>
+              <h3 className="text-3xl text-gray-400 font-bold">Good Stuff</h3>
+            </motion.div>
+
+            {/* Here you would add a carousel or grid of other projects */}
+            <div className="text-center py-8">
+              <Link href="/">
+                <motion.button
+                  className="group flex items-center gap-2 mx-auto bg-black text-white font-semibold py-3 px-6 rounded-full hover:bg-gray-800 transition-all"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <div className="text-gray-400 font-bold text-xl mr-4">
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <div className="text-base leading-relaxed">{challenge}</div>
-                </div>
-              ))}
+                  View All Projects
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </motion.button>
+              </Link>
             </div>
           </div>
-        </div>
-
-        {/* ---------------------------------------- */}
-        {/* section 3  2 img*/}
-        {/* ---------------------------------------- */}
-
-        <div className="flex flex-col sm:flex-row  h-[800px] sm:h-[400px] justify-center gap-4  w-[100%] ">
-          {/* first img */}
-          <div className="   relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 ">
-            <Image
-              className=""
-              src={res.screens[0]}
-              alt="banner"
-              layout="fill"
-              objectFit="cover"
-            ></Image>
-          </div>
-
-          {/* second img */}
-          <div className="  relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 ">
-            <Image
-              className=""
-              src={res.screens[1]}
-              layout="fill"
-              alt="banner"
-            ></Image>
-          </div>
-        </div>
-        {/* ---------------------------------------- */}
-        {/* section 4   SOlution*/}
-        {/* ---------------------------------------- */}
-
-        <div className="flex flex-col my-14 m-4">
-          <div className="text-2xl my-5 ">Industry : {res.industryName}</div>
-          <div className="text-2xl font-bold ">Solution</div>
-          <div className=" ">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum quis
-            deleniti dolorem aperiam corrupti a, incidunt suscipit nesciunt
-            repudiandae ullam necessitatibus, et cupiditate officiis ea odit ab,
-            dignissimos sed iste?Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Laboriosam, at! Odio totam sunt maiores corporis
-            eum, ipsa quod. Autem magnam, temporibus totam consectetur veniam
-            hic. Animi eligendi deleniti quam debitis. Lorem ipsum dolor sit
-            amet consectetur adipisicing elit. Repellat voluptas, nam blanditiis
-            officiis a velit rerum pariatur voluptatibus consequuntur
-            voluptatum. Accusamus est consequatur, eveniet voluptates
-            exercitationem soluta beatae. Asperiores, ex.lorem3 Lorem ipsum
-            dolor sit amet consectetur, adipisicing elit. Ipsam unde sed magni
-            reiciendis velit nihil, enim, cupiditate aliquam ea doloribus
-            repellat dolorem at dolore similique saepe quibusdam necessitatibus
-            obcaecati dignissimos?
-          </div>
-        </div>
-        {/* ---------------------------------------- */}
-        {/* section 5   2 img
-        {/* ---------------------------------------- */}
-
-        <div className="flex flex-col sm:flex-row  justify-center gap-4 h-[800px] sm:h-[400px] w-[100%] ">
-          {/* first img */}
-          <div className="   relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 ">
-            <Image
-              className=""
-              src={res.screens[2]}
-              alt="banner"
-              layout="fill"
-              objectFit="cover"
-            ></Image>
-          </div>
-
-          {/* second img */}
-          <div className="  relative h-[400px] w-[100%] sm:w-1/2   bg-slate-200 ">
-            <Image
-              className=""
-              src={res.screens[3]}
-              layout="fill"
-              alt="banner"
-            ></Image>
-          </div>
-        </div>
-        {/* ---------------------------------------- */}
-        {/* section 6  3 LOGO*/}
-        {/* ---------------------------------------- */}
-
-        {/* <ScopeOfWork2></ScopeOfWork2> */}
-        <div className="flex flex-col sm:flex-row justify-center gap-10 items-center h-screen bg-white">
-          <div className="flex flex-col items-center h-[150px] w-[200px]">
-            <div className="h-[100px] w-[100px]">
-              <Image src={m1} alt="m1" height={150} width={150}></Image>
-            </div>
-            <span className="text-xl">Increased Brand Awareness</span>
-          </div>
-          <div className="flex flex-col items-center h-[150px] w-[200px] ">
-            <div className="h-[100px] w-[100px]">
-              <Image src={m2} alt="m1" height={150} width={150}></Image>
-            </div>
-            <span className="text-xl">Improved Sales</span>
-          </div>
-          <div className="flex flex-col items-center h-[150px] w-[200px] ">
-            <div className="h-[100px] w-[100px]">
-              <Image src={m3} alt="m1" height={150} width={150}></Image>
-            </div>
-            <span className="text-xl">Better Value</span>
-          </div>
-        </div>
-        {/* ---------------------------------------- */}
-        {/* section 7  3 LOGO*/}
-        {/* ---------------------------------------- */}
-        <div className="bg-pink-500 text-white p-6 rounded-lg  mx-auto sm:mt-10">
-          <h2 className="text-2xl font-bold mb-2">Make the Move</h2>
-          <h3 className="text-lg font-semibold mb-2">REACH OUT</h3>
-          <p className="mb-4">
-            If you’re looking for a holistic agency to work on your big dream,
-            just say the magic words!
-          </p>
-          <button className="bg-transparent text-white font-semibold py-2 px-4 border border-white rounded-lg hover:bg-white hover:text-pink-500">
-            LET’S COLLABORATE
-          </button>
-        </div>
-
-        {/* ---------------------------------------- */}
-        {/* section 8 more stuff*/}
-        {/* ---------------------------------------- */}
-        <div className="flex flex-col my-14 m-4">
-          <div className="text-2xl my-1 ">More</div>
-          <div className="text-2xl text-gray-400 font-bold ">Good Stuff</div>
-        </div>
-
-        <div className="flex flex-row flex-wrap">
-          <div className=" m-3   w-[350px]">
-            <Link href={"./work/" + project.id}>
-              <article className="relative h-[300px] isolate flex flex-col just    ify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 ">
-                <Image
-                  src={project.thumbnail}
-                  alt="University of Southern California"
-                  className="absolute inset-0 h-full w-full object-cover"
-                  width={200}
-                  height={200}
-                ></Image>
-                <div className="absolute inset-0 bottom-[0px] bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
-                <h3 className="z-10 mt-8  text-3xl font-bold text-white">
-                  {project.title}
-                </h3>
-                <div className="z-10 bottom-0 text-red-400 overflow-hidden text-sm  text- font-bold">
-                  {" "}
-                  {"for " + project.projectCompanyName + " company"}{" "}
-                </div>
-              </article>
-            </Link>
-          </div>
-          <div className=" m-3   w-[350px]">
-            <Link href={"/work/" + project.id}>
-              <article className="relative h-[300px] isolate flex flex-col just    ify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 ">
-                <Image
-                  src={project.thumbnail}
-                  alt="University of Southern California"
-                  className="absolute inset-0 h-full w-full object-cover"
-                  width={200}
-                  height={200}
-                ></Image>
-                <div className="absolute inset-0 bottom-[0px] bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
-                <h3 className="z-10 mt-8  text-3xl font-bold text-white">
-                  {project.title}
-                </h3>
-                <div className="z-10 bottom-0 text-red-400 overflow-hidden text-sm  text- font-bold">
-                  {" "}
-                  {"for " + project.projectCompanyName + " company"}{" "}
-                </div>
-              </article>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </Suspense>
+        </section>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
-export default page;
+export default ProjectPage;
