@@ -4,32 +4,43 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import design1 from "../../../../public/design_loti.json";
-import figma from "../../../../public/figma.png";
-import sketch from "../../../../public/sketch.png";
-import xd from "../../../../public/xd.png";
-import zeplin from "../../../../public/zeplin.png";
-import invision from "../../../../public/invision.png";
+
 import { Sparkles } from "lucide-react";
 
 const services = [
-  "UI/UX Design",
-  "Wireframing",
-  "Prototyping",
-  "Design Systems",
-  "Brand Identity",
-  "Interaction Design",
-  "User Research",
-  "Usability Testing",
-  "Design Audits",
-  "Accessibility",
+  { name: "UI/UX Design", icon: "🖌️" },
+  { name: "Wireframing", icon: "📝" },
+  { name: "Prototyping", icon: "📐" },
+  { name: "Design Systems", icon: "🧩" },
+  { name: "Brand Identity", icon: "🏷️" },
+  { name: "Interaction Design", icon: "🤝" },
+  { name: "User Research", icon: "🔬" },
+  { name: "Usability Testing", icon: "🧪" },
+  { name: "Design Audits", icon: "🔎" },
+  { name: "Accessibility", icon: "♿" },
 ];
 
 const tools = [
-  { name: "Figma", img: figma },
-  { name: "Sketch", img: sketch },
-  { name: "Adobe XD", img: xd },
-  { name: "Zeplin", img: zeplin },
-  { name: "InVision", img: invision },
+  {
+    name: "Figma",
+    img: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
+  },
+  {
+    name: "Sketch",
+    img: "https://upload.wikimedia.org/wikipedia/commons/5/59/Sketch_Logo.svg",
+  },
+  {
+    name: "Adobe XD",
+    img: "https://upload.wikimedia.org/wikipedia/commons/c/c2/Adobe_XD_CC_icon.svg",
+  },
+  {
+    name: "Zeplin",
+    img: "https://seeklogo.com/images/Z/zeplin-logo-CA3C558C6B-seeklogo.com.png",
+  },
+  {
+    name: "InVision",
+    img: "https://upload.wikimedia.org/wikipedia/commons/6/6e/InVision-logo.svg",
+  },
 ];
 
 const steps = [
@@ -269,13 +280,10 @@ function Page() {
                   type: "spring",
                 }}
               >
-                <div className="mb-4">
-                  <span className="text-4xl">🎨</span>
-                </div>
+                <span className="text-5xl mb-4">{service.icon}</span>
                 <p className="font-bold text-lg text-blue-600 mb-2 tracking-wide drop-shadow">
-                  {service}
+                  {service.name}
                 </p>
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-24 border-b-2 border-dotted border-blue-400 mt-2"></div>
               </motion.div>
             ))}
           </div>
@@ -311,6 +319,7 @@ function Page() {
                   width={60}
                   height={60}
                   className="rounded-xl shadow-lg"
+                  unoptimized
                 />
                 <span className="mt-4 text-lg font-semibold text-gray-700">
                   {tool.name}
