@@ -172,7 +172,7 @@ function Footer() {
         </div>
 
         <div className="bg-black/5 p-6 text-center">
-          <span>©kpiTotal. All rights reserved 2024 Copyright</span>
+          <span>©kpiTotal. All rights reserved 2025 Copyright</span>
           <a className="font-semibold" href="https://tw-elements.com/"></a>
         </div>
       </footer>

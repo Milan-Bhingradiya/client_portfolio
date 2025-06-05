@@ -8,7 +8,6 @@ import Link from "next/link";
 import Loading from "./component/Loading";
 import {
   ArrowRight,
-  Star,
   Users,
   Award,
   Zap,
@@ -17,11 +16,17 @@ import {
   Smartphone,
   Globe,
   CheckCircle,
-  Quote,
   Play,
   Heart,
   Coffee,
   Lightbulb,
+  Brain,
+  Rocket,
+  RotateCcw,
+  Handshake,
+  Target,
+  TrendingUp,
+  ShoppingCart,
 } from "lucide-react";
 import Section1 from "./work/component/Section1";
 
@@ -32,7 +37,6 @@ import three from "../../public/3.png";
 import four from "../../public/4.png";
 import six from "../../public/6.png";
 import seven from "../../public/7.png";
-import end from "../../public/end.jpeg";
 import smit from "../../public/smit.jpeg";
 
 function Page() {
@@ -199,6 +203,54 @@ function Page() {
     { step: "05", title: "Launch", desc: "Delivering exceptional results" },
   ];
 
+  // Kpitotal core offerings
+  const coreOfferings = [
+    {
+      icon: Target,
+      title: "Brand Building",
+      desc: "Craft a distinct, memorable identity that resonates with both customers and stakeholders. We transform businesses into brands that command loyalty and market share.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Marketing Strategy",
+      desc: "Your growth deserves more than ad-hoc tactics. We build comprehensive, data-backed marketing strategies that align with your business goals and unlock sustainable results.",
+    },
+    {
+      icon: ShoppingCart,
+      title: "Cracking D2C",
+      desc: "We specialize in helping legacy and B2B brands crack the D2C code — from channel strategy and digital shelf optimization to performance marketing and retention.",
+    },
+    {
+      icon: Zap,
+      title: "Marketing Automation",
+      desc: "Increase marketing ROI by automating repetitive tasks, integrating tools, and streamlining workflows — freeing your team to focus on what moves the needle.",
+    },
+  ];
+
+  // Kpitotal why work with us
+  const whyWorkWithUs = [
+    {
+      icon: Brain,
+      title: "Strategic Mindset",
+      desc: "We don't just execute — we guide.",
+    },
+    {
+      icon: Rocket,
+      title: "Growth-Obsessed",
+      desc: "Your next 100 crores is our focus.",
+    },
+    {
+      icon: RotateCcw,
+      title: "Efficiency Experts",
+      desc: "Automation and optimization are baked into our DNA.",
+    },
+    {
+      icon: Handshake,
+      title: "Trusted Partners",
+      desc: "We work like an extension of your internal team.",
+    },
+  ];
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       {/* Progress bar */}
@@ -236,7 +288,7 @@ function Page() {
         <motion.div whileHover={{ scale: 1.2 }}>
           <Image
             className="blackfilter"
-            src={one}
+            src={one || "/placeholder.svg"}
             alt="ms"
             width={80}
             height={80}
@@ -245,7 +297,7 @@ function Page() {
         <motion.div whileHover={{ scale: 1.2 }}>
           <Image
             className="blackfilter"
-            src={two}
+            src={two || "/placeholder.svg"}
             alt="ms"
             width={80}
             height={80}
@@ -254,7 +306,7 @@ function Page() {
         <motion.div whileHover={{ scale: 1.2 }}>
           <Image
             className="blackfilter"
-            src={three}
+            src={three || "/placeholder.svg"}
             alt="ms"
             width={80}
             height={80}
@@ -263,7 +315,7 @@ function Page() {
         <motion.div className="block" whileHover={{ scale: 1.2 }}>
           <Image
             className="blackfilter"
-            src={four}
+            src={four || "/placeholder.svg"}
             alt="ms"
             width={80}
             height={80}
@@ -272,7 +324,7 @@ function Page() {
         <motion.div className="block" whileHover={{ scale: 1.2 }}>
           <Image
             className="blackfilter"
-            src={six}
+            src={six || "/placeholder.svg"}
             alt="ms"
             width={80}
             height={80}
@@ -281,7 +333,7 @@ function Page() {
         <motion.div className="block" whileHover={{ scale: 1.2 }}>
           <Image
             className="blackfilter"
-            src={seven}
+            src={seven || "/placeholder.svg"}
             alt="ms"
             width={60}
             height={80}
@@ -350,6 +402,167 @@ function Page() {
           className="absolute bottom-20 right-10 w-16 h-16 bg-blue-200 rounded-full opacity-60"
           animate={{ y: [0, 20, 0], rotate: [0, -180, -360] }}
           transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY }}
+        />
+      </section>
+
+      {/* NEW SECTION: Kpitotal Marketing */}
+      <section className="py-24 bg-gradient-to-br from-purple-50 to-blue-50 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.h2
+              className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              Scaling Ambitious Brands with Strategy, Structure, and Smart
+              Marketing
+            </motion.h2>
+
+            <motion.p
+              className="text-xl text-gray-600 max-w-4xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              We help growth-stage companies build powerful brands, engineer
+              high-impact marketing strategies, and automate for efficiency — so
+              you can scale without limits.
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
+            <div className="bg-white p-8 rounded-2xl shadow-xl">
+              <h3 className="text-2xl font-bold mb-6 text-center">
+                What We Do
+              </h3>
+              <p className="text-gray-600 leading-relaxed text-lg">
+                At Kpitotal, we partner with companies crossing the ₹100 Cr
+                threshold to accelerate their next phase of growth. Our work
+                isn't about guesswork or fluff — it's rooted in strategic
+                clarity, operational efficiency, and bold execution.
+              </p>
+            </div>
+          </motion.div>
+
+          <h3 className="text-2xl font-bold mb-8 text-center">
+            Our Core Offerings
+          </h3>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20"
+          >
+            {coreOfferings.map((offering, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                whileHover={{ y: -5 }}
+              >
+                <div className="flex items-start gap-6">
+                  <div className="flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
+                      <offering.icon className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold mb-4">{offering.title}</h3>
+                    <p className="text-gray-600">{offering.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-3xl p-10 text-white"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+          >
+            <h3 className="text-2xl font-bold mb-10 text-center">
+              Why Work With Us?
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {whyWorkWithUs.map((item, index) => (
+                <motion.div
+                  key={index}
+                  className="text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 * index + 0.6 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <item.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h4 className="text-lg font-bold mb-2">{item.title}</h4>
+                  <p className="text-blue-100">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              className="mt-12 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1 }}
+            >
+              <h3 className="text-xl font-semibold mb-6">Let's Talk Growth</h3>
+              <p className="text-blue-100 mb-8">
+                Whether you're restructuring your marketing engine or preparing
+                for your next leap, we're ready to help.
+              </p>
+              <Link href="#contact">
+                <motion.button
+                  className="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Book a consultation →
+                </motion.button>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Decorative elements */}
+        <motion.div
+          className="absolute top-40 right-10 w-64 h-64 bg-blue-200 rounded-full opacity-30 blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.3, 0.2],
+          }}
+          transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY }}
+        />
+        <motion.div
+          className="absolute bottom-40 left-10 w-80 h-80 bg-purple-200 rounded-full opacity-30 blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.3, 0.2, 0.3],
+          }}
+          transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY }}
         />
       </section>
 
@@ -496,7 +709,8 @@ function Page() {
                         <Image
                           src={
                             project.images[0] ||
-                            "/placeholder.svg?height=500&width=400"
+                            "/placeholder.svg?height=500&width=400" ||
+                            "/placeholder.svg"
                           }
                           alt={project.title || "Project thumbnail"}
                           className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
@@ -792,82 +1006,11 @@ function Page() {
         </div>
       </section>
 
-      {/* Section 10: Blog Preview */}
-      {/* <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Latest Insights
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Stay updated with the latest trends and insights from our team.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "The Future of Web Design",
-                excerpt:
-                  "Exploring upcoming trends that will shape the digital landscape.",
-                date: "Dec 15, 2024",
-                image: "/placeholder.svg?height=200&width=400",
-              },
-              {
-                title: "Mobile-First Development",
-                excerpt:
-                  "Why mobile-first approach is crucial for modern applications.",
-                date: "Dec 10, 2024",
-                image: "/placeholder.svg?height=200&width=400",
-              },
-              {
-                title: "Brand Identity in Digital Age",
-                excerpt:
-                  "Creating memorable brand experiences in the digital world.",
-                date: "Dec 5, 2024",
-                image: "/placeholder.svg?height=200&width=400",
-              },
-            ].map((post, index) => (
-              <motion.article
-                key={index}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-              >
-                <Image
-                  src={post.image || "/placeholder.svg"}
-                  alt={post.title}
-                  width={400}
-                  height={200}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <div className="text-sm text-gray-500 mb-2">{post.date}</div>
-                  <h3 className="text-xl font-bold mb-3">{post.title}</h3>
-                  <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                  <Link
-                    href="#"
-                    className="text-blue-500 font-semibold hover:underline"
-                  >
-                    Read More →
-                  </Link>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
       {/* Section 11: Contact CTA */}
-      <section className="py-20 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+      <section
+        id="contact"
+        className="py-20 bg-gradient-to-r from-purple-600 to-pink-600 text-white"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -980,7 +1123,7 @@ function Page() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 DesignStudio. All rights reserved.</p>
+            <p>&copy; 2025 DesignStudio. All rights reserved.</p>
           </div>
         </div>
       </footer>
