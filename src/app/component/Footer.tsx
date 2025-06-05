@@ -87,44 +87,8 @@ function Footer() {
                 results.
               </p>
             </div>
+
             <div>
-              <h6 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
-                Skills
-              </h6>
-              <p className="mb-4">
-                <a href="#!">SEO</a>
-              </p>
-              <p className="mb-4">
-                <a href="#!">Marketing</a>
-              </p>
-              <p className="mb-4">
-                <a href="#!">Devlopment</a>
-              </p>
-              <p>
-                <a href="#!">UI/UX</a>
-              </p>
-            </div>
-            <div>
-              <h6 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
-                Useful links
-              </h6>
-              <p className="mb-4">
-                <a href="/service/design">Design</a>
-              </p>
-              <p className="mb-4">
-                <a href="/service/marketing">Marketing</a>
-              </p>
-              <p className="mb-4">
-                <a href="/service/technology">Technology</a>
-              </p>
-              <p>
-                <a href="/service/consultancy">Consultancy</a>
-              </p>
-            </div>
-            <div>
-              <h6 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
-                Contact
-              </h6>
               <p className="mb-4 flex items-center justify-center md:justify-start">
                 <span className="me-3 [&>svg]:h-5 [&>svg]:w-5">
                   <svg
