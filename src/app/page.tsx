@@ -370,9 +370,9 @@ function Page() {
               transition={{ delay: 1.2 }}
               className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Link href="/contactus">
+              <Link href="/contactus" className="w-full sm:w-auto">
                 <motion.button
-                  className="group bg-black text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2"
+                  className="group bg-black text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 w-full sm:w-auto"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -484,30 +484,6 @@ function Page() {
               Let&apos;s collaborate to bring your vision to life. Get in touch
               with us today!
             </p>
-            <motion.div
-              className="mt-12 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 1 }}
-            >
-              <h3 className="text-xl font-semibold mb-6">
-                Let&apos;s Talk Growth
-              </h3>
-              <p className="text-blue-100 mb-8">
-                Whether you&apos;re restructuring your marketing engine or
-                preparing for your next leap, we&apos;re ready to help.
-              </p>
-              <Link href="#contact">
-                <motion.button
-                  className="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Book a consultation →
-                </motion.button>
-              </Link>
-            </motion.div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button
