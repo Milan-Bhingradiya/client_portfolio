@@ -232,7 +232,7 @@ function Page() {
     {
       icon: Brain,
       title: "Strategic Mindset",
-      desc: "We don't just execute — we guide.",
+      desc: "We don&apos;t just execute — we guide.",
     },
     {
       icon: Rocket,
@@ -452,8 +452,8 @@ function Page() {
               <p className="text-gray-600 leading-relaxed text-lg">
                 At Kpitotal, we partner with companies crossing the ₹100 Cr
                 threshold to accelerate their next phase of growth. Our work
-                isn't about guesswork or fluff — it's rooted in strategic
-                clarity, operational efficiency, and bold execution.
+                isn&apos;t about guesswork or fluff — it&apos;s rooted in
+                strategic clarity, operational efficiency, and bold execution.
               </p>
             </div>
           </motion.div>
@@ -529,10 +529,12 @@ function Page() {
               viewport={{ once: true }}
               transition={{ delay: 1 }}
             >
-              <h3 className="text-xl font-semibold mb-6">Let's Talk Growth</h3>
+              <h3 className="text-xl font-semibold mb-6">
+                Let&apos;s Talk Growth
+              </h3>
               <p className="text-blue-100 mb-8">
-                Whether you're restructuring your marketing engine or preparing
-                for your next leap, we're ready to help.
+                Whether you&apos;re restructuring your marketing engine or
+                preparing for your next leap, we&apos;re ready to help.
               </p>
               <Link href="#contact">
                 <motion.button
