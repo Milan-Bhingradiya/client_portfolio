@@ -63,7 +63,7 @@ export default function KpitotalLanding() {
     {
       icon: Brain,
       title: "Strategic Mindset",
-      description: "We don't just execute — we guide.",
+      description: "We don&apos;t just execute — we guide.",
     },
     {
       icon: Rocket,
@@ -169,8 +169,8 @@ export default function KpitotalLanding() {
               <p className="text-xl text-gray-600 leading-relaxed">
                 At Kpitotal, we partner with companies crossing the ₹100 Cr
                 threshold to accelerate their next phase of growth. Our work
-                isn't about guesswork or fluff — it's rooted in strategic
-                clarity, operational efficiency, and bold execution.
+                isn&apos;t about guesswork or fluff — it&apos;s rooted in
+                strategic clarity, operational efficiency, and bold execution.
               </p>
             </div>
           </motion.div>
@@ -279,11 +279,11 @@ export default function KpitotalLanding() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-              Let's Talk Growth
+              Let&apos;s Talk Growth
             </h2>
             <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-              Whether you're restructuring your marketing engine or preparing
-              for your next leap, we're ready to help.
+              Whether you&apos;re restructuring your marketing engine or
+              preparing for your next leap, we&apos;re ready to help.
             </p>
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
