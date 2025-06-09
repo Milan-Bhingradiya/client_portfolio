@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Animated_text from "./component/Animated_text";
 import Link from "next/link";
@@ -38,6 +38,7 @@ import four from "../../public/4.png";
 import six from "../../public/6.png";
 import seven from "../../public/7.png";
 import smit from "../../public/smit.jpeg";
+import Section2 from "./work/component/Section2";
 
 function Page() {
   const [homeProjects, setHomeProjects] = useState<any[]>([]);
@@ -251,6 +252,11 @@ function Page() {
     },
   ];
 
+  // section 2 ma ue thay chhe
+  const designRef = useRef<HTMLDivElement>(null);
+  const technologyRef = useRef<HTMLDivElement>(null);
+  const businessRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       {/* Progress bar */}
@@ -260,7 +266,7 @@ function Page() {
       />
 
       {/* Animated background gradient */}
-      <motion.div
+      {/* <motion.div
         className="fixed inset-0 -z-10 opacity-20"
         animate={{
           background: [
@@ -274,7 +280,7 @@ function Page() {
           repeat: Number.POSITIVE_INFINITY,
           repeatType: "reverse",
         }}
-      />
+      /> */}
 
       <Section1></Section1>
 
@@ -342,6 +348,52 @@ function Page() {
       </div>
       {/* //////////////////////////////// */}
 
+      {/* About Section */}
+      <section className="relative z-20 py-20 px-6 lg:px-12">
+        <div className="max-w-6xl mx-auto">
+          <div className="mx-6 sm:mx-20 mt-0 mb-12">
+            <Animated_text
+              text={
+                "We are a global creative agency that combines design expertise with technology and intelligence."
+              }
+              mode={"multi"}
+              weight={"font-extrabold"}
+              size={"text-4xl lg:text-6xl"}
+              space={true}
+            />
+          </div>
+
+          {/* Three Circles Illustration */}
+          <div className="flex justify-center items-center my-20">
+            <div className="relative">
+              <div className="flex items-center space-x-8">
+                <div className="w-32 h-32 border-4 border-black rounded-full flex items-center justify-center">
+                  <div className="w-16 h-16 bg-red-500 rounded-full"></div>
+                </div>
+                <div className="w-40 h-40 border-4 border-black rounded-full flex items-center justify-center">
+                  <div className="relative w-24 h-24">
+                    <div className="absolute top-0 left-0 w-full h-1/2 bg-purple-500 rounded-t-full"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-1/2 bg-red-500 rounded-b-full"></div>
+                  </div>
+                </div>
+                <div className="w-32 h-32 border-4 border-black rounded-full flex items-center justify-center">
+                  <div className="w-16 h-16 bg-blue-500 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* //////////////////////////////////////////////////////////////////////////////////// */}
+
+      <Section2
+        designRef={designRef}
+        technologyRef={technologyRef}
+        businessRef={businessRef}
+      ></Section2>
+      {/* //////////////////////////////////////////////////////////////////////////////////// */}
+
       {/* Section 1: Hero */}
       <section className="min-h-screen flex items-center justify-center relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -353,42 +405,6 @@ function Page() {
               size={"text-4xl sm:text-5xl md:text-6xl lg:text-7xl"}
               space={true}
             />
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-              className="mt-8 text-xl text-gray-600 max-w-3xl mx-auto"
-            >
-              Transforming ideas into exceptional digital experiences through
-              innovative design and cutting-edge technology.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-              className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
-            >
-              <Link href="/contactus" className="w-full sm:w-auto">
-                <motion.button
-                  className="group bg-black text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 w-full sm:w-auto"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Start Your Project
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </motion.button>
-              </Link>
-              <motion.button
-                className="group border-2 border-black text-black px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Play className="w-4 h-4" />
-                Watch Our Story
-              </motion.button>
-            </motion.div>
           </div>
         </div>
 
@@ -467,10 +483,7 @@ function Page() {
       </section>
 
       {/* Section 11: Contact CTA */}
-      <section
-        id="contact"
-        className="py-20 bg-gradient-to-r from-purple-600 to-pink-600 text-white"
-      >
+      <section id="contact" className="py-20  h-[400px] ju">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -487,7 +500,7 @@ function Page() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button
-                className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2"
+                className="border-2    px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -506,7 +519,9 @@ function Page() {
             <div>
               <h3 className="text-2xl font-bold mb-4">DesignStudio</h3>
               <p className="text-gray-400 mb-4">
-                Creating exceptional digital experiences that drive results.
+                Elevate your digital presence with KPI Agency: SEO mastery,
+                targeted marketing, and seamless development for unparalleled
+                results.
               </p>
               <div className="flex gap-4">
                 {/* Social media icons would go here */}
@@ -565,18 +580,14 @@ function Page() {
             <div>
               <h4 className="text-lg font-semibold mb-4">Contact</h4>
               <div className="space-y-2 text-gray-400">
-                <div>hello@designstudio.com</div>
-                <div>+1 (555) 123-4567</div>
-                <div>
-                  123 Design Street
-                  <br />
-                  Creative City, CC 12345
-                </div>
+                <div> info@kpitotal.com</div>
+                <div> + 91 7678004443</div>
+                <div>ahmedabad</div>
               </div>
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 DesignStudio. All rights reserved.</p>
+            <span> &copy; kpiTotal. All rights reserved 2025 Copyright</span>
           </div>
         </div>
       </footer>

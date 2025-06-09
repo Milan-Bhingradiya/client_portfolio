@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -67,7 +66,7 @@ function Section2({
   ];
   useEffect(() => {
     // console.log("useEffect");
-    if (typeof window === "undefined") return;
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const windowHeight =
@@ -76,6 +75,7 @@ function Section2({
       if (designRef.current) {
         const rect = designRef.current.getBoundingClientRect();
         const isScrollingDown = currentScrollY > lastScrollY;
+        const isScrollingUp = currentScrollY < lastScrollY;
 
         if (isScrollingDown && rect.top <= 200) {
           setshowImg(true);
@@ -124,10 +124,10 @@ function Section2({
           setimgIndex(1);
         } else if (
           !isScrollingDown &&
-          rect.top >= 200 &&
+          rect.top >= 100 &&
           rect.top < window.innerHeight
         ) {
-          setimgIndex(0);
+          setimgIndex(1);
 
           setshowTechnology(false);
         }
@@ -151,8 +151,9 @@ function Section2({
           rect.top >= 200 &&
           rect.top < window.innerHeight
         ) {
-          setimgIndex(1);
-
+          console.log("xxxxx");
+          setimgIndex(2);
+          setshowImg(true);
           setshowBusiness(false);
         }
         setLastScrollY(currentScrollY);
@@ -160,17 +161,11 @@ function Section2({
     };
 
     window.addEventListener("scroll", handleScroll);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [
-    lastScrollY,
-    designRef,
-    technologyRef,
-    businessRef,
-    setballVisible,
-    setstaticTitleBallVisible,
-  ]);
+  }, [lastScrollY]);
 
   const designtext = [
     "UI Design",
@@ -196,7 +191,6 @@ function Section2({
   ];
 
   useEffect(() => {
-    if (typeof document === "undefined") return;
     let timeoutIds: NodeJS.Timeout[] = [];
     const listItems = document.querySelectorAll("#design-list li");
     const firstPlayer = document.getElementById("firstPlayer");
@@ -226,7 +220,6 @@ function Section2({
   }, [showSubText]);
 
   useEffect(() => {
-    if (typeof document === "undefined") return;
     let timeoutIds: NodeJS.Timeout[] = [];
     const listItems = document.querySelectorAll("#technology-list li");
     const secondPlayer = document.getElementById("secondPlayer");
@@ -255,7 +248,6 @@ function Section2({
   }, [showTechnology]);
 
   useEffect(() => {
-    if (typeof document === "undefined") return;
     let timeoutIds: NodeJS.Timeout[] = [];
     const listItems = document.querySelectorAll("#marketing-list li");
     const thirdPlayer = document.getElementById("thirdPlayer");

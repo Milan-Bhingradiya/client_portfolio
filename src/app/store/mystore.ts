@@ -1,4 +1,4 @@
-import { create } from "zustand"
+import { create } from "zustand";
 
 export const mystore = create((set) => ({
   isLoading: false,
@@ -19,4 +19,4 @@ export const mystore = create((set) => ({
   staticTitleBallVisible: false,
   setstaticTitleBallVisible: (bool: any) =>
     set({ staticTitleBallVisible: bool }),
-}))
+}));

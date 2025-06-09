@@ -60,13 +60,14 @@ const Navbar: React.FC = () => {
 
         <div className="hidden sm:block  ">
           <div className="flex flex-row gap-4 md:gap-8 lg:gap-10  items-center">
-            <Link
+            {/* <Link
               href={"/work"}
               className={selectedMenu === "Work" ? "font-bold" : ""}
               onClick={() => handleMenuSelect("Work")}
             >
               Work
-            </Link>
+            </Link> */}
+
             <div
               onMouseEnter={openServicesMenu}
               onMouseLeave={closeServicesMenu}

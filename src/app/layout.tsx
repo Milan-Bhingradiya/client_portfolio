@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./component/Navbar";
 import GlobalData from "./context/globalData";
-import Footer from "./component/Footer";
 import Loading from "./component/Loading";
 import { mystore } from "./store/mystore";
 
@@ -34,7 +33,6 @@ export default function RootLayout({
           <Navbar></Navbar>
           {children}
         </GlobalData>
-        <Footer></Footer>
       </body>
     </html>
   );
