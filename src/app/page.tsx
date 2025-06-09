@@ -252,6 +252,9 @@ function Page() {
     },
   ];
 
+  const topRow = ["FMCG", "Food & Beverages", "Healthcare", "Real Estate"];
+  const bottomRow = ["Technology", "Engineering", "Finance", "& More.."];
+
   // section 2 ma ue thay chhe
   const designRef = useRef<HTMLDivElement>(null);
   const technologyRef = useRef<HTMLDivElement>(null);
@@ -351,33 +354,33 @@ function Page() {
       {/* About Section */}
       <section className="relative z-20 py-20 px-6 lg:px-12">
         <div className="max-w-6xl mx-auto">
-          <div className="mx-6 sm:mx-20 mt-0 mb-12">
+          <div className="mx-4 sm:mx-10 md:mx-20 mt-0 mb-8 sm:mb-12">
             <Animated_text
               text={
                 "We are a global creative agency that combines design expertise with technology and intelligence."
               }
               mode={"multi"}
               weight={"font-extrabold"}
-              size={"text-4xl lg:text-6xl"}
+              size={"text-2xl sm:text-3xl md:text-4xl lg:text-6xl"}
               space={true}
             />
           </div>
 
           {/* Three Circles Illustration */}
-          <div className="flex justify-center items-center my-20">
+          <div className="flex justify-center items-center my-10 sm:my-20">
             <div className="relative">
-              <div className="flex items-center space-x-8">
-                <div className="w-32 h-32 border-4 border-black rounded-full flex items-center justify-center">
-                  <div className="w-16 h-16 bg-red-500 rounded-full"></div>
+              <div className="flex flex-col sm:flex-row items-center sm:space-x-8 space-y-8 sm:space-y-0">
+                <div className="w-24 h-24 sm:w-32 sm:h-32 border-4 border-black rounded-full flex items-center justify-center">
+                  <div className="w-10 h-10 sm:w-16 sm:h-16 bg-red-500 rounded-full"></div>
                 </div>
-                <div className="w-40 h-40 border-4 border-black rounded-full flex items-center justify-center">
-                  <div className="relative w-24 h-24">
+                <div className="w-28 h-28 sm:w-40 sm:h-40 border-4 border-black rounded-full flex items-center justify-center">
+                  <div className="relative w-16 h-16 sm:w-24 sm:h-24">
                     <div className="absolute top-0 left-0 w-full h-1/2 bg-purple-500 rounded-t-full"></div>
                     <div className="absolute bottom-0 left-0 w-full h-1/2 bg-red-500 rounded-b-full"></div>
                   </div>
                 </div>
-                <div className="w-32 h-32 border-4 border-black rounded-full flex items-center justify-center">
-                  <div className="w-16 h-16 bg-blue-500 rounded-full"></div>
+                <div className="w-24 h-24 sm:w-32 sm:h-32 border-4 border-black rounded-full flex items-center justify-center">
+                  <div className="w-10 h-10 sm:w-16 sm:h-16 bg-blue-500 rounded-full"></div>
                 </div>
               </div>
             </div>
@@ -420,6 +423,32 @@ function Page() {
           transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY }}
         />
       </section>
+
+      <div className="w-full max-w-6xl mx-auto px-4 py-6 my-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 text-center relative">
+          {/* Mobile vertical line (between 2 columns) */}
+          <div className="absolute inset-y-0 left-1/2 w-px bg-gray-300 lg:hidden" />
+
+          {/* Top Row (first 4 items) */}
+          {topRow.map((item, index) => (
+            <div key={index} className="font-bold text-2xl lg:text-3xl z-10">
+              {item}
+            </div>
+          ))}
+
+          {/* Horizontal line between rows (only on lg+) */}
+          <div className="col-span-2 lg:col-span-4 hidden lg:block">
+            <div className="border-t border-gray-400 my-2" />
+          </div>
+
+          {/* Bottom Row (last 4 items) */}
+          {bottomRow.map((item, index) => (
+            <div key={index} className="font-bold text-2xl lg:text-3xl z-10">
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Section 2: Stats */}
       <section className="py-20 bg-black text-white">
