@@ -367,24 +367,6 @@ function Page() {
           </div>
 
           {/* Three Circles Illustration */}
-          <div className="flex justify-center items-center my-10 sm:my-20">
-            <div className="relative">
-              <div className="flex flex-col sm:flex-row items-center sm:space-x-8 space-y-8 sm:space-y-0">
-                <div className="w-24 h-24 sm:w-32 sm:h-32 border-4 border-black rounded-full flex items-center justify-center">
-                  <div className="w-10 h-10 sm:w-16 sm:h-16 bg-red-500 rounded-full"></div>
-                </div>
-                <div className="w-28 h-28 sm:w-40 sm:h-40 border-4 border-black rounded-full flex items-center justify-center">
-                  <div className="relative w-16 h-16 sm:w-24 sm:h-24">
-                    <div className="absolute top-0 left-0 w-full h-1/2 bg-purple-500 rounded-t-full"></div>
-                    <div className="absolute bottom-0 left-0 w-full h-1/2 bg-red-500 rounded-b-full"></div>
-                  </div>
-                </div>
-                <div className="w-24 h-24 sm:w-32 sm:h-32 border-4 border-black rounded-full flex items-center justify-center">
-                  <div className="w-10 h-10 sm:w-16 sm:h-16 bg-blue-500 rounded-full"></div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 

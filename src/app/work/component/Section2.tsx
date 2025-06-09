@@ -279,11 +279,11 @@ function Section2({
     <div className="">
       {/* 11----------------------------------------------------------------------------------- */}
 
-      <div className=" flex flex-row    mt-10   sm:px-28 ">
+      <div className="flex flex-row mt-10 sm:px-40">
         <div
-          className={`flex flex-col w-[100%] sm:w-[50%]    ${
+          className={`flex flex-col w-[100%] sm:w-[50%] ${
             showSubText ? "sm:m-10" : "sm:m-4"
-          } `}
+          }`}
         >
           <div
             ref={designRef}
@@ -332,11 +332,11 @@ function Section2({
       {/* ----------------------------------------------------------------------------------- */}
 
       {/*22 ----------------------------------------------------------------------------------- */}
-      <div className="flex flex-row    sm:px-28">
+      <div className="flex flex-row sm:px-40">
         <div
-          className={`flex flex-col w-[100%] sm:w-[50%]    ${
+          className={`flex flex-col w-[100%] sm:w-[50%] ${
             showTechnology ? "sm:m-10" : "sm:m-4"
-          } `}
+          }`}
         >
           <div
             ref={technologyRef}
@@ -384,11 +384,11 @@ function Section2({
       {/* ----------------------------------------------------------------------------------- */}
 
       {/* 33----------------------------------------------------------------------------------- */}
-      <div className="flex flex-row sm:px-28">
+      <div className="flex flex-row sm:px-40">
         <div
-          className={`flex flex-col w-[100%] sm:w-[50%]    ${
+          className={`flex flex-col w-[100%] sm:w-[50%] ${
             showBusiness ? "sm:m-10" : "sm:m-4"
-          } `}
+          }`}
         >
           <div
             ref={businessRef}

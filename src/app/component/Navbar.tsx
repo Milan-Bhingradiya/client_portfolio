@@ -53,13 +53,20 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="h-[90px] w-[100%] items-center flex ">
-      <div className=" mx-5 sm:mx-20 md:mx-26 lg:mx-32  w-[100%]   flex flex-row justify-between items-center">
+      <div className=" mx-5 sm:mx-20 md:mx-26 lg:mx-32  w-[100%]   flex flex-row justify-betaven items-center">
         <Link href={"/"} className="m-2  text-2xl superBold">
           <Image src={logo} alt="Logo" width={100} height={100}></Image>
         </Link>
 
         <div className="hidden sm:block  ">
           <div className="flex flex-row gap-4 md:gap-8 lg:gap-10  items-center">
+            {/* <Link
+              href={"/work"}
+              className={selectedMenu === "Work" ? "font-bold" : ""}
+              onClick={() => handleMenuSelect("Work")}
+            >
+              Work
+            </Link> */}
             {/* <Link
               href={"/work"}
               className={selectedMenu === "Work" ? "font-bold" : ""}
