@@ -79,6 +79,7 @@ export default function BlogDetailPage({
           <circle cx="19" cy="12" r="2" fill="currentColor" />
         </svg>
       </button>
+
       {/* Share Popup */}
       <AnimatePresence>
         {showShare && (
@@ -205,57 +206,195 @@ export default function BlogDetailPage({
       </AnimatePresence>
 
       {/* Markdown Content */}
-      <div className="max-w-3xl mx-auto px-4">
-        <div
-          className="prose prose-xl max-w-none p-4 sm:p-8
-        prose-pre:bg-gray-900 prose-pre:text-white prose-code:text-pink-600 prose-img:rounded-xl
-        prose-table:table-auto prose-th:bg-gray-200 prose-th:p-2 prose-td:p-2 prose-td:border prose-td:border-gray-300
-        prose-p:my-6 prose-h1:mb-8 prose-h2:mb-7 prose-h3:mb-6 text-left"
-        >
+      <div className="max-w-4xl mx-auto px-4 pb-16">
+        <article className="prose prose-lg prose-gray max-w-none">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw, rehypeHighlight]}
             components={{
-              h1: ({ node, ...props }) => (
-                <>
-                  <div className="h-8" />
-                  <h1
-                    className="text-4xl font-bold mb-8 text-gray-900 text-left"
-                    {...props}
-                  />
-                </>
+              // Headers with proper spacing
+              h1: ({ children, ...props }) => (
+                <h1
+                  className="text-4xl font-bold mt-12 mb-8 text-gray-900 leading-tight"
+                  {...props}
+                >
+                  {children}
+                </h1>
               ),
-              h2: ({ node, ...props }) => (
-                <>
-                  <div className="h-6" />
-                  <h2
-                    className="text-3xl font-semibold mb-6 text-gray-800 text-left"
-                    {...props}
-                  />
-                </>
+              h2: ({ children, ...props }) => (
+                <h2
+                  className="text-3xl font-semibold mt-10 mb-6 text-gray-800 leading-tight"
+                  {...props}
+                >
+                  {children}
+                </h2>
               ),
-              table: ({ node, ...props }) => (
-                <div className="overflow-x-auto">
-                  <table {...props} />
+              h3: ({ children, ...props }) => (
+                <h3
+                  className="text-2xl font-semibold mt-8 mb-4 text-gray-800 leading-tight"
+                  {...props}
+                >
+                  {children}
+                </h3>
+              ),
+              h4: ({ children, ...props }) => (
+                <h4
+                  className="text-xl font-semibold mt-6 mb-3 text-gray-800 leading-tight"
+                  {...props}
+                >
+                  {children}
+                </h4>
+              ),
+
+              // Paragraphs with proper spacing
+              p: ({ children, ...props }) => (
+                <p
+                  className="text-lg leading-relaxed mb-6 text-gray-700"
+                  {...props}
+                >
+                  {children}
+                </p>
+              ),
+
+              // Lists with proper spacing
+              ul: ({ children, ...props }) => (
+                <ul
+                  className="list-disc list-inside mb-6 space-y-2 text-lg text-gray-700"
+                  {...props}
+                >
+                  {children}
+                </ul>
+              ),
+              ol: ({ children, ...props }) => (
+                <ol
+                  className="list-decimal list-inside mb-6 space-y-2 text-lg text-gray-700"
+                  {...props}
+                >
+                  {children}
+                </ol>
+              ),
+              li: ({ children, ...props }) => (
+                <li className="mb-1 leading-relaxed" {...props}>
+                  {children}
+                </li>
+              ),
+
+              // Blockquotes
+              blockquote: ({ children, ...props }) => (
+                <blockquote
+                  className="border-l-4 border-purple-500 pl-6 py-2 my-8 bg-gray-50 italic text-lg text-gray-700"
+                  {...props}
+                >
+                  {children}
+                </blockquote>
+              ),
+
+              // Code blocks with proper formatting
+              pre: ({ children, ...props }) => (
+                <pre
+                  className="bg-gray-900 text-white p-6 rounded-lg overflow-x-auto my-6 text-sm leading-relaxed"
+                  style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+                  {...props}
+                >
+                  {children}
+                </pre>
+              ),
+
+              // Inline code
+              code: ({ inline, children, ...props }) => {
+                if (inline) {
+                  return (
+                    <code
+                      className="bg-gray-100 text-pink-600 px-2 py-1 rounded text-sm font-mono"
+                      {...props}
+                    >
+                      {children}
+                    </code>
+                  );
+                }
+                return (
+                  <code
+                    className="text-white font-mono"
+                    style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+                    {...props}
+                  >
+                    {children}
+                  </code>
+                );
+              },
+
+              // Tables with better styling
+              table: ({ children, ...props }) => (
+                <div className="overflow-x-auto my-8">
+                  <table
+                    className="min-w-full border-collapse border border-gray-300 bg-white"
+                    {...props}
+                  >
+                    {children}
+                  </table>
                 </div>
               ),
-              pre: ({ node, ...props }) => (
-                <pre
+              th: ({ children, ...props }) => (
+                <th
+                  className="border border-gray-300 bg-gray-100 px-4 py-3 text-left font-semibold text-gray-900"
                   {...props}
-                  style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+                >
+                  {children}
+                </th>
+              ),
+              td: ({ children, ...props }) => (
+                <td
+                  className="border border-gray-300 px-4 py-3 text-gray-700"
+                  {...props}
+                >
+                  {children}
+                </td>
+              ),
+
+              // Images with better styling
+              img: ({ src, alt, ...props }) => (
+                <img
+                  src={src}
+                  alt={alt}
+                  className="rounded-xl shadow-lg my-8 w-full h-auto"
+                  {...props}
                 />
               ),
-              code: ({ node, ...props }) => (
-                <code
+
+              // Links
+              a: ({ children, href, ...props }) => (
+                <a
+                  href={href}
+                  className="text-purple-600 hover:text-purple-800 underline font-medium"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   {...props}
-                  style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
-                />
+                >
+                  {children}
+                </a>
+              ),
+
+              // Strong and emphasis
+              strong: ({ children, ...props }) => (
+                <strong className="font-bold text-gray-900" {...props}>
+                  {children}
+                </strong>
+              ),
+              em: ({ children, ...props }) => (
+                <em className="italic text-gray-700" {...props}>
+                  {children}
+                </em>
+              ),
+
+              // Horizontal rule
+              hr: ({ ...props }) => (
+                <hr className="my-8 border-t-2 border-gray-200" {...props} />
               ),
             }}
           >
             {blog.content}
           </ReactMarkdown>
-        </div>
+        </article>
       </div>
     </div>
   );
