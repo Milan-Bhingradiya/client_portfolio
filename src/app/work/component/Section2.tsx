@@ -288,7 +288,6 @@ function Section2({
             ref={designRef}
             className=" text-4xl sm:text-5xl superBold flex flex-row"
           >
-            {/* <div ref={designPointRef} className={`${staticTitleBallVisible ? '' : 'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-red-300" : ""}`}> { }</div> */}
             <div
               className={`border-dotted animate-spin  border-red-300 border-2 rounded-[50%] p-1 sm:p-2 m-4  `}
             >
@@ -354,8 +353,6 @@ function Section2({
             ref={technologyRef}
             className="text-4xl sm:text-5xl superBold mt-6 flex flex-row"
           >
-            {/* <div ref={technologyPointRef} className={`${staticTitleBallVisible ? '' : 'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-blue-300" : ""}`}> { }</div> */}
-
             <div
               className={`border-dotted animate-spin  border-blue-300 border-2 rounded-[50%] p-1 sm:p-2 m-4  `}
             >
@@ -367,29 +364,42 @@ function Section2({
               Technology
             </div>
           </div>
-          <ul
-            id="technology-list"
-            className=" mt-10 ml-12 space-y-2  h-[30vh] sm:h-[80vh]  "
-          >
-            {technologytext.map((name, index) => (
-              <li className="notshow-left text-xl" key={index}>
-                {name}
-              </li>
-            ))}
-          </ul>
-
-          <div
-            id="secondPlayer"
-            className=" notshow-left block sm:hidden h-[300px] w-[280px]  m-10"
-          >
-            <Player
-              // src='https://lottie.host/6ee4d5fc-4a27-4f56-96c2-40c5c0440fbf/jvysS84Gc9.json'
-              // src='https://lottie.host/3dac4db4-374a-48d1-a3e2-e705001a512e/FA8Be7ZiIf.json'
-              src={images[1]}
-              className="player"
-              loop
-              autoplay
-            />
+          {/* Mobile: image first, then list. Desktop: list then image */}
+          <div className="block sm:hidden">
+            <div
+              id="secondPlayer"
+              className="notshow-left h-[300px] w-[280px] m-10"
+            >
+              <Player src={images[1]} className="player" loop autoplay />
+            </div>
+            <ul
+              id="technology-list"
+              className="mt-4 ml-12 space-y-2 h-[30vh] sm:h-[80vh]"
+            >
+              {technologytext.map((name, index) => (
+                <li className="notshow-left text-xl" key={index}>
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="hidden sm:block">
+            <ul
+              id="technology-list"
+              className="mt-10 ml-12 space-y-2  h-[30vh] sm:h-[80vh]"
+            >
+              {technologytext.map((name, index) => (
+                <li className="notshow-left text-xl" key={index}>
+                  {name}
+                </li>
+              ))}
+            </ul>
+            <div
+              id="secondPlayer"
+              className="notshow-left h-[300px] w-[280px] m-10"
+            >
+              <Player src={images[1]} className="player" loop autoplay />
+            </div>
           </div>
         </div>
       </div>
@@ -406,8 +416,6 @@ function Section2({
             ref={businessRef}
             className="text-4xl sm:text-5xl superBold mt-6 flex flex-row"
           >
-            {/* <div ref={businessPointRef} className={` ${staticTitleBallVisible ? '' : 'opacity-0'} rounded-[50%] h-[50px] w-[50px] m-2 ${true ? "bg-green-300" : ""}`}> { }</div> */}
-
             <div
               className={`border-dotted animate-spin  border-green-300 border-2 rounded-[50%] p-1 sm:p-2 m-4  `}
             >
@@ -421,29 +429,42 @@ function Section2({
               Maketing
             </div>
           </div>
-          <ul
-            id="marketing-list"
-            className=" mt-10 ml-12 space-y-2  h-[30vh] sm:h-[80vh]  "
-          >
-            {businesstext.map((name, index) => (
-              <li className="notshow-left text-xl" key={index}>
-                {name}
-              </li>
-            ))}
-          </ul>
-
-          <div
-            id="thirdPlayer"
-            className=" notshow-left block sm:hidden h-[300px] w-[280px]  m-10"
-          >
-            <Player
-              // src='https://lottie.host/6ee4d5fc-4a27-4f56-96c2-40c5c0440fbf/jvysS84Gc9.json'
-              // src='https://lottie.host/3dac4db4-374a-48d1-a3e2-e705001a512e/FA8Be7ZiIf.json'
-              src={images[2]}
-              className="player "
-              loop
-              autoplay
-            />
+          {/* Mobile: image first, then list. Desktop: list then image */}
+          <div className="block sm:hidden">
+            <div
+              id="thirdPlayer"
+              className="notshow-left h-[300px] w-[280px] m-10"
+            >
+              <Player src={images[2]} className="player" loop autoplay />
+            </div>
+            <ul
+              id="marketing-list"
+              className="mt-4 ml-12 space-y-2 h-[30vh] sm:h-[80vh]"
+            >
+              {businesstext.map((name, index) => (
+                <li className="notshow-left text-xl" key={index}>
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="hidden sm:block">
+            <ul
+              id="marketing-list"
+              className="mt-10 ml-12 space-y-2  h-[30vh] sm:h-[80vh]"
+            >
+              {businesstext.map((name, index) => (
+                <li className="notshow-left text-xl" key={index}>
+                  {name}
+                </li>
+              ))}
+            </ul>
+            <div
+              id="thirdPlayer"
+              className="notshow-left h-[300px] w-[280px] m-10"
+            >
+              <Player src={images[2]} className="player " loop autoplay />
+            </div>
           </div>
         </div>
       </div>
@@ -451,14 +472,7 @@ function Section2({
       {showImg && (
         <motion.div className=" hidden md:block md:fixed top-[50px] right-[200px]  z-10 h-1/4   flex-row justify-center  m-10">
           <div className="block h-1/4 w-[280px]  m-10">
-            <Player
-              // src='https://lottie.host/6ee4d5fc-4a27-4f56-96c2-40c5c0440fbf/jvysS84Gc9.json'
-              // src='https://lottie.host/3dac4db4-374a-48d1-a3e2-e705001a512e/FA8Be7ZiIf.json'
-              src={images[imgIndex]}
-              className="player"
-              loop
-              autoplay
-            />
+            <Player src={images[imgIndex]} className="player" loop autoplay />
           </div>
         </motion.div>
       )}
