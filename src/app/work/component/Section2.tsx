@@ -279,7 +279,7 @@ function Section2({
     <div className="">
       {/* 11----------------------------------------------------------------------------------- */}
 
-      <div className="flex flex-row mt-10 sm:px-40">
+      <div className="flex flex-row mt-10 sm:px-34">
         <div
           className={`flex flex-col w-[100%] sm:w-[50%] ${
             showSubText ? "sm:m-10" : "sm:m-4"

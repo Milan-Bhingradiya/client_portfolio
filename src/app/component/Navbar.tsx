@@ -68,6 +68,14 @@ const Navbar: React.FC = () => {
               Work
             </Link> */}
 
+            <Link
+              href={"/blogs"}
+              className={selectedMenu === "Blog" ? "font-bold" : ""}
+              onClick={() => handleMenuSelect("Blog")}
+            >
+              Blogs
+            </Link>
+
             <div
               onMouseEnter={openServicesMenu}
               onMouseLeave={closeServicesMenu}
