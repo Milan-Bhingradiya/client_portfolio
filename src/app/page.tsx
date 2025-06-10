@@ -39,6 +39,7 @@ import six from "../../public/6.png";
 import seven from "../../public/7.png";
 import smit from "../../public/smit.jpeg";
 import Section2 from "./work/component/Section2";
+import TestimonialSection from "./component/TestimonialSection";
 
 function Page() {
   const [homeProjects, setHomeProjects] = useState<any[]>([]);
@@ -522,6 +523,8 @@ function Page() {
           </motion.div>
         </div>
       </section>
+
+      <TestimonialSection />
 
       {/* Section 12: Footer */}
       <footer className="bg-black text-white py-16">
