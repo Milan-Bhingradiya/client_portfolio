@@ -7,25 +7,25 @@ import { FaArrowRight } from "react-icons/fa";
 const services = [
   {
     title: "Brand Building",
-    slug: "brand-building",
+    slug: "design",
     description:
       "Craft a distinct, memorable identity that resonates with both customers and stakeholders. We transform businesses into brands that command loyalty and market share.",
   },
   {
     title: "Marketing Strategy",
-    slug: "marketing-strategy",
+    slug: "marketing",
     description:
       "Your growth deserves more than ad-hoc tactics. We build comprehensive, data-backed marketing strategies that align with your business goals and unlock sustainable results.",
   },
   {
     title: "Cracking D2C",
-    slug: "cracking-d2c",
+    slug: "technology",
     description:
       "We specialize in helping legacy and B2B brands crack the D2C code — from channel strategy and digital shelf optimization to performance marketing and retention.",
   },
   {
     title: "Marketing Automation",
-    slug: "marketing-automation",
+    slug: "consultancy",
     description:
       "Increase marketing ROI by automating repetitive tasks, integrating tools, and streamlining workflows — freeing your team to focus on what moves the needle.",
   },
@@ -50,7 +50,7 @@ export default function ServiceSection() {
             transition={{ delay: index * 0.1, duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <Link href={`/services/${service.slug}`}>
+            <Link href={`/service/${service.slug}`}>
               <div className="bg-white text-black rounded-2xl p-6 md:p-8 shadow-xl hover:bg-gray-900 hover:text-white transition duration-300 group h-full flex flex-col justify-between">
                 <div>
                   <h3 className="text-2xl font-semibold mb-4 group-hover:text-white transition">

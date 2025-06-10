@@ -41,6 +41,7 @@ import smit from "../../public/smit.jpeg";
 import Section2 from "./work/component/Section2";
 import TestimonialSection from "./component/TestimonialSection";
 import ServiceSection from "./component/ServiceSection";
+import WhyWorkWithUs from "./component/WhyWorkWithUs";
 
 function Page() {
   const [homeProjects, setHomeProjects] = useState<any[]>([]);
@@ -254,7 +255,7 @@ function Page() {
     },
   ];
 
-  const topRow = ["FMCG", "Food & Beverages", "Healthcare", "Real Estate"];
+  const topRow = ["Food & Beverages", "FMCG", "Healthcare", "Real Estate"];
   const bottomRow = ["Technology", "Engineering", "Finance", "& More.."];
 
   // section 2 ma ue thay chhe
@@ -384,6 +385,7 @@ function Page() {
       {/* //////////////////////////////////// */}
 
       <ServiceSection />
+      <WhyWorkWithUs />
       {/* //////////////////////////////////// */}
       {/* Section 1: Hero */}
       <section className="min-h-screen flex items-center justify-center relative">

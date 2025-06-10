@@ -205,7 +205,7 @@ function Section2({
       if (firstPlayer != null) {
         setTimeout(() => {
           firstPlayer.classList.add("show-right");
-        }, listItems.length * 200); // Adjust the delay as needed
+        }, 100); // Adjust the delay as needed
       }
     } else {
       // Clear timeouts and remove the class if hiding
@@ -233,7 +233,7 @@ function Section2({
       if (secondPlayer != null) {
         setTimeout(() => {
           secondPlayer.classList.add("show-right");
-        }, listItems.length * 200); // Adjust the delay as needed
+        }, 100); // Adjust the delay as needed
       }
     } else {
       // Clear timeouts and remove the class if hiding
@@ -261,7 +261,7 @@ function Section2({
       if (thirdPlayer != null) {
         setTimeout(() => {
           thirdPlayer.classList.add("show-right");
-        }, listItems.length * 200); // Adjust the delay as needed
+        }, 100); // Adjust the delay as needed
       }
     } else {
       // Clear timeouts and remove the class if hiding
@@ -278,7 +278,7 @@ function Section2({
   return (
     <div className="">
       {/* 11----------------------------------------------------------------------------------- */}
-      <div className="flex flex-row mt-10 sm:px-36">
+      <div className="flex flex-row mt-10 mb-0 sm:px-36">
         <div
           className={`flex flex-col w-[100%] sm:w-[50%] ${
             showSubText ? "sm:m-10" : "sm:m-4"
