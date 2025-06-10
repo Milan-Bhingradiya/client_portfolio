@@ -278,7 +278,6 @@ function Section2({
   return (
     <div className="">
       {/* 11----------------------------------------------------------------------------------- */}
-
       <div className="flex flex-row mt-10 sm:px-36">
         <div
           className={`flex flex-col w-[100%] sm:w-[50%] ${
@@ -302,29 +301,42 @@ function Section2({
               Design
             </div>
           </div>
-          <ul
-            id="design-list"
-            className="design mt-10 ml-12 space-y-2  h-[30vh] sm:h-[80vh]  "
-          >
-            {designtext.map((name, index) => (
-              <li className="notshow-left text-xl" key={index}>
-                {name}
-              </li>
-            ))}
-          </ul>
-
-          <div
-            id="firstPlayer"
-            className="notshow-left  block sm:hidden h-[300px] w-[280px]  m-10"
-          >
-            <Player
-              // src='https://lottie.host/6ee4d5fc-4a27-4f56-96c2-40c5c0440fbf/jvysS84Gc9.json'
-              // src='https://lottie.host/3dac4db4-374a-48d1-a3e2-e705001a512e/FA8Be7ZiIf.json'
-              src={images[0]}
-              className="player"
-              loop
-              autoplay
-            />
+          {/* Mobile: image first, then list. Desktop: list then image */}
+          <div className="block sm:hidden">
+            <div
+              id="firstPlayer"
+              className="notshow-left h-[300px] w-[280px] m-10"
+            >
+              <Player src={images[0]} className="player" loop autoplay />
+            </div>
+            <ul
+              id="design-list"
+              className="design mt-4 ml-12 space-y-2 h-[30vh] sm:h-[80vh]"
+            >
+              {designtext.map((name, index) => (
+                <li className="notshow-left text-xl" key={index}>
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="hidden sm:block">
+            <ul
+              id="design-list"
+              className="design mt-10 ml-12 space-y-2 h-[30vh] sm:h-[80vh]"
+            >
+              {designtext.map((name, index) => (
+                <li className="notshow-left text-xl" key={index}>
+                  {name}
+                </li>
+              ))}
+            </ul>
+            <div
+              id="firstPlayer"
+              className="notshow-left h-[300px] w-[280px] m-10"
+            >
+              <Player src={images[0]} className="player" loop autoplay />
+            </div>
           </div>
         </div>
       </div>

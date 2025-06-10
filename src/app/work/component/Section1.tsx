@@ -25,7 +25,7 @@ function Section1() {
           />
         </div>
 
-        <div className="flex flex-col mt-10 justify-center superBold">
+        <div className="flex flex-col mt-10 m-6 justify-center superBold">
           <div>
             <Animated_text
               text={"Ideate | Connect | Automate"}

@@ -40,6 +40,7 @@ import seven from "../../public/7.png";
 import smit from "../../public/smit.jpeg";
 import Section2 from "./work/component/Section2";
 import TestimonialSection from "./component/TestimonialSection";
+import ServiceSection from "./component/ServiceSection";
 
 function Page() {
   const [homeProjects, setHomeProjects] = useState<any[]>([]);
@@ -380,6 +381,10 @@ function Page() {
       ></Section2>
       {/* //////////////////////////////////////////////////////////////////////////////////// */}
 
+      {/* //////////////////////////////////// */}
+
+      <ServiceSection />
+      {/* //////////////////////////////////// */}
       {/* Section 1: Hero */}
       <section className="min-h-screen flex items-center justify-center relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -408,25 +413,28 @@ function Page() {
       </section>
 
       <div className="w-full max-w-6xl mx-auto px-4 py-6 my-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 text-center relative">
-          {/* Mobile vertical line (between 2 columns) */}
-          <div className="absolute inset-y-0 left-1/2 w-px bg-gray-300 lg:hidden" />
-
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-y-4 text-left relative">
           {/* Top Row (first 4 items) */}
           {topRow.map((item, index) => (
-            <div key={index} className="font-bold text-2xl lg:text-3xl z-10">
+            <div
+              key={index}
+              className="font-bold text-2xl lg:text-3xl z-10 py-2 px-2 border-b border-gray-200 lg:border-none"
+            >
               {item}
             </div>
           ))}
 
           {/* Horizontal line between rows (only on lg+) */}
-          <div className="col-span-2 lg:col-span-4 hidden lg:block">
+          <div className="col-span-1 lg:col-span-4 hidden lg:block">
             <div className="border-t border-gray-400 my-2" />
           </div>
 
           {/* Bottom Row (last 4 items) */}
           {bottomRow.map((item, index) => (
-            <div key={index} className="font-bold text-2xl lg:text-3xl z-10">
+            <div
+              key={index}
+              className="font-bold text-2xl lg:text-3xl z-10 py-2 px-2 border-b border-gray-200 lg:border-none"
+            >
               {item}
             </div>
           ))}

@@ -301,7 +301,15 @@ export default function BlogDetailPage({
               ),
 
               // Inline code
-              code: ({ inline, children, ...props }) => {
+              code: ({
+                inline,
+                children,
+                ...props
+              }: {
+                inline?: boolean;
+                children?: React.ReactNode;
+                [key: string]: any;
+              }) => {
                 if (inline) {
                   return (
                     <code
