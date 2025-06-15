@@ -173,10 +173,44 @@ export default function TestimonialSection() {
                 </div>
                 <h3 className="text-2xl font-bold mb-2">Smit Shah</h3>
                 <p className="text-gray-600 mb-2">
-                  Founder, Head of KPI Total.
+                  Founder, Head of Kpitotal.
                 </p>
-                <p className="text-gray-600 mb-4">SEO and Marketing expert.</p>
-                <div className="text-blue-600 mb-4">in</div>
+                <p className="text-gray-600 mb-4">
+                  Marketing & Automation Expert
+                </p>
+                <a
+                  href="https://www.linkedin.com/in/connectsmit/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center mb-4 text-blue-600 hover:text-blue-800 transition"
+                  aria-label="LinkedIn"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-6 h-6 mr-1"
+                  >
+                    <rect
+                      width="20"
+                      height="20"
+                      x="2"
+                      y="2"
+                      rx="4"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8 11v5M8 8v.01M12 16v-5m0 0a2 2 0 1 1 4 0v5"
+                    />
+                  </svg>
+                  LinkedIn
+                </a>
                 <div className="flex space-x-2">
                   <div className="px-3 py-1 bg-gray-100 rounded text-sm">
                     SEO

@@ -10,6 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "/public/logo.svg";
 import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -80,46 +81,57 @@ const Navbar: React.FC = () => {
               onMouseEnter={openServicesMenu}
               onMouseLeave={closeServicesMenu}
               onClick={handleServicesClick}
-              className={
-                (selectedMenu === "Services" ? "font-bold " : "") +
-                `relative p-2 rounded-lg ${
-                  isServicesOpen ? "text-blue-700" : "text-gray-700"
-                }`
-              }
+              className={clsx(
+                "relative p-2 rounded-lg",
+                (pathname.startsWith("/service") || selectedMenu === "Services") && "font-bold text-blue-700",
+                // !pathname.startsWith("/service") && selectedMenu !== "Services" && "text-gray-700"
+              )}
             >
               Services
               {isServicesOpen && (
-                <ul className="absolute z-50 top-full text-black left-0 bg-white shadow-md rounded-md w-40 overflow-hidden">
+                <ul className="absolute z-50 top-full font-normal text-black left-0 bg-white shadow-md rounded-md w-40 overflow-hidden">
                   <li>
                     <Link
-                      href={"/service/design"}
-                      className="block px-4 py-2 hover:bg-gray-200"
+                      href={"/service/building"}
+                      className={clsx(
+                        "block px-4 py-2 hover:bg-gray-200",
+                        pathname === "/service/building" && "font-bold text-blue-700"
+                      )}
                     >
-                      Design
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href={"/service/technology"}
-                      className="block px-4 py-2 hover:bg-gray-200"
-                    >
-                      Technology
+                      Brand Building
                     </Link>
                   </li>
                   <li>
                     <Link
                       href={"/service/marketing"}
-                      className="block px-4 py-2 hover:bg-gray-200"
+                      className={clsx(
+                        "block px-4 py-2 hover:bg-gray-200",
+                        pathname === "/service/marketing" && "font-bold text-blue-700"
+                      )}
                     >
-                      Marketing
+                      Marketing Strategy
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href={"/service/consultancy"}
-                      className="block px-4 py-2 hover:bg-gray-200"
+                      href={"/service/d2c"}
+                      className={clsx(
+                        "block px-4 py-2 hover:bg-gray-200",
+                        pathname === "/service/d2c" && "font-bold text-blue-700"
+                      )}
                     >
-                      Consultancy
+                      Cracking D2C
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={"/service/automation"}
+                      className={clsx(
+                        "block px-4 py-2 hover:bg-gray-200",
+                        pathname === "/service/automation" && "font-bold text-blue-700"
+                      )}
+                    >
+                      Marketing Automation
                     </Link>
                   </li>
                 </ul>

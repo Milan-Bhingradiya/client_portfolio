@@ -375,11 +375,11 @@ function Page() {
 
       {/* //////////////////////////////////////////////////////////////////////////////////// */}
 
-      <Section2
+      {/* <Section2
         designRef={designRef}
         technologyRef={technologyRef}
         businessRef={businessRef}
-      ></Section2>
+      ></Section2> */}
       {/* //////////////////////////////////////////////////////////////////////////////////// */}
 
       {/* //////////////////////////////////// */}
@@ -415,30 +415,30 @@ function Page() {
       </section>
 
       <div className="w-full max-w-6xl mx-auto px-4 py-6 my-10">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-y-4 text-left relative">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-y-4 text-center lg:text-left relative">
           {/* Top Row (first 4 items) */}
           {topRow.map((item, index) => (
-            <div
-              key={index}
-              className="font-bold text-2xl lg:text-3xl z-10 py-2 px-2 border-b border-gray-200 lg:border-none"
-            >
-              {item}
-            </div>
+        <div
+          key={index}
+          className="font-bold text-2xl lg:text-3xl z-10 py-2 px-2 border-b border-gray-200 lg:border-none"
+        >
+          {item}
+        </div>
           ))}
 
           {/* Horizontal line between rows (only on lg+) */}
           <div className="col-span-1 lg:col-span-4 hidden lg:block">
-            <div className="border-t border-gray-400 my-2" />
+        <div className="border-t border-gray-400 my-2" />
           </div>
 
           {/* Bottom Row (last 4 items) */}
           {bottomRow.map((item, index) => (
-            <div
-              key={index}
-              className="font-bold text-2xl lg:text-3xl z-10 py-2 px-2 border-b border-gray-200 lg:border-none"
-            >
-              {item}
-            </div>
+        <div
+          key={index}
+          className="font-bold text-2xl lg:text-3xl z-10 py-2 px-2 border-b border-gray-200 lg:border-none"
+        >
+          {item}
+        </div>
           ))}
         </div>
       </div>

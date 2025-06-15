@@ -7,7 +7,7 @@ import { FaArrowRight } from "react-icons/fa";
 const services = [
   {
     title: "Brand Building",
-    slug: "design",
+    slug: "building",
     description:
       "Craft a distinct, memorable identity that resonates with both customers and stakeholders. We transform businesses into brands that command loyalty and market share.",
   },
@@ -19,13 +19,13 @@ const services = [
   },
   {
     title: "Cracking D2C",
-    slug: "technology",
+    slug: "d2c",
     description:
       "We specialize in helping legacy and B2B brands crack the D2C code — from channel strategy and digital shelf optimization to performance marketing and retention.",
   },
   {
     title: "Marketing Automation",
-    slug: "consultancy",
+    slug: "automation",
     description:
       "Increase marketing ROI by automating repetitive tasks, integrating tools, and streamlining workflows — freeing your team to focus on what moves the needle.",
   },
