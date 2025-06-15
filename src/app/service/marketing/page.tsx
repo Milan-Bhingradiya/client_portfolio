@@ -67,7 +67,7 @@ const approach = [
   {
     icon: <Map className="w-12 h-12 text-green-500" />,
     title: "Performance Measurement Framework",
-    desc: "With clear KPIs, dashboards, and reporting tools, we track every campaign's impact and use insights to continuously refine and improve your marketing efforts.",
+    desc: "With clear KPIs, dashboards, and reporting tools, we track every campaign&apos;s impact and use insights to continuously refine and improve your marketing efforts.",
     gradient: "from-green-500/10 to-green-600/20",
     iconBg: "bg-green-100",
   },
@@ -125,8 +125,8 @@ export default function Page() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              In today's fast-paced digital landscape, a clear and adaptive
-              marketing strategy is not optional—it's a growth essential. At{" "}
+              In today&apos;s fast-paced digital landscape, a clear and adaptive
+              marketing strategy is not optional—it&apos;s a growth essential. At{" "}
               <span className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Kpitotal
               </span>
@@ -195,7 +195,7 @@ export default function Page() {
                 Why Strategic Marketing Matters
               </h3>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                The numbers don't lie - strategic marketing delivers measurable
+                The numbers don&apos;t lie - strategic marketing delivers measurable
                 results
               </p>
             </div>
@@ -236,10 +236,10 @@ export default function Page() {
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-3xl blur-xl"></div>
               <div className="relative bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm rounded-3xl p-12 border border-white/40 shadow-2xl">
                 <h3 className="text-4xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent">
-                  Let's Build a Smarter Marketing Plan
+                  Let&apos;s Build a Smarter Marketing Plan
                 </h3>
                 <p className="text-xl text-gray-700 mb-10 max-w-3xl mx-auto leading-relaxed">
-                  Your growth deserves more than guesswork. Let's turn insight
+                  Your growth deserves more than guesswork. Let&apos;s turn insight
                   into action with a marketing strategy built to scale, pivot,
                   and outperform.
                 </p>

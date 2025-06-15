@@ -52,7 +52,7 @@ const approach = [
   {
     icon: <Puzzle className="w-12 h-12 text-purple-500" />,
     title: "Brand Experience Design",
-    desc: "A strong brand isn’t just what you say—it's how customers feel. We create cohesive, multi-platform brand experiences across websites, packaging, social media, and customer touchpoints to strengthen engagement and loyalty.",
+    desc: "A strong brand isn’t just what you say—it&apos;s how customers feel. We create cohesive, multi-platform brand experiences across websites, packaging, social media, and customer touchpoints to strengthen engagement and loyalty.",
     iconBg: "bg-purple-100",
   },
   {
@@ -220,7 +220,7 @@ export default function Page() {
                   Let’s Build Your Iconic Brand
                 </h3>
                 <p className="text-xl text-gray-700 mb-10 max-w-3xl mx-auto leading-relaxed">
-                  Whether you're launching, evolving, or redefining your brand, our experienced team is ready to help you lead your market with clarity and confidence.
+                  Whether you&apos;re launching, evolving, or redefining your brand, our experienced team is ready to help you lead your market with clarity and confidence.
                 </p>
                 <motion.a
                   href="#contact-us"

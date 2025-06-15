@@ -49,7 +49,7 @@ const approach = [
   {
     icon: <Cpu className="w-12 h-12 text-purple-500" />,
     title: "Platform Selection & Implementation",
-    desc: "Whether you're starting from scratch or upgrading systems, we help you select the right platform (e.g., HubSpot, Salesforce, Klaviyo, Active Campaign) and integrate it seamlessly with your CRM, CMS, and other tech tools to build a strong automation infrastructure.",
+    desc: "Whether you&apos;re starting from scratch or upgrading systems, we help you select the right platform (e.g., HubSpot, Salesforce, Klaviyo, Active Campaign) and integrate it seamlessly with your CRM, CMS, and other tech tools to build a strong automation infrastructure.",
     iconBg: "bg-purple-100",
   },
   {
@@ -223,7 +223,7 @@ export default function Page() {
                   Make Marketing Work Smarter, Not Harder
                 </h3>
                 <p className="text-xl text-gray-700 mb-10 max-w-3xl mx-auto leading-relaxed">
-                  Whether you're just getting started or scaling complex automation workflows, we’re here to help you unlock the power of automation to transform how you market.
+                  Whether you&apos;re just getting started or scaling complex automation workflows, we’re here to help you unlock the power of automation to transform how you market.
                 </p>
                 <motion.a
                   href="#contact-us"
