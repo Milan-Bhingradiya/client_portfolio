@@ -43,14 +43,14 @@ const Navbar: React.FC = () => {
   const toggleAboutMenu = () => setIsAboutOpen(!isAboutOpen);
 
   const pathname = usePathname();
-  const isOnServicePage = pathname.startsWith("/service");
+  // const isOnServicePage = pathname.startsWith("/service");
 
   // Open submenu by default on /service/* pages
-  useEffect(() => {
-    if (isOnServicePage) {
-      setIsServicesOpen(true);
-    }
-  }, [isOnServicePage]);
+  // useEffect(() => {
+  //   if (isOnServicePage) {
+  //     setIsServicesOpen(true);
+  //   }
+  // }, [isOnServicePage]);
 
   return (
     <div className="h-[90px] w-[100%] items-center flex ">
