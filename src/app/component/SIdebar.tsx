@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface SidebarProps {
   isOpen: boolean; // Flag indicating whether the sidebar is open
@@ -10,6 +12,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
+  const pathname = usePathname();
   const sidebarRef = React.createRef<HTMLDivElement>();
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const toggleServicesMenu = (e?: React.MouseEvent) => {
@@ -40,6 +43,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       }
     };
   }, [isOpen, sidebarRef, toggleSidebar]);
+  const services = [
+    { label: "Brand Building", href: "/service/building", color: "bg-[#E94772]/10 text-[#E94772]" },
+    { label: "Marketing Strategy", href: "/service/marketing", color: "bg-[#5A87C5]/10 text-[#5A87C5]" },
+    { label: "D2C Expert Services", href: "/service/d2c", color: "bg-[#219F89]/10 text-[#219F89]" },
+    { label: "Marketing Automation", href: "/service/automation", color: "bg-gradient-to-r from-[#E94772]/10 via-[#5A87C5]/10 to-[#219F89]/10 text-[#5A87C5]" },
+  ];
   return (
     <div
       ref={sidebarRef}
@@ -52,6 +61,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           Menu
         </h5>
       </div>
+
+
+        {/* Main menu close button */}
+        <button
+        onClick={toggleSidebar}
+        className="absolute top-4 right-4 z-20 text-[#E94772] hover:text-[#219F89] text-2xl font-bold bg-white/80 rounded-full px-3 py-1 shadow border border-[#E94772]/20"
+        aria-label="Close menu"
+      >
+        &times;
+      </button>
+      
       <nav className="p-2 text-base font-normal text-blue-gray-700">
         <div className="flex flex-col gap-1">
           {/* <Link
@@ -76,42 +96,45 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             role="button"
             onClick={toggleServicesMenu}
           >
+            
             <span>Services</span>
             {isServicesOpen ? <ExpandLess /> : <ExpandMore />}
           </div>
 
-          {isServicesOpen && (
-            <div className="flex flex-col top-full left-0 border-1 border-blue-gray-300 bg-white shadow-md rounded-md w-full overflow-hidden">
-              <Link
-                href="/service/design"
-                className="p-3 hover:bg-blue-gray-50"
-                onClick={toggleSidebar}
+          <AnimatePresence>
+            {isServicesOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col top-full left-0 bg-white rounded-md w-full overflow-hidden"
               >
-                Design
-              </Link>
-              <Link
-                href="/service/technology"
-                className="p-3 hover:bg-blue-gray-50"
-                onClick={toggleSidebar}
-              >
-                Technology
-              </Link>
-              <Link
-                href="/service/marketing"
-                className="p-3 hover:bg-blue-gray-50"
-                onClick={toggleSidebar}
-              >
-                Marketing
-              </Link>
-              <Link
-                href="/service/consultancy"
-                className="p-3 hover:bg-blue-gray-50"
-                onClick={toggleSidebar}
-              >
-                Consultancy
-              </Link>
-            </div>
-          )}
+                <div className="mt-1 ml-4 bg-white/80 rounded-lg  px-2">
+                  {services.map((s) => (
+                    <motion.div
+                      key={s.href}
+                      initial={{ scale: 0.95, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.95, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Link
+                        href={s.href}
+                        className={`block p-4 rounded-md m-2 font-semibold ${s.color} hover:scale-105 transition-all duration-200 border border-transparent hover:border-[#5A87C5]/30 ${
+                          pathname === s.href
+                            ? "ring-1 ring-[#219F89] bg-[#219F89]/10 text-[#219F89]"
+                            : ""
+                        }`}
+                      >
+                        {s.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <Link
             href={"/clients"}

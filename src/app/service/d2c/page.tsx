@@ -122,7 +122,9 @@ export default function Page() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              We transform brands into D2C powerhouses by eliminating middlemen and connecting you directly with your customers. Our expertise turns your products into experiences that consumers can’t resist.
+              We transform brands into D2C powerhouses by eliminating middlemen
+              and connecting you directly with your customers. Our expertise
+              turns your products into experiences that consumers can’t resist.
             </motion.p>
           </div>
 
@@ -227,19 +229,25 @@ export default function Page() {
                   Ready to Go Direct? 📞
                 </h3>
                 <p className="text-xl text-gray-700 mb-10 max-w-3xl mx-auto leading-relaxed">
-                  Let’s build your direct path to consumers and unlock growth that traditional retail can’t deliver.
+                  Let’s build your direct path to consumers and unlock growth
+                  that traditional retail can’t deliver.
                 </p>
                 <motion.a
                   href="#contact-us"
-                  className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 text-xl relative overflow-hidden"
+                  className="group inline-flex items-center gap-2 sm:gap-3 px-6 py-3 sm:px-10 sm:py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold sm:font-bold rounded-full shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-500 text-base sm:text-xl relative overflow-hidden"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <span className="relative z-10">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Mobile Text Only */}
+                  <span className="relative z-10 sm:hidden">Contact Us</span>
+
+                  {/* Full Text + Icon for larger screens */}
+                  <span className="relative z-10 hidden sm:inline">
                     Contact us today for D2C excellence
                   </span>
-                  <PhoneCall className="w-6 h-6 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+                  <PhoneCall className="hidden sm:block w-6 h-6 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
                 </motion.a>
               </div>
             </div>

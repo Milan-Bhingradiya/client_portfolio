@@ -118,7 +118,15 @@ export default function Page() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              In today’s fast-moving digital environment, marketing automation is the key to scaling personalized engagement without sacrificing efficiency. At <span className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Kpitotal</span>, we help you harness the full potential of automation to streamline processes, nurture leads, convert customers, and accelerate revenue.
+              In today’s fast-moving digital environment, marketing automation
+              is the key to scaling personalized engagement without sacrificing
+              efficiency. At{" "}
+              <span className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Kpitotal
+              </span>
+              , we help you harness the full potential of automation to
+              streamline processes, nurture leads, convert customers, and
+              accelerate revenue.
             </motion.p>
           </div>
 
@@ -223,19 +231,29 @@ export default function Page() {
                   Make Marketing Work Smarter, Not Harder
                 </h3>
                 <p className="text-xl text-gray-700 mb-10 max-w-3xl mx-auto leading-relaxed">
-                  Whether you&apos;re just getting started or scaling complex automation workflows, we’re here to help you unlock the power of automation to transform how you market.
+                  Whether you&apos;re just getting started or scaling complex
+                  automation workflows, we’re here to help you unlock the power
+                  of automation to transform how you market.
                 </p>
                 <motion.a
                   href="#contact-us"
-                  className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 text-xl relative overflow-hidden"
+                  className="group inline-flex items-center gap-2 sm:gap-3 px-6 py-3 sm:px-10 sm:py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold sm:font-bold rounded-full shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-500 text-base sm:text-xl relative overflow-hidden"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <span className="relative z-10">
-                    Contact us today to learn how we can streamline and elevate your marketing operations with automation
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Mobile Text */}
+                  <span className="relative z-10 sm:hidden">Contact Us</span>
+
+                  {/* Desktop Text */}
+                  <span className="relative z-10 hidden sm:inline">
+                    Contact us today to learn how we can streamline and elevate
+                    your marketing operations with automation
                   </span>
-                  <PhoneCall className="w-6 h-6 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+
+                  {/* Icon only on desktop */}
+                  <PhoneCall className="hidden sm:block w-6 h-6 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
                 </motion.a>
               </div>
             </div>

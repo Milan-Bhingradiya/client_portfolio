@@ -126,7 +126,8 @@ export default function Page() {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               In today&apos;s fast-paced digital landscape, a clear and adaptive
-              marketing strategy is not optional—it&apos;s a growth essential. At{" "}
+              marketing strategy is not optional—it&apos;s a growth essential.
+              At{" "}
               <span className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Kpitotal
               </span>
@@ -191,12 +192,12 @@ export default function Page() {
             transition={{ duration: 1, delay: 1 }}
           >
             <div className="text-center mb-16">
-              <h3 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              <h3 className="text-4xl p-4 sm:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                 Why Strategic Marketing Matters
               </h3>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                The numbers don&apos;t lie - strategic marketing delivers measurable
-                results
+                The numbers don&apos;t lie - strategic marketing delivers
+                measurable results
               </p>
             </div>
 
@@ -239,22 +240,29 @@ export default function Page() {
                   Let&apos;s Build a Smarter Marketing Plan
                 </h3>
                 <p className="text-xl text-gray-700 mb-10 max-w-3xl mx-auto leading-relaxed">
-                  Your growth deserves more than guesswork. Let&apos;s turn insight
-                  into action with a marketing strategy built to scale, pivot,
-                  and outperform.
+                  Your growth deserves more than guesswork. Let&apos;s turn
+                  insight into action with a marketing strategy built to scale,
+                  pivot, and outperform.
                 </p>
                 <motion.a
                   href="#book-consultation"
-                  className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 text-xl relative overflow-hidden"
+                  className="group inline-flex items-center gap-2 sm:gap-3 px-6 py-3 sm:px-10 sm:py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold sm:font-bold rounded-full shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-500 text-base sm:text-xl relative overflow-hidden"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <span className="relative z-10">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Mobile Text */}
+                  <span className="relative z-10 sm:hidden">Book Now</span>
+
+                  {/* Desktop Text */}
+                  <span className="relative z-10 hidden sm:inline">
                     Ready to Transform Your Marketing?
                   </span>
-                  <Calendar className="w-6 h-6 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
-                  <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+
+                  {/* Icons (hidden on mobile) */}
+                  <Calendar className="hidden sm:block w-6 h-6 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+                  <ArrowRight className="hidden sm:block w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
                 </motion.a>
               </div>
             </div>

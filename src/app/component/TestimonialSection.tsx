@@ -1,12 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import smit from "../../../public/smit.jpeg";
+import { useRef } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function TestimonialSection() {
-  // Testimonial data
   const testimonials = [
     {
       text: "Kpitotal is indeed marketing and branding partner to reckon with. Professionalism, creativity and understanding different marketing concepts are their USP. Very satisfied with the quality of work they have done for my company/brands. Endorsed & recommended with 5 star ratings. I wish them very good luck.",
@@ -58,69 +55,54 @@ export default function TestimonialSection() {
     },
   ];
 
-  // Carousel logic
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  // Scroll handler for arrows
+  // Scroll handler for arrows (all screens)
   const scroll = (dir: "left" | "right") => {
-    if (typeof window === "undefined" || !carouselRef.current) return;
-    const { scrollLeft, clientWidth } = carouselRef.current;
-    const scrollAmount = clientWidth * 0.8;
-    carouselRef.current.scrollTo({
-      left:
-        dir === "left" ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+    if (!carouselRef.current) return;
+    const card = carouselRef.current.querySelector("div[data-card]");
+    const cardWidth = card ? (card as HTMLElement).offsetWidth + 32 : 320; // 32 = gap-8
+    carouselRef.current.scrollBy({
+      left: dir === "left" ? -cardWidth : cardWidth,
       behavior: "smooth",
     });
-  };
-
-  // Touch/drag support
-  let startX = 0;
-  let scrollStart = 0;
-  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!carouselRef.current) return;
-    startX = e.touches[0].clientX;
-    scrollStart = carouselRef.current.scrollLeft;
-  };
-  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!carouselRef.current) return;
-    const dx = e.touches[0].clientX - startX;
-    carouselRef.current.scrollLeft = scrollStart - dx;
   };
 
   return (
     <div className="relative z-20 py-20 px-6 lg:px-12">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-6xl font-bold mb-4">
-            What Our Clients Say
-          </h2>
-          <p className="text-xl text-gray-600">
-            Trusted by companies worldwide
-          </p>
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-3xl font-bold text-gray-900">Testimonials</h2>
         </div>
-        {/* Carousel Row */}
-        <div className="relative">
-          {/* Left Arrow (desktop only) */}
+        <div className="relative w-full">
+          {/* Left Arrow */}
           <button
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white border border-gray-300 rounded-full p-2 shadow hover:bg-gray-100 transition"
             onClick={() => scroll("left")}
-            aria-label="Scroll testimonials left"
-            type="button"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition shadow"
+            aria-label="Scroll left"
+            style={{ transform: "translateY(-50%)" }}
           >
-            <FaChevronLeft size={24} />
+            <FaChevronLeft />
           </button>
-          {/* Testimonial Cards Row */}
+          {/* Right Arrow */}
+          <button
+            onClick={() => scroll("right")}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition shadow"
+            aria-label="Scroll right"
+            style={{ transform: "translateY(-50%)" }}
+          >
+            <FaChevronRight />
+          </button>
           <div
             ref={carouselRef}
-            className="flex flex-col lg:flex-row gap-8 overflow-x-auto lg:overflow-x-scroll snap-x snap-mandatory px-1 hide-scrollbar"
+            className="flex flex-row gap-8 overflow-x-auto snap-x snap-mandatory px-10 hide-scrollbar"
             style={{ scrollBehavior: "smooth" }}
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
           >
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className="bg-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-0 w-full lg:w-[350px] flex-shrink-0 snap-center"
+                data-card
+                className="bg-white border-2 border-gray-200 rounded-2xl p-4 my-4 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[85vw] max-w-[90vw] sm:min-w-[350px] sm:max-w-[400px] w-full flex-shrink-0 snap-center"
               >
                 <div className="flex space-x-1 mb-4">
                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -142,94 +124,7 @@ export default function TestimonialSection() {
               </div>
             ))}
           </div>
-          {/* Right Arrow (desktop only) */}
-          <button
-            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white border border-gray-300 rounded-full p-2 shadow hover:bg-gray-100 transition"
-            onClick={() => scroll("right")}
-            aria-label="Scroll testimonials right"
-            type="button"
-          >
-            <FaChevronRight size={24} />
-          </button>
         </div>
-        {/* Meet The Founder Section */}
-        <div className="mt-20 border-2 border-gray-200 rounded-2xl p-8 lg:p-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl lg:text-6xl font-bold mb-8">
-                Meet
-                <br />
-                The
-                <br />
-                Founder
-              </h2>
-            </div>
-            <div className="flex flex-col-reverse gap-4 lg:flex-row items-center space-y-6 lg:space-y-0 lg:space-x-6">
-              <div>
-                <div className="flex space-x-1 mb-4">
-                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                </div>
-                <h3 className="text-2xl font-bold mb-2">Smit Shah</h3>
-                <p className="text-gray-600 mb-2">
-                  Founder, Head of Kpitotal.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  Marketing & Automation Expert
-                </p>
-                <a
-                  href="https://www.linkedin.com/in/connectsmit/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center mb-4 text-blue-600 hover:text-blue-800 transition"
-                  aria-label="LinkedIn"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    className="w-6 h-6 mr-1"
-                  >
-                    <rect
-                      width="20"
-                      height="20"
-                      x="2"
-                      y="2"
-                      rx="4"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    />
-                    <path
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M8 11v5M8 8v.01M12 16v-5m0 0a2 2 0 1 1 4 0v5"
-                    />
-                  </svg>
-                  LinkedIn
-                </a>
-                <div className="flex space-x-2">
-                  <div className="px-3 py-1 bg-gray-100 rounded text-sm">
-                    SEO
-                  </div>
-                  <div className="px-3 py-1 bg-gray-100 rounded text-sm">
-                    Marketing
-                  </div>
-                </div>
-              </div>
-              <div className="w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden sm:mb-4 sm:w-40 sm:h-52 md:w-48 md:h-64 lg:w-48 lg:h-64 min-w-0 min-h-0 max-w-full max-h-full  lg:mb-0">
-                <img
-                  src={smit.src}
-                  alt="Founder Smit Shah"
-                  className="object-cover w-full h-full"
-                />
-              </div>
-            </div>
-          </div>
-        </div>{" "}
       </div>
     </div>
   );

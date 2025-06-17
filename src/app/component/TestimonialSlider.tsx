@@ -1,128 +1,144 @@
-import React, { useState } from "react";
-import { useSwipeable } from "react-swipeable";
-import Image from "next/image";
-import Testimonial from "./Testimonial";
-import review1 from "../../../public/review1.jpeg";
-import review2 from "../../../public/review2.jpeg";
-import review3 from "../../../public/review3.jpeg";
-import review4 from "../../../public/review4.jpeg";
-import review5 from "../../../public/review5.jpeg";
+// "use client";
 
-const testimonials = [
-  {
-    image: review1,
-    name: "Sandip ",
-    title: "C.E.O. - Investica",
-    text: "Leo9 Studio is one of the few Design agencies that understand the financial services industry's inner workings. They're an incredible agency that \"knows it\". The team Leo9 is killing it and bringing UI/UX Designs to the forefront of a whole industry's digital transformation.",
-    rating: 5,
-  },
-  {
-    image: review2,
-    name: "Bhavi Patel",
-    title: "C.T.O. - FinTech Inc.",
-    text: "The team at Leo9 Studio is fantastic. They really understand the nuances of the fintech space and have helped us significantly improve our user interface and overall user experience.",
-    rating: 5,
-  },
-  {
-    image: review3,
-    name: "Bikash Garabadu",
-    title: "C.E.O. - Investica",
-    text: "Leo9 Studio is one of the few Design agencies that understand the financial services industry's inner workings. They're an incredible agency that \"knows it\". The team Leo9 is killing it and bringing UI/UX Designs to the forefront of a whole industry's digital transformation.",
-    rating: 5,
-  },
-  {
-    image: review4,
-    name: "Sudheesh K",
-    title: "C.T.O. - FinTech Inc.",
-    text: "The team at Leo9 Studio is fantastic. They really understand the nuances of the fintech space and have helped us significantly improve our user interface and overall user experience.",
-    rating: 5,
-  },
-  {
-    image: review5,
-    name: "unknown",
-    title: "C.E.O. - Investica",
-    text: "Leo9 Studio is one of the few Design agencies that understand the financial services industry's inner workings. They're an incredible agency that \"knows it\". The team Leo9 is killing it and bringing UI/UX Designs to the forefront of a whole industry's digital transformation.",
-    rating: 5,
-  },
-];
+// import { useRef } from "react";
+// import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-const TestimonialSlider = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+// export default function TestimonialSection() {
+//   const testimonials = [
+//     {
+//       text: "Kpitotal is indeed marketing and branding partner to reckon with. Professionalism, creativity and understanding different marketing concepts are their USP. Very satisfied with the quality of work they have done for my company/brands. Endorsed & recommended with 5 star ratings. I wish them very good luck.",
+//       name: "Sagar Patel",
+//       country: "🇮🇳 India",
+//       initials: "SP",
+//       color: "from-red-400 to-red-600",
+//       company: "Customer",
+//     },
+//     {
+//       text: "Got my business card designed for my USA business with KPI total, and was very pleased with the professionalism, timing, and their inputs in getting the final product ready. Now used them again for another business need. Great work at very affordable rate.",
+//       name: "Bhavi Patel",
+//       country: "🇺🇸 USA",
+//       initials: "BP",
+//       color: "from-blue-400 to-blue-600",
+//       company: "Customer",
+//     },
+//     {
+//       text: "Thanks Mr Shah for your lovely friendly approach. The designs are unique and appealing. Your basic concept conversion of our thoughts are really best in this industry. Best wishes for your future endeavors and wish for future associations.",
+//       name: "Bikash Garabadu",
+//       country: "🇮🇳 India",
+//       initials: "BG",
+//       color: "from-purple-400 to-purple-600",
+//       company: "Customer",
+//     },
+//     {
+//       text: "I am from Gujarat and we approached them for Packaging design. Much satisfied with their creative designs and dedication towards customer.",
+//       name: "Tejash Patel",
+//       country: "🇮🇳 India",
+//       initials: "TP",
+//       color: "from-green-400 to-green-600",
+//       company: "Customer",
+//     },
+//     {
+//       text: "Professional and innovative approach for Brand Management. Keep it up.",
+//       name: "Pramit R Jethwa",
+//       country: "🇮🇳 India",
+//       initials: "PJ",
+//       color: "from-indigo-400 to-indigo-600",
+//       company: "Customer",
+//     },
+//     {
+//       text: "Good work with minute detailing. If you want some one to take care of entire branding and positioning side, KPI total are the best partners to rely upon..",
+//       name: "Smit Rathod",
+//       country: "🇮🇳 India",
+//       initials: "SR",
+//       color: "from-orange-400 to-orange-600",
+//       company: "Customer",
+//     },
+//   ];
 
-  const handleDotClick = (index: number) => {
-    setCurrentSlide(index);
-  };
+//   const carouselRef = useRef<HTMLDivElement>(null);
 
-  const handleSwipe = (direction: any) => {
-    if (direction === "LEFT") {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % testimonials.length);
-    } else if (direction === "RIGHT") {
-      setCurrentSlide(
-        (prevSlide) =>
-          (prevSlide - 1 + testimonials.length) % testimonials.length
-      );
-    }
-  };
+//   // Scroll handler for arrows
+//   const scroll = (dir: "left" | "right") => {
+//     if (!carouselRef.current) return;
+//     const scrollAmount = carouselRef.current.offsetWidth * 0.8;
+//     carouselRef.current.scrollBy({
+//       left: dir === "left" ? -scrollAmount : scrollAmount,
+//       behavior: "smooth",
+//     });
+//   };
 
-  const handlers = useSwipeable({
-    onSwipedLeft: () => handleSwipe("LEFT"),
-    onSwipedRight: () => handleSwipe("RIGHT"),
-  });
-
-  const handleMouseDown = (event: any) => {
-    if (typeof window === "undefined") return;
-    event.preventDefault();
-    const startX = event.clientX;
-
-    const handleMouseMove = (moveEvent: any) => {
-      const deltaX = moveEvent.clientX - startX;
-      if (Math.abs(deltaX) > 50) {
-        handleSwipe(deltaX > 0 ? "RIGHT" : "LEFT");
-        window.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener("mouseup", handleMouseUp);
-      }
-    };
-
-    const handleMouseUp = () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-  };
-
-  return (
-    <div
-      onMouseDown={handleMouseDown}
-      className="   mx-auto overflow-hidden relative mb-32  "
-      {...handlers}
-    >
-      {/* <div className="text-2xl sm:text-3xl sm:ml-20 mt-10 mb-4 sm:mb-10 font-bold">
-        What client says
-      </div> */}
-
-      <div
-        className="flex transition-transform duration-500"
-        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-      >
-        {testimonials.map((testimonial, index) => (
-          <Testimonial key={index} data={testimonials[index]}></Testimonial>
-        ))}
-      </div>
-      <div className="flex justify-center m-2 mb-10">
-        {testimonials.map((_, index) => (
-          <span
-            key={index}
-            className={`h-3 w-3 rounded-full mx-1 cursor-pointer ${
-              currentSlide === index ? "bg-red-500" : ""
-            }`}
-            onClick={() => handleDotClick(index)}
-          ></span>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default TestimonialSlider;
+//   return (
+//     <div className="relative z-20 py-20 px-6 lg:px-12">
+//       <div className="max-w-6xl mx-auto">
+//         <div className="flex items-center justify-between mb-8">
+//           <h2 className="text-3xl font-bold text-gray-900">Testimonials</h2>
+//           <div className="hidden lg:flex gap-2">
+//             <button
+//               onClick={() => scroll("left")}
+//               className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
+//               aria-label="Scroll left"
+//             >
+//               <FaChevronLeft />
+//             </button>
+//             <button
+//               onClick={() => scroll("right")}
+//               className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
+//               aria-label="Scroll right"
+//             >
+//               <FaChevronRight />
+//             </button>
+//           </div>
+//         </div>
+//         <div className="relative">
+//           {/* Mobile arrows overlay */}
+//           <div className="flex lg:hidden justify-between absolute top-1/2 left-0 right-0 z-10 px-2 pointer-events-none">
+//             <button
+//               onClick={() => scroll("left")}
+//               className="p-2 rounded-full bg-gray-200/80 hover:bg-gray-300/90 transition pointer-events-auto"
+//               aria-label="Scroll left"
+//             >
+//               <FaChevronLeft />
+//             </button>
+//             <button
+//               onClick={() => scroll("right")}
+//               className="p-2 rounded-full bg-gray-200/80 hover:bg-gray-300/90 transition pointer-events-auto"
+//               aria-label="Scroll right"
+//             >
+//               <FaChevronRight />
+//             </button>
+//           </div>
+//           <div
+//             ref={carouselRef}
+//             className="flex flex-row gap-8 overflow-x-auto snap-x snap-mandatory px-1 hide-scrollbar"
+//             style={{ scrollBehavior: "smooth" }}
+//           >
+//             {testimonials.map((t, i) => (
+//               <div
+//                 key={i}
+//                 className="bg-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[85vw] sm:min-w-[350px] w-full flex-shrink-0 snap-center"
+//               >
+//                 <div className="flex space-x-1 mb-4">
+//                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+//                   <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+//                   <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+//                 </div>
+//                 <p className="text-gray-700 mb-6 italic">{`"${t.text}"`}</p>
+//                 <div className="flex items-center space-x-3">
+//                   <div
+//                     className={`w-12 h-12 bg-gradient-to-r ${t.color} rounded-full flex items-center justify-center text-white font-bold`}
+//                   >
+//                     {t.initials}
+//                   </div>
+//                   <div>
+//                     <h4 className="font-bold text-gray-900">{t.name}</h4>
+//                     <span className="text-xs">{t.country}</span>
+//                   </div>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }

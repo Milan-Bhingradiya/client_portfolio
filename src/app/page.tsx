@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 import Section1 from "./work/component/Section1";
 
-import TestimonialSlider from "./component/TestimonialSlider";
+// import TestimonialSlider from "./component/TestimonialSlider";
 import one from "../../public/1.png";
 import two from "../../public/2.png";
 import three from "../../public/3.png";
@@ -42,6 +42,7 @@ import Section2 from "./work/component/Section2";
 import TestimonialSection from "./component/TestimonialSection";
 import ServiceSection from "./component/ServiceSection";
 import WhyWorkWithUs from "./component/WhyWorkWithUs";
+import SocialMediaRow from "./component/SocialMediaRow";
 
 function Page() {
   const [homeProjects, setHomeProjects] = useState<any[]>([]);
@@ -94,7 +95,7 @@ function Page() {
   // Animate stats
   useEffect(() => {
     const timer = setTimeout(() => {
-      setStats({ projects: 260, clients: 150, years: 8, awards: 25 });
+      setStats({ projects: 25, clients: 15, years: 8, awards: 5 });
     }, 1000);
     return () => clearTimeout(timer);
   }, []);
@@ -388,21 +389,21 @@ function Page() {
       <WhyWorkWithUs />
       {/* //////////////////////////////////// */}
       {/* Section 1: Hero */}
-      <section className="min-h-screen flex items-center justify-center relative">
+      <section className="min-h-[80%] md:min-h-screen flex items-center justify-center relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <Animated_text
-              text={"We Have Designed Experiences For Over 260 Projects."}
+              text={"We Have Designed Experiences For Over 25+ Projects."}
               mode={"multi"}
               weight={"font-extrabold"}
-              size={"text-4xl sm:text-5xl md:text-6xl lg:text-7xl"}
+              size={"text-4xl sm:text-5xl md:text-5xl lg:text-6xl"}
               space={true}
             />
           </div>
         </div>
 
         {/* Floating elements */}
-        <motion.div
+        {/* <motion.div
           className="absolute top-20 left-10 w-20 h-20 bg-pink-200 rounded-full opacity-60"
           animate={{ y: [0, -20, 0], rotate: [0, 180, 360] }}
           transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY }}
@@ -411,34 +412,34 @@ function Page() {
           className="absolute bottom-20 right-10 w-16 h-16 bg-blue-200 rounded-full opacity-60"
           animate={{ y: [0, 20, 0], rotate: [0, -180, -360] }}
           transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY }}
-        />
+        /> */}
       </section>
 
       <div className="w-full max-w-6xl mx-auto px-4 py-6 my-10">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-y-4 text-center lg:text-left relative">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-4 text-center lg:text-left relative">
           {/* Top Row (first 4 items) */}
           {topRow.map((item, index) => (
-        <div
-          key={index}
-          className="font-bold text-2xl lg:text-3xl z-10 py-2 px-2 border-b border-gray-200 lg:border-none"
-        >
-          {item}
-        </div>
+            <div
+              key={index}
+              className="font-bold text-lg lg:text-2xl z-10 py-2 px-2 border-b border-gray-200 lg:border-none"
+            >
+              {item}
+            </div>
           ))}
 
           {/* Horizontal line between rows (only on lg+) */}
-          <div className="col-span-1 lg:col-span-4 hidden lg:block">
-        <div className="border-t border-gray-400 my-2" />
+          <div className="col-span-2 lg:col-span-4 hidden lg:block">
+            <div className="border-t border-gray-400 my-2" />
           </div>
 
           {/* Bottom Row (last 4 items) */}
           {bottomRow.map((item, index) => (
-        <div
-          key={index}
-          className="font-bold text-2xl lg:text-3xl z-10 py-2 px-2 border-b border-gray-200 lg:border-none"
-        >
-          {item}
-        </div>
+            <div
+              key={index}
+              className="font-bold text-lg  lg:text-2xl z-10 py-2 px-2 border-b border-gray-200 lg:border-none"
+            >
+              {item}
+            </div>
           ))}
         </div>
       </div>
@@ -535,7 +536,7 @@ function Page() {
       </section>
 
       <TestimonialSection />
-
+<SocialMediaRow/>
       {/* Section 12: Footer */}
       <footer className="bg-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
