@@ -6,6 +6,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Animated_text from "./component/Animated_text";
 import Link from "next/link";
 import Loading from "./component/Loading";
+import peoples from "../../public/peoples.json"
+
+import yellow_triangle from "../../public/yellow_triangle.json";
+
+
+import { Player } from "@lottiefiles/react-lottie-player";
+
 import {
   ArrowRight,
   Users,
@@ -390,7 +397,18 @@ function Page() {
       {/* //////////////////////////////////// */}
       {/* Section 1: Hero */}
       <section className="min-h-[80%] md:min-h-screen flex items-center justify-center relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 my-10 ">
+          <div className="flex justify-center items-end mt-10 h-full my-6">
+            <div className="w-4/5 sm:w-1/2 h-auto">
+              <Player
+                src={yellow_triangle}
+                className="w-full h-full"
+                loop
+                autoplay
+              />
+            </div>
+          </div>
           <div className="text-center">
             <Animated_text
               text={"We Have Designed Experiences For Over 25+ Projects."}
@@ -536,7 +554,14 @@ function Page() {
       </section>
 
       <TestimonialSection />
-<SocialMediaRow/>
+      <SocialMediaRow />
+
+      <div className="flex justify-center items-end mt-10 h-full">
+        <div className="w-4/5 sm:w-1/2 h-auto">
+          <Player src={peoples} className="w-full h-full" loop autoplay />
+        </div>
+      </div>
+
       {/* Section 12: Footer */}
       <footer className="bg-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

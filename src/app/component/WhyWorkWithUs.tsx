@@ -1,5 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
+import fire from "../../../public/fire.json"; 
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const items = [
   {
@@ -36,6 +38,18 @@ export default function WhyWorkWithUs() {
         >
           Why Work With Us?
         </motion.h2>
+
+
+                  <div className="flex justify-center items-end mt-10 h-full my-6">
+                    <div className="w-4/5 sm:w-1/2 h-auto">
+                      <Player
+                        src={fire}
+                        className="w-full h-full"
+                        loop
+                        autoplay
+                      />
+                    </div>
+                  </div>
 
         <div className="grid gap-8 md:grid-cols-2">
           {items.map((item, i) => (
