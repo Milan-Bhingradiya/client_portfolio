@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function TestimonialSection() {
@@ -56,6 +56,42 @@ export default function TestimonialSection() {
   ];
 
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth < 640);
+    }
+  }, []);
+
+  // Auto-swipe right every 2 seconds on mobile (but do NOT scrollIntoView)
+  useEffect(() => {
+    if (!isMobile) return;
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % testimonials.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isMobile, testimonials.length]);
+
+  // Touch swipe handlers for mobile
+  const touchStartX = useRef<number | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+      } else {
+        setCurrent((prev) => (prev + 1) % testimonials.length);
+      }
+    }
+    touchStartX.current = null;
+  };
 
   // Scroll handler for arrows (all screens)
   const scroll = (dir: "left" | "right") => {
@@ -66,6 +102,10 @@ export default function TestimonialSection() {
       left: dir === "left" ? -cardWidth : cardWidth,
       behavior: "smooth",
     });
+    setCurrent((prev) => {
+      if (dir === "left") return (prev - 1 + testimonials.length) % testimonials.length;
+      return (prev + 1) % testimonials.length;
+    });
   };
 
   return (
@@ -75,34 +115,29 @@ export default function TestimonialSection() {
           <h2 className="text-3xl font-bold text-gray-900">Testimonials</h2>
         </div>
         <div className="relative w-full">
-          {/* Left Arrow */}
-          <button
-            onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition shadow"
-            aria-label="Scroll left"
-            style={{ transform: "translateY(-50%)" }}
-          >
-            <FaChevronLeft />
-          </button>
-          {/* Right Arrow */}
-          <button
-            onClick={() => scroll("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition shadow"
-            aria-label="Scroll right"
-            style={{ transform: "translateY(-50%)" }}
-          >
-            <FaChevronRight />
-          </button>
+          {/* Left Arrow (desktop only) */}
+          {!isMobile && (
+            <button
+              onClick={() => scroll("left")}
+              className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-gray-200 hover:bg-gray-300 transition shadow-lg"
+              aria-label="Scroll left"
+              style={{ transform: 'translateY(-50%)' }}
+            >
+              <FaChevronLeft size={22} />
+            </button>
+          )}
           <div
             ref={carouselRef}
             className="flex flex-row gap-8 overflow-x-auto snap-x snap-mandatory px-10 hide-scrollbar"
             style={{ scrollBehavior: "smooth" }}
+            onTouchStart={isMobile ? handleTouchStart : undefined}
+            onTouchEnd={isMobile ? handleTouchEnd : undefined}
           >
             {testimonials.map((t, i) => (
               <div
                 key={i}
                 data-card
-                className="bg-white border-2 border-gray-200 rounded-2xl p-4 my-4 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[85vw] max-w-[90vw] sm:min-w-[350px] sm:max-w-[400px] w-full flex-shrink-0 snap-center"
+                className={`bg-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[85vw] max-w-[90vw] sm:min-w-[350px] sm:max-w-[400px] w-full flex-shrink-0 snap-center ${isMobile && i === current ? 'ring-2 ring-[#5A87C5]' : ''}`}
               >
                 <div className="flex space-x-1 mb-4">
                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -124,6 +159,17 @@ export default function TestimonialSection() {
               </div>
             ))}
           </div>
+          {/* Right Arrow (desktop only) */}
+          {!isMobile && (
+            <button
+              onClick={() => scroll("right")}
+              className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-gray-200 hover:bg-gray-300 transition shadow-lg"
+              aria-label="Scroll right"
+              style={{ transform: 'translateY(-50%)' }}
+            >
+              <FaChevronRight size={22} />
+            </button>
+          )}
         </div>
       </div>
     </div>

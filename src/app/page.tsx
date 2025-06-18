@@ -397,29 +397,27 @@ function Page() {
       {/* //////////////////////////////////// */}
       {/* Section 1: Hero */}
       <section className="min-h-[80%] md:min-h-screen flex items-center justify-center relative">
-      
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 my-10 ">
-          <div className="flex justify-center items-end mt-10 h-full my-6">
-            <div className="w-4/5 sm:w-1/2 h-auto">
-              <Player
-                src={yellow_triangle}
-                className="w-full h-full"
-                loop
-                autoplay
-              />
-            </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 my-10 flex flex-col justify-center items-center h-full">
+          <div className="flex justify-center items-center h-full my-6">
+        <div className="  mb-4 w-4/5 sm:w-1/2 h-auto flex items-center justify-center">
+          <Player
+            src={yellow_triangle}
+            className="w-full h-full"
+            loop
+            autoplay
+          />
+        </div>
           </div>
-          <div className="text-center">
-            <Animated_text
-              text={"We Have Designed Experiences For Over 25+ Projects."}
-              mode={"multi"}
-              weight={"font-extrabold"}
-              size={"text-4xl sm:text-5xl md:text-5xl lg:text-6xl"}
-              space={true}
-            />
+          <div className="text-center mt-8">
+        <Animated_text
+          text={"We Have Designed Experiences For Over 25+ Projects."}
+          mode={"multi"}
+          weight={"font-extrabold"}
+          size={"text-4xl sm:text-5xl md:text-5xl lg:text-6xl"}
+          space={true}
+        />
           </div>
         </div>
-
         {/* Floating elements */}
         {/* <motion.div
           className="absolute top-20 left-10 w-20 h-20 bg-pink-200 rounded-full opacity-60"
@@ -554,13 +552,15 @@ function Page() {
       </section>
 
       <TestimonialSection />
-      <SocialMediaRow />
-
       <div className="flex justify-center items-end mt-10 h-full">
         <div className="w-4/5 sm:w-1/2 h-auto">
           <Player src={peoples} className="w-full h-full" loop autoplay />
         </div>
       </div>
+
+
+      <SocialMediaRow />
+
 
       {/* Section 12: Footer */}
       <footer className="bg-black text-white py-16">

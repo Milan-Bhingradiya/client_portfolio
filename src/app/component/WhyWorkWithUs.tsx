@@ -40,7 +40,7 @@ export default function WhyWorkWithUs() {
         </motion.h2>
 
 
-                  <div className="flex justify-center items-end mt-10 h-full my-6">
+                  {/* <div className="flex justify-center items-end mt-10 h-full my-6">
                     <div className="w-4/5 sm:w-1/2 h-auto">
                       <Player
                         src={fire}
@@ -49,7 +49,7 @@ export default function WhyWorkWithUs() {
                         autoplay
                       />
                     </div>
-                  </div>
+                  </div> */}
 
         <div className="grid gap-8 md:grid-cols-2">
           {items.map((item, i) => (
