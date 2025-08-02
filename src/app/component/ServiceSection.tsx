@@ -202,42 +202,6 @@ export default function ServiceSection() {
             </motion.div>
           ))}
         </motion.div>
-
-        {/* Bottom CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-purple-500/30">
-            <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              transition={{ delay: 1, type: "spring", stiffness: 200 }}
-              className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 mb-6"
-            >
-              <Target className="w-10 h-10 text-white" />
-            </motion.div>
-
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">
-              Ready to Scale Your Business?
-            </h3>
-            <p className="text-lg text-gray-300 mb-6 max-w-2xl mx-auto">
-              Let&apos;s discuss how our strategic services can transform your
-              brand and drive sustainable growth.
-            </p>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 flex items-center gap-2 mx-auto shadow-lg hover:shadow-xl"
-            >
-              <Users className="w-5 h-5" />
-              Explore Services
-            </motion.button>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
