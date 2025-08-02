@@ -80,13 +80,15 @@ export default function TestimonialSection() {
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
-  
+
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const diff = e.changedTouches[0].clientX - touchStartX.current;
     if (Math.abs(diff) > 50) {
       if (diff > 0) {
-        setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+        setCurrent(
+          (prev) => (prev - 1 + testimonials.length) % testimonials.length
+        );
       } else {
         setCurrent((prev) => (prev + 1) % testimonials.length);
       }
@@ -104,7 +106,8 @@ export default function TestimonialSection() {
       behavior: "smooth",
     });
     setCurrent((prev) => {
-      if (dir === "left") return (prev - 1 + testimonials.length) % testimonials.length;
+      if (dir === "left")
+        return (prev - 1 + testimonials.length) % testimonials.length;
       return (prev + 1) % testimonials.length;
     });
   };
@@ -122,7 +125,7 @@ export default function TestimonialSection() {
               onClick={() => scroll("left")}
               className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-gray-200 hover:bg-gray-300 transition shadow-lg"
               aria-label="Scroll left"
-              style={{ transform: 'translateY(-50%)' }}
+              style={{ transform: "translateY(-50%)" }}
             >
               <FaChevronLeft size={22} />
             </button>
@@ -138,7 +141,9 @@ export default function TestimonialSection() {
               <div
                 key={i}
                 data-card
-                className={`bg-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[85vw] max-w-[90vw] sm:min-w-[350px] sm:max-w-[400px] w-full flex-shrink-0 snap-center ${isMobile && i === current ? 'ring-2 ring-[#5A87C5]' : ''}`}
+                className={`bg-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[85vw] max-w-[90vw] sm:min-w-[350px] sm:max-w-[400px] w-full flex-shrink-0 snap-center ${
+                  isMobile && i === current ? "ring-2 ring-[#5A87C5]" : ""
+                }`}
               >
                 <div className="flex space-x-1 mb-4">
                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -166,11 +171,26 @@ export default function TestimonialSection() {
               onClick={() => scroll("right")}
               className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-gray-200 hover:bg-gray-300 transition shadow-lg"
               aria-label="Scroll right"
-              style={{ transform: 'translateY(-50%)' }}
+              style={{ transform: "translateY(-50%)" }}
             >
               <FaChevronRight size={22} />
             </button>
           )}
+          {/* Dots below carousel */}
+          <div className="flex justify-center mt-6 gap-2">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`w-3 h-3 rounded-full transition-all duration-200 border-2 ${
+                  current === i
+                    ? "bg-[#5A87C5] border-[#5A87C5]"
+                    : "bg-gray-200 border-gray-300"
+                } focus:outline-none`}
+                aria-label={`Go to testimonial ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

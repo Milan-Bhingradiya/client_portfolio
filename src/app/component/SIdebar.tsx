@@ -12,7 +12,8 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
-  const pathname = usePathname();
+  const pathname = 
+  usePathname();
   const sidebarRef = React.createRef<HTMLDivElement>();
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const toggleServicesMenu = (e?: React.MouseEvent) => {
@@ -110,7 +111,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                 transition={{ duration: 0.3 }}
                 className="flex flex-col top-full left-0 bg-white rounded-md w-full overflow-hidden"
               >
-                <div className="mt-1 ml-4 bg-white/80 rounded-lg  px-2">
+                <div className="mt-1  bg-white/80 rounded-lg  px-2">
                   {services.map((s) => (
                     <motion.div
                       key={s.href}
@@ -123,7 +124,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                         href={s.href}
                         className={`block p-4 rounded-md m-2 font-semibold ${s.color} hover:scale-105 transition-all duration-200 border border-transparent hover:border-[#5A87C5]/30 ${
                           pathname === s.href
-                            ? "ring-1 ring-[#219F89] bg-[#219F89]/10 text-[#219F89]"
+                            ? "ring-1 ring-[#219F89] bg-[#219F89]/10 "
                             : ""
                         }`}
                       >
