@@ -147,11 +147,11 @@ function ProjectPage({ params }: RouteParams) {
             />
           </div>
 
-          <div className="container mx-auto px-4 py-20 relative z-10">
-            <div className="flex flex-col lg:flex-row items-center gap-16 min-h-[80vh]">
+          <div className="container mx-auto px-4 py-12 lg:py-20 relative z-10">
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 min-h-[90vh] lg:min-h-[80vh]">
               {/* Left side - Text content */}
               <motion.div
-                className="flex-1 lg:pr-16"
+                className="flex-1 lg:pr-16 w-full"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -212,15 +212,15 @@ function ProjectPage({ params }: RouteParams) {
 
               {/* Right side - Device Mockup */}
               <motion.div
-                className="flex-1 relative"
+                className="flex-1 relative w-full"
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <div className="relative w-full max-w-2xl mx-auto">
+                <div className="relative w-full max-w-2xl mx-auto min-h-[400px] lg:min-h-[500px]">
                   {/* Laptop Mockup */}
                   <motion.div
-                    className="relative group cursor-pointer"
+                    className="relative group cursor-pointer w-full"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
@@ -235,8 +235,8 @@ function ProjectPage({ params }: RouteParams) {
                     }}
                   >
                     {/* Laptop Screen */}
-                    <div className="relative bg-gray-900 rounded-t-2xl p-3 shadow-2xl">
-                      <div className="bg-black rounded-xl p-1">
+                    <div className="relative bg-gray-900 rounded-t-2xl p-2 sm:p-3 lg:p-4 shadow-2xl">
+                      <div className="bg-black rounded-xl p-1 sm:p-1.5">
                         <div className="aspect-[16/10] relative bg-gray-100 rounded-lg overflow-hidden">
                           {project.images && project.images[0] && (
                             <Image
@@ -253,15 +253,15 @@ function ProjectPage({ params }: RouteParams) {
                     </div>
 
                     {/* Laptop Base */}
-                    <div className="bg-gradient-to-b from-gray-200 to-gray-300 rounded-b-2xl h-8 shadow-lg"></div>
+                    <div className="bg-gradient-to-b from-gray-200 to-gray-300 rounded-b-2xl h-8 sm:h-10 lg:h-12 shadow-lg"></div>
 
                     {/* Laptop Shadow */}
                     <div className="absolute -bottom-1 left-2 right-2 h-2 bg-black/20 rounded-full blur-sm"></div>
                   </motion.div>
 
-                  {/* Mobile Mockup */}
+                  {/* Mobile Mockup - Attached/Overlapping position */}
                   <motion.div
-                    className="absolute -bottom-8 -right-8 w-32 group cursor-pointer"
+                    className="absolute -bottom-6 sm:-bottom-8 lg:-bottom-10 -right-6 sm:-right-8 lg:-right-10 w-28 sm:w-32 lg:w-36 group cursor-pointer z-10"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 }}
@@ -278,7 +278,7 @@ function ProjectPage({ params }: RouteParams) {
                     }}
                   >
                     {/* Phone Frame */}
-                    <div className="relative bg-gray-900 rounded-3xl p-2 shadow-xl">
+                    <div className="relative bg-gray-900 rounded-3xl p-2 sm:p-2.5 lg:p-3 shadow-xl">
                       <div className="aspect-[9/19.5] relative bg-black rounded-2xl overflow-hidden">
                         {project.images && project.images[0] && (
                           <Image
@@ -293,12 +293,12 @@ function ProjectPage({ params }: RouteParams) {
                     </div>
 
                     {/* Mobile shadow */}
-                    <div className="absolute -bottom-1 left-1 right-1 h-2 bg-black/30 rounded-full blur-sm"></div>
+                    <div className="absolute -bottom-1 left-1 right-1 h-2 lg:h-3 bg-black/30 rounded-full blur-sm"></div>
                   </motion.div>
 
-                  {/* Minimal floating elements */}
+                  {/* Minimal floating elements - responsive positioning */}
                   <motion.div
-                    className="absolute -top-12 -right-12 w-24 h-24 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full blur-2xl"
+                    className="absolute -top-8 lg:-top-12 -right-8 lg:-right-12 w-16 h-16 lg:w-24 lg:h-24 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full blur-2xl"
                     animate={{
                       scale: [1, 1.3, 1],
                       opacity: [0.3, 0.6, 0.3],
@@ -311,7 +311,7 @@ function ProjectPage({ params }: RouteParams) {
                   />
 
                   <motion.div
-                    className="absolute -bottom-8 -left-8 w-20 h-20 bg-gradient-to-br from-pink-400/30 to-orange-500/30 rounded-full blur-xl"
+                    className="absolute -bottom-6 lg:-bottom-8 -left-6 lg:-left-8 w-14 h-14 lg:w-20 lg:h-20 bg-gradient-to-br from-pink-400/30 to-orange-500/30 rounded-full blur-xl"
                     animate={{
                       scale: [1.2, 1, 1.2],
                       opacity: [0.2, 0.5, 0.2],

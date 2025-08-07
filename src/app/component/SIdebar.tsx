@@ -12,8 +12,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
-  const pathname = 
-  usePathname();
+  const pathname = usePathname();
   const sidebarRef = React.createRef<HTMLDivElement>();
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const toggleServicesMenu = (e?: React.MouseEvent) => {
@@ -45,10 +44,27 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     };
   }, [isOpen, sidebarRef, toggleSidebar]);
   const services = [
-    { label: "Brand Building", href: "/service/building", color: "bg-[#E94772]/10 text-[#E94772]" },
-    { label: "Marketing Strategy", href: "/service/marketing", color: "bg-[#5A87C5]/10 text-[#5A87C5]" },
-    { label: "D2C Expert Services", href: "/service/d2c", color: "bg-[#219F89]/10 text-[#219F89]" },
-    { label: "Marketing Automation", href: "/service/automation", color: "bg-gradient-to-r from-[#E94772]/10 via-[#5A87C5]/10 to-[#219F89]/10 text-[#5A87C5]" },
+    {
+      label: "Brand Building",
+      href: "/service/building",
+      color: "bg-[#E94772]/10 text-[#E94772]",
+    },
+    {
+      label: "Marketing Strategy",
+      href: "/service/marketing",
+      color: "bg-[#5A87C5]/10 text-[#5A87C5]",
+    },
+    {
+      label: "D2C Expert Services",
+      href: "/service/d2c",
+      color: "bg-[#219F89]/10 text-[#219F89]",
+    },
+    {
+      label: "Marketing Automation",
+      href: "/service/automation",
+      color:
+        "bg-gradient-to-r from-[#E94772]/10 via-[#5A87C5]/10 to-[#219F89]/10 text-[#5A87C5]",
+    },
   ];
   return (
     <div
@@ -63,26 +79,25 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         </h5>
       </div>
 
-
-        {/* Main menu close button */}
-        <button
+      {/* Main menu close button */}
+      <button
         onClick={toggleSidebar}
         className="absolute top-4 right-4 z-20 text-[#E94772] hover:text-[#219F89] text-2xl font-bold bg-white/80 rounded-full px-3 py-1 shadow border border-[#E94772]/20"
         aria-label="Close menu"
       >
         &times;
       </button>
-      
+
       <nav className="p-2 text-base font-normal text-blue-gray-700">
         <div className="flex flex-col gap-1">
-          {/* <Link
+          <Link
             href={"/work"}
             className="p-3 hover:bg-blue-gray-50"
             role="button"
             onClick={toggleSidebar}
           >
             Work
-          </Link> */}
+          </Link>
 
           <Link
             href={"/blogs"}
@@ -97,7 +112,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             role="button"
             onClick={toggleServicesMenu}
           >
-            
             <span>Services</span>
             {isServicesOpen ? <ExpandLess /> : <ExpandMore />}
           </div>
@@ -122,7 +136,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                     >
                       <Link
                         href={s.href}
-                        className={`block p-4 rounded-md m-2 font-semibold ${s.color} hover:scale-105 transition-all duration-200 border border-transparent hover:border-[#5A87C5]/30 ${
+                        className={`block p-4 rounded-md m-2 font-semibold ${
+                          s.color
+                        } hover:scale-105 transition-all duration-200 border border-transparent hover:border-[#5A87C5]/30 ${
                           pathname === s.href
                             ? "ring-1 ring-[#219F89] bg-[#219F89]/10 "
                             : ""

@@ -29,7 +29,7 @@ export default function ClientsSection({ logos }: ClientsSectionProps) {
           {logos.map((logo, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 1, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.1 }}
