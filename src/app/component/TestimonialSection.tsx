@@ -59,32 +59,49 @@ export default function TestimonialSection() {
   const [current, setCurrent] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile on mount
+  // Detect mobile on mount and handle resize
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
     if (typeof window !== "undefined") {
-      setIsMobile(window.innerWidth < 640);
+      checkMobile();
+      window.addEventListener("resize", checkMobile);
+      return () => window.removeEventListener("resize", checkMobile);
     }
   }, []);
 
-  // Auto-swipe right every 2 seconds on mobile (but do NOT scrollIntoView)
+  // Auto-swipe right every 3 seconds on mobile with better performance
   useEffect(() => {
     if (!isMobile) return;
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % testimonials.length);
-    }, 2000);
+    }, 3000);
     return () => clearInterval(interval);
   }, [isMobile, testimonials.length]);
 
-  // Touch swipe handlers for mobile
+  // Touch swipe handlers for mobile with improved performance
   const touchStartX = useRef<number | null>(null);
+  const touchStartTime = useRef<number>(0);
+
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    touchStartTime.current = Date.now();
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
+
+    const touchEndTime = Date.now();
+    const touchDuration = touchEndTime - touchStartTime.current;
+
+    // Only handle quick swipes (less than 300ms) to avoid conflicts with scrolling
+    if (touchDuration > 300) {
+      touchStartX.current = null;
+      return;
+    }
+
     const diff = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(diff) > 50) {
+    if (Math.abs(diff) > 60) {
+      // Increased threshold for better UX
       if (diff > 0) {
         setCurrent(
           (prev) => (prev - 1 + testimonials.length) % testimonials.length
@@ -132,8 +149,13 @@ export default function TestimonialSection() {
           )}
           <div
             ref={carouselRef}
-            className="flex flex-row gap-8 overflow-x-auto snap-x snap-mandatory px-10 hide-scrollbar"
-            style={{ scrollBehavior: "smooth" }}
+            className="flex flex-row gap-8 overflow-x-auto snap-x snap-mandatory px-10 hide-scrollbar testimonial-container"
+            style={{
+              scrollBehavior: "smooth",
+              WebkitOverflowScrolling: "touch", // iOS smooth scrolling
+              scrollbarWidth: "none", // Firefox
+              msOverflowStyle: "none", // IE/Edge
+            }}
             onTouchStart={isMobile ? handleTouchStart : undefined}
             onTouchEnd={isMobile ? handleTouchEnd : undefined}
           >
@@ -141,25 +163,36 @@ export default function TestimonialSection() {
               <div
                 key={i}
                 data-card
-                className={`bg-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 min-w-[85vw] max-w-[90vw] sm:min-w-[350px] sm:max-w-[400px] w-full flex-shrink-0 snap-center ${
-                  isMobile && i === current ? "ring-2 ring-[#5A87C5]" : ""
+                className={`testimonial-card relative bg-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 ${
+                  !isMobile ? "hover:scale-105" : ""
+                } min-w-[85vw] max-w-[90vw] sm:min-w-[350px] sm:max-w-[400px] w-full flex-shrink-0 snap-center min-h-[280px] flex flex-col ${
+                  isMobile && i === current
+                    ? "ring-2 ring-[#5A87C5] shadow-xl transform scale-105"
+                    : ""
                 }`}
+                style={{
+                  backdropFilter: isMobile ? "blur(10px)" : "none",
+                  background:
+                    isMobile && i === current
+                      ? "rgba(255, 255, 255, 0.95)"
+                      : "white",
+                }}
               >
                 <div className="flex space-x-1 mb-4">
                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                 </div>
-                <p className="text-gray-700 mb-6 italic">{`"${t.text}"`}</p>
-                <div className="flex items-center space-x-3">
+                <p className="text-gray-700 mb-6 italic flex-grow leading-relaxed">{`"${t.text}"`}</p>
+                <div className="flex items-center space-x-3 mt-auto">
                   <div
-                    className={`w-12 h-12 bg-gradient-to-r ${t.color} rounded-full flex items-center justify-center text-white font-bold`}
+                    className={`w-12 h-12 bg-gradient-to-r ${t.color} rounded-full flex items-center justify-center text-white font-bold shadow-md`}
                   >
                     {t.initials}
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900">{t.name}</h4>
-                    <span className="text-xs">{t.country}</span>
+                    <span className="text-xs text-gray-600">{t.country}</span>
                   </div>
                 </div>
               </div>

@@ -44,6 +44,18 @@
 
 /* Hide scrollbar for Webkit (Chrome, Safari, etc.) */
 
+/* Testimonial section optimizations */
+.testimonial-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.testimonial-container {
+  -webkit-overflow-scrolling: touch;
+  transform: translate3d(0, 0, 0);
+}
+
 .expandable {
   max-height: 0;
   opacity: 0;

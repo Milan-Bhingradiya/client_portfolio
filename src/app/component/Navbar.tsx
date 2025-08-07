@@ -61,13 +61,13 @@ const Navbar: React.FC = () => {
 
         <div className="hidden sm:block  ">
           <div className="flex flex-row gap-4 md:gap-8 lg:gap-10  items-center">
-            {/* <Link
+            <Link
               href={"/work"}
               className={selectedMenu === "Work" ? "font-bold" : ""}
               onClick={() => handleMenuSelect("Work")}
             >
               Work
-            </Link> */}
+            </Link>
 
             <Link
               href={"/blogs"}
@@ -83,7 +83,9 @@ const Navbar: React.FC = () => {
               onClick={handleServicesClick}
               className={clsx(
                 "relative p-2 rounded-lg",
-                (pathname.startsWith("/service") || selectedMenu === "Services") && "font-bold text-blue-700",
+                (pathname.startsWith("/service") ||
+                  selectedMenu === "Services") &&
+                  "font-bold text-blue-700"
                 // !pathname.startsWith("/service") && selectedMenu !== "Services" && "text-gray-700"
               )}
             >
@@ -95,7 +97,8 @@ const Navbar: React.FC = () => {
                       href={"/service/building"}
                       className={clsx(
                         "block px-4 py-2 hover:bg-gray-200",
-                        pathname === "/service/building" && "font-bold text-blue-700"
+                        pathname === "/service/building" &&
+                          "font-bold text-blue-700"
                       )}
                     >
                       Brand Building
@@ -106,7 +109,8 @@ const Navbar: React.FC = () => {
                       href={"/service/marketing"}
                       className={clsx(
                         "block px-4 py-2 hover:bg-gray-200",
-                        pathname === "/service/marketing" && "font-bold text-blue-700"
+                        pathname === "/service/marketing" &&
+                          "font-bold text-blue-700"
                       )}
                     >
                       Marketing Strategy
@@ -128,7 +132,8 @@ const Navbar: React.FC = () => {
                       href={"/service/automation"}
                       className={clsx(
                         "block px-4 py-2 hover:bg-gray-200",
-                        pathname === "/service/automation" && "font-bold text-blue-700"
+                        pathname === "/service/automation" &&
+                          "font-bold text-blue-700"
                       )}
                     >
                       Marketing Automation
