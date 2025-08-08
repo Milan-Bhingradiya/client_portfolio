@@ -179,9 +179,9 @@ export default function ServiceSection() {
 
                     {/* Bottom section with arrow */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-400 group-hover:text-white transition-colors duration-300">
+                      {/* <span className="text-sm font-medium text-gray-400 group-hover:text-white transition-colors duration-300">
                         Learn More
-                      </span>
+                      </span> */}
                       <motion.div
                         initial={{ x: 0 }}
                         whileHover={{ x: 5 }}

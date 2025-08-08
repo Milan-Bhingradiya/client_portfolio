@@ -16,6 +16,7 @@ import AboutSection from "./component/AboutSection";
 import IndustriesSection from "./component/IndustriesSection";
 import StatsSection from "./component/StatsSection";
 import CTASection from "./component/CTASection";
+import ContactSection from "./component/ContactUs";
 
 // Assets
 import peoples from "../../public/peoples.json";
@@ -23,8 +24,12 @@ import one from "../../public/1.png";
 import two from "../../public/2.png";
 import three from "../../public/3.png";
 import four from "../../public/4.png";
+import five from "../../public/5.png";
+
 import six from "../../public/6.png";
 import seven from "../../public/7.png";
+import eight from "../../public/8.png";
+import nine from "../../public/9.png";
 
 function Page() {
   const [stats, setStats] = useState({
@@ -48,7 +53,8 @@ function Page() {
 
   const topRow = ["Food & Beverages", "FMCG", "Healthcare", "Real Estate"];
   const bottomRow = ["Technology", "Engineering", "Finance", "& More.."];
-  const clientLogos = [one, two, three, four, six, seven];
+  const clientLogos = [one, two, three, four, five, six];
+  const logos = [one, two, three, four, five, six, seven, eight, nine];
 
   return (
     <div className="min-h-screen overflow-x-hidden">
@@ -82,6 +88,8 @@ function Page() {
       {/* Testimonials */}
       <TestimonialSection />
 
+      {/* Contact Section */}
+
       {/* Animation */}
       <div className="flex justify-center items-end mt-10 h-full">
         <div className="w-4/5 sm:w-1/2 h-auto">
@@ -92,6 +100,7 @@ function Page() {
       {/* Social Media */}
       <SocialMediaRow />
 
+      <ContactSection logos={logos} />
       {/* Footer */}
       <footer className="bg-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
