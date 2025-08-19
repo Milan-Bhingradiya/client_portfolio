@@ -36,7 +36,7 @@ export default function ClientsSection({ logos }: ClientsSectionProps) {
               className="flex items-center justify-center"
             >
               <Image
-                className="grayscale hover:grayscale-0 transition-all duration-300"
+                className="filter brightness-0 contrast-200 hover:brightness-50 hover:contrast-150 transition-all duration-300"
                 src={logo || "/placeholder.svg"}
                 alt="Client logo"
                 width={80}

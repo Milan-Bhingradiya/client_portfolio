@@ -30,6 +30,7 @@ import six from "../../public/6.png";
 import seven from "../../public/7.png";
 import eight from "../../public/8.png";
 import nine from "../../public/9.png";
+import ImageVideoSlider from "./component/imageVideoSlider";
 
 function Page() {
   const [stats, setStats] = useState({
@@ -82,8 +83,9 @@ function Page() {
 
       {/* Stats Section */}
       <IndustriesSection topRow={topRow} bottomRow={bottomRow} />
+      <ImageVideoSlider />
       {/* CTA Section */}
-      <CTASection />
+      {/* <CTASection /> */}
 
       {/* Testimonials */}
       <TestimonialSection />
