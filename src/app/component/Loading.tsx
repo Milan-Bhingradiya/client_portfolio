@@ -63,11 +63,11 @@ const Loading = () => {
         />
 
         {/* Pulsing dot in center */}
-        <motion.div
+        {/* <motion.div
           className="absolute top-1/2 left-1/2 w-3 h-3 bg-pink-500 rounded-full -translate-x-1/2 -translate-y-1/2"
           animate={{ scale: [1, 1.4, 1] }}
           transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-        />
+        /> */}
 
         {/* Loading text */}
         <motion.div

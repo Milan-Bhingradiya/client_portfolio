@@ -12,6 +12,8 @@ import Loading from "@/app/component/Loading";
 import Link from "next/link";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
+
+
 interface RouteParams {
   params: {
     [key: string]: string;
@@ -105,20 +107,17 @@ function ProjectPage({ params }: RouteParams) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="relative"
+        className="relative mx-5 sm:mx-20 md:mx-26 lg:mx-32"
       >
         {/* Animated gradient background */}
         <motion.div
           className="fixed inset-0 -z-10"
-          animate={{
-            background: `linear-gradient(135deg, ${gradientColors[colorIndex][0]} 0%, ${gradientColors[colorIndex][1]} 100%)`,
-          }}
           transition={{ duration: 2 }}
           style={{ opacity: 0.05 }}
         />
 
         {/* Hero section */}
-        <section className="relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden">
+        <section className="relative min-h-screen overflow-hidden">
           {/* Animated background elements */}
           <div className="absolute inset-0 overflow-hidden">
             <motion.div
@@ -210,119 +209,21 @@ function ProjectPage({ params }: RouteParams) {
                 </motion.div>
               </motion.div>
 
-              {/* Right side - Device Mockup */}
+              {/* Right side - Full Image */}
               <motion.div
-                className="flex-1 relative w-full"
+                className="flex-1 w-full h-full"
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <div className="relative w-full max-w-2xl mx-auto min-h-[350px] sm:min-h-[400px] lg:min-h-[500px] px-4 sm:px-0">
-                  {/* Laptop Mockup */}
-                  <motion.div
-                    className="relative group cursor-pointer w-full"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                    whileHover={{
-                      scale: 1.02,
-                      rotateY: 3,
-                      rotateX: 2,
-                    }}
-                    style={{
-                      transformStyle: "preserve-3d",
-                      perspective: "1000px",
-                    }}
-                  >
-                    {/* Laptop Screen */}
-                    <div className="relative bg-gray-900 rounded-t-2xl p-2 sm:p-3 lg:p-4 shadow-2xl">
-                      <div className="bg-black rounded-xl p-1 sm:p-1.5">
-                        <div className="aspect-[16/10] relative bg-gray-100 rounded-lg overflow-hidden">
-                          {project.images && project.images[0] && (
-                            <Image
-                              src={project.images[0] || "/placeholder.svg"}
-                              alt={project.title || "Project main visual"}
-                              layout="fill"
-                              objectFit="cover"
-                              className="transition-all duration-700 group-hover:scale-105"
-                              priority
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Laptop Base */}
-                    <div className="bg-gradient-to-b from-gray-200 to-gray-300 rounded-b-2xl h-8 sm:h-10 lg:h-12 shadow-lg"></div>
-
-                    {/* Laptop Shadow */}
-                    <div className="absolute -bottom-1 left-2 right-2 h-2 bg-black/20 rounded-full blur-sm"></div>
-                  </motion.div>
-
-                  {/* Mobile Mockup - Attached/Overlapping position */}
-                  <motion.div
-                    className="absolute -bottom-4 sm:-bottom-6 lg:-bottom-10 -right-2 sm:-right-8 lg:-right-10 w-24 sm:w-32 lg:w-36 group cursor-pointer z-10"
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 }}
-                    whileHover={{
-                      y: -10,
-                      scale: 1.1,
-                      rotateY: -8,
-                      rotateX: -3,
-                      zIndex: 50,
-                    }}
-                    style={{
-                      transformStyle: "preserve-3d",
-                      perspective: "1000px",
-                    }}
-                  >
-                    {/* Phone Frame */}
-                    <div className="relative bg-gray-900 rounded-3xl p-1.5 sm:p-2.5 lg:p-3 shadow-xl">
-                      <div className="aspect-[9/19.5] relative bg-black rounded-2xl overflow-hidden">
-                        {project.images && project.images[0] && (
-                          <Image
-                            src={project.images[0] || "/placeholder.svg"}
-                            alt="Mobile view"
-                            layout="fill"
-                            objectFit="cover"
-                            className="transition-all duration-700 group-hover:scale-110"
-                          />
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Mobile shadow */}
-                    <div className="absolute -bottom-1 left-1 right-1 h-2 lg:h-3 bg-black/30 rounded-full blur-sm"></div>
-                  </motion.div>
-
-                  {/* Minimal floating elements - responsive positioning */}
-                  <motion.div
-                    className="absolute -top-6 lg:-top-12 -right-6 lg:-right-12 w-12 h-12 lg:w-24 lg:h-24 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full blur-2xl"
-                    animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [0.3, 0.6, 0.3],
-                    }}
-                    transition={{
-                      duration: 8,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-
-                  <motion.div
-                    className="absolute -bottom-4 lg:-bottom-8 -left-4 lg:-left-8 w-10 h-10 lg:w-20 lg:h-20 bg-gradient-to-br from-pink-400/30 to-orange-500/30 rounded-full blur-xl"
-                    animate={{
-                      scale: [1.2, 1, 1.2],
-                      opacity: [0.2, 0.5, 0.2],
-                    }}
-                    transition={{
-                      duration: 10,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-                </div>
+                <Image
+                  src="/projectbanner.jpg"
+                  alt="Project visual"
+                  width={800}
+                  height={600}
+                  className="w-full h-full object-cover rounded-2xl"
+                  priority
+                />
               </motion.div>
             </div>
 

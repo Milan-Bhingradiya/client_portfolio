@@ -163,8 +163,8 @@ export default function TestimonialSection() {
               <div
                 key={i}
                 data-card
-                className={`testimonial-card relative bg-white border-2 border-gray-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 ${
-                  !isMobile ? "hover:scale-105" : ""
+                className={`testimonial-card relative bg-white border-2 border-gray-200 rounded-2xl p-4 my-4 hover:shadow-lg hover:border-gray-300 transition-all duration-300 ${
+                  !isMobile ? "hover:scale-[1.02]" : ""
                 } min-w-[85vw] max-w-[90vw] sm:min-w-[350px] sm:max-w-[400px] w-full flex-shrink-0 snap-center min-h-[280px] flex flex-col ${
                   isMobile && i === current
                     ? "ring-2 ring-[#5A87C5] shadow-xl transform scale-105"

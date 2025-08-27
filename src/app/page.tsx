@@ -76,15 +76,15 @@ function Page() {
 
       {/* Main Services */}
       <ServiceSection />
+
+      {/* Stats Section */}
+      <IndustriesSection topRow={topRow} bottomRow={bottomRow} />
+      {/* CTA Section */}
+      <ImageVideoSlider />
       <WhyWorkWithUs />
 
       {/* Industries Section */}
       <StatsSection stats={stats} />
-
-      {/* Stats Section */}
-      <IndustriesSection topRow={topRow} bottomRow={bottomRow} />
-      <ImageVideoSlider />
-      {/* CTA Section */}
       {/* <CTASection /> */}
 
       {/* Testimonials */}

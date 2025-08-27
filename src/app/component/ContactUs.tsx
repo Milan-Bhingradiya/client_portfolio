@@ -124,7 +124,7 @@ export default function ContactUs({ logos }: ContactUsProps) {
                     type="submit"
                     className="inline-flex items-center gap-2 rounded-full bg-white text-neutral-900 px-5 py-3 font-medium hover:bg-emerald-400 hover:text-neutral-900 transition"
                   >
-                    <span>Send A Message</span>
+                    <span>Start Your Project</span>
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </div>
