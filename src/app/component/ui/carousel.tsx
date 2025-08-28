@@ -1,5 +1,5 @@
 "use client";
-import { FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useState, useRef, useId, useEffect } from "react";
 
 interface MediaItem {
@@ -12,140 +12,64 @@ interface SlideProps {
   media: MediaItem;
   index: number;
   current: number;
-  handleSlideClick: (index: number) => void;
 }
 
-const Slide = ({ media, index, current, handleSlideClick }: SlideProps) => {
-  const slideRef = useRef<HTMLLIElement>(null);
+const Slide = ({ media, index, current }: SlideProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  const xRef = useRef(0);
-  const yRef = useRef(0);
-  const frameRef = useRef<number>(0);
-
-  useEffect(() => {
-    const animate = () => {
-      if (!slideRef.current) return;
-
-      const x = xRef.current;
-      const y = yRef.current;
-
-      slideRef.current.style.setProperty("--x", `${x}px`);
-      slideRef.current.style.setProperty("--y", `${y}px`);
-
-      frameRef.current = requestAnimationFrame(animate);
-    };
-
-    frameRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-      }
-    };
-  }, []);
-
-  const handleMouseMove = (event: React.MouseEvent) => {
-    const el = slideRef.current;
-    if (!el) return;
-
-    const r = el.getBoundingClientRect();
-    xRef.current = event.clientX - (r.left + Math.floor(r.width / 2));
-    yRef.current = event.clientY - (r.top + Math.floor(r.height / 2));
-  };
-
-  const handleMouseLeave = () => {
-    xRef.current = 0;
-    yRef.current = 0;
-  };
-
-  const imageLoaded = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    event.currentTarget.style.opacity = "1";
-  };
-
   const { type, url } = media;
 
+  useEffect(() => {
+    if (videoRef.current) {
+      if (current === index) {
+        videoRef.current.play();
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [current, index]);
+
   return (
-    <div className="[perspective:1200px] [transform-style:preserve-3d]">
-      <li
-        ref={slideRef}
-        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[95vw] h-[80vh] md:w-[80vmin] md:h-[80vmin] mx-0 md:mx-[4vmin] z-10"
-        onClick={() => handleSlideClick(index)}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          transform:
-            current !== index
-              ? "scale(0.98) rotateX(8deg)"
-              : "scale(1) rotateX(0deg)",
-          transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-          transformOrigin: "bottom",
-        }}
-      >
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-[#1D1F2F] rounded-[1%] overflow-hidden transition-all duration-150 ease-out"
-          style={{
-            transform:
-              current === index
-                ? "translate3d(calc(var(--x) / 30), calc(var(--y) / 30), 0)"
-                : "none",
-          }}
-        >
-          {type === "image" ? (
-            <img
-              className="absolute inset-0 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
-              style={{
-                opacity: current === index ? 1 : 0.5,
-              }}
-              alt={`Slide ${index + 1}`}
-              src={url}
-              onLoad={imageLoaded}
-              loading="eager"
-              decoding="sync"
-            />
-          ) : (
-            <video
-              ref={videoRef}
-              className="absolute inset-0 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
-              style={{
-                opacity: current === index ? 1 : 0.5,
-              }}
-              src={url}
-              autoPlay={current === index}
-              muted
-              loop
-              playsInline
-            />
-          )}
-          {current === index && (
-            <div className="absolute inset-0 bg-black/30 transition-all duration-1000" />
-          )}
-        </div>
-      </li>
+    <div className="flex-shrink-0 w-full h-full">
+      <div className="w-full h-full rounded-3xl overflow-hidden shadow-2xl">
+        {type === "image" ? (
+          <img
+            className="w-full h-full object-cover transition-all duration-500 ease-out"
+            alt={`Slide ${index + 1}`}
+            src={url}
+            loading="lazy"
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover transition-all duration-500 ease-out"
+            src={url}
+            muted
+            loop
+            playsInline
+          />
+        )}
+      </div>
     </div>
   );
 };
 
 interface CarouselControlProps {
-  type: string;
-  title: string;
+  direction: "left" | "right";
   handleClick: () => void;
 }
 
-const CarouselControl = ({
-  type,
-  title,
-  handleClick,
-}: CarouselControlProps) => {
+const CarouselControl = ({ direction, handleClick }: CarouselControlProps) => {
   return (
     <button
-      className={`w-12 h-12 flex items-center justify-center bg-black/50 hover:bg-black/70 border-2 border-white/20 hover:border-white/40 rounded-full focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200 backdrop-blur-sm ${
-        type === "previous" ? "rotate-180" : ""
-      }`}
-      title={title}
+      className="w-14 h-14 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 rounded-full focus:outline-none transition-all duration-300 backdrop-blur-md hover:scale-110 group"
       onClick={handleClick}
+      aria-label={`Go to ${direction === "left" ? "previous" : "next"} slide`}
     >
-      <FaChevronRight className="text-white w-6 h-6" />
+      {direction === "left" ? (
+        <FaChevronLeft className="text-white w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+      ) : (
+        <FaChevronRight className="text-white w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+      )}
     </button>
   );
 };
@@ -156,96 +80,133 @@ interface CarouselProps {
 
 export function Carousel({ mediaItems }: CarouselProps) {
   const [current, setCurrent] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [currentTranslate, setCurrentTranslate] = useState(0);
+  const [prevTranslate, setPrevTranslate] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const handlePreviousClick = () => {
-    const previous = current - 1;
-    setCurrent(previous < 0 ? mediaItems.length - 1 : previous);
+    setCurrent(prev => prev === 0 ? mediaItems.length - 1 : prev - 1);
   };
 
   const handleNextClick = () => {
-    const next = current + 1;
-    setCurrent(next === mediaItems.length ? 0 : next);
+    setCurrent(prev => prev === mediaItems.length - 1 ? 0 : prev + 1);
   };
 
   const handleSlideClick = (index: number) => {
-    if (current !== index) {
-      setCurrent(index);
+    setCurrent(index);
+  };
+
+  // Touch/Swipe handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].clientX);
+    setPrevTranslate(currentTranslate);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    
+    const currentX = e.touches[0].clientX;
+    const diff = currentX - startX;
+    const translate = prevTranslate + diff;
+    setCurrentTranslate(translate);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    
+    setIsDragging(false);
+    const threshold = 100;
+    
+    if (Math.abs(currentTranslate - prevTranslate) > threshold) {
+      if (currentTranslate > prevTranslate) {
+        // Swiped right - go to previous
+        handlePreviousClick();
+      } else {
+        // Swiped left - go to next
+        handleNextClick();
+      }
     }
+    
+    setCurrentTranslate(0);
+    setPrevTranslate(0);
   };
 
   const id = useId();
 
   return (
-    <div
-      className="relative w-[95vw] h-[80vh] md:w-[80vmin] md:h-[80vmin] mx-auto"
-      aria-labelledby={`carousel-heading-${id}`}
-    >
-      <ul
-        className="absolute flex mx-0 md:mx-[-4vmin] transition-transform duration-1000 ease-in-out"
-        style={{
-          transform: `translateX(-${current * (100 / mediaItems.length)}%)`,
-        }}
+    <div className="relative w-full max-w-2xl mx-auto">
+      {/* Main Carousel Container - Square aspect ratio on all screens */}
+      <div
+        ref={carouselRef}
+        className="relative w-full aspect-square overflow-hidden rounded-3xl"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
-        {mediaItems.map((media, index) => (
-          <Slide
-            key={index}
-            media={media}
-            index={index}
-            current={current}
-            handleSlideClick={handleSlideClick}
+        <div
+          className="flex h-full transition-transform duration-500 ease-out"
+          style={{
+            transform: `translateX(-${current * 100}%)`,
+          }}
+        >
+          {mediaItems.map((media, index) => (
+            <Slide
+              key={index}
+              media={media}
+              index={index}
+              current={current}
+            />
+          ))}
+        </div>
+
+        {/* Desktop Navigation Arrows - Hidden on mobile */}
+        <div className="hidden md:block absolute left-4 top-1/2 transform -translate-y-1/2">
+          <CarouselControl
+            direction="left"
+            handleClick={handlePreviousClick}
           />
-        ))}
-      </ul>
+        </div>
 
-      {/* Left Navigation Button - Hidden on mobile, visible on desktop */}
-      <div className="hidden md:block absolute left-[-80px] top-1/2 transform -translate-y-1/2">
-        <CarouselControl
-          type="previous"
-          title="Go to previous slide"
-          handleClick={handlePreviousClick}
-        />
-      </div>
+        <div className="hidden md:block absolute right-4 top-1/2 transform -translate-y-1/2">
+          <CarouselControl
+            direction="right"
+            handleClick={handleNextClick}
+          />
+        </div>
 
-      {/* Right Navigation Button - Hidden on mobile, visible on desktop */}
-      <div className="hidden md:block absolute right-[-80px] top-1/2 transform -translate-y-1/2">
-        <CarouselControl
-          type="next"
-          title="Go to next slide"
-          handleClick={handleNextClick}
-        />
-      </div>
-
-      {/* Mobile Navigation Buttons - Visible only on mobile */}
-      <div className="md:hidden absolute inset-0 flex items-center justify-between px-4 z-20">
-        <button
-          onClick={handlePreviousClick}
-          className="w-10 h-10 flex items-center justify-center bg-black/50 hover:bg-black/70 border-2 border-white/20 hover:border-white/40 rounded-full focus:outline-none transition duration-200 backdrop-blur-sm"
-          title="Previous slide"
-        >
-          <FaChevronRight className="text-white w-5 h-5 rotate-180" />
-        </button>
-        <button
-          onClick={handleNextClick}
-          className="w-10 h-10 flex items-center justify-center bg-black/50 hover:bg-black/70 border-2 border-white/20 hover:border-white/40 rounded-full focus:outline-none transition duration-200 backdrop-blur-sm"
-          title="Next slide"
-        >
-          <FaChevronRight className="text-white w-5 h-5" />
-        </button>
+        {/* Mobile Swipe Indicator */}
+        <div className="md:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <div className="flex items-center space-x-2 text-white/60 text-sm">
+            <span>←</span>
+            <span className="text-xs">Swipe</span>
+            <span>→</span>
+          </div>
+        </div>
       </div>
 
       {/* Slide Indicators */}
-      <div className="absolute flex justify-center w-full top-[calc(100%+1rem)]">
+      <div className="flex justify-center mt-6 space-x-3">
         {mediaItems.map((_, index) => (
           <button
             key={index}
-            className={`w-2 h-2 mx-1 rounded-full transition-all duration-300 ${
-              current === index ? "bg-white" : "bg-white/30"
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              current === index 
+                ? "bg-white scale-125" 
+                : "bg-white/30 hover:bg-white/50"
             }`}
-            onClick={() => setCurrent(index)}
+            onClick={() => handleSlideClick(index)}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
+
+      {/* Slide Counter */}
+      {/* <div className="text-center mt-4 text-white/60 text-sm">
+        {current + 1} / {mediaItems.length}
+      </div> */}
     </div>
   );
 }

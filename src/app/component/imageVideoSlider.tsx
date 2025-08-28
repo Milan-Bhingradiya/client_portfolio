@@ -22,24 +22,19 @@ const sampleMedia: MediaItem[] = [
 
 export default function ImageVideoSlider() {
   return (
-    <div className="relative overflow-hidden w-full h-full py-0 md:py-20 bg-black">
-      {/* Beautiful Title Section */}
-      <div className="relative z-30 text-center py-8 md:py-16 px-4">
-        <div className="mb-6">
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              Highlights of Our Work
-            </span>
+    <div className="w-full py-12 md:py-20 bg-black">
+      <div className="container mx-auto px-4">
+        {/* Simple Title */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Our Work Highlights
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mx-auto rounded-full"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-purple-500 mx-auto rounded-full"></div>
         </div>
-        
-        <p className="text-lg md:text-xl text-gray-300 font-light max-w-3xl mx-auto leading-relaxed">
-          Discover the magic of our creative journey through stunning visuals and captivating stories
-        </p>
-      </div>
 
-      <Carousel mediaItems={sampleMedia} />
+        {/* Carousel */}
+        <Carousel mediaItems={sampleMedia} />
+      </div>
     </div>
   );
 }
