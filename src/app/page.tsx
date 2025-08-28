@@ -76,15 +76,16 @@ function Page() {
 
       {/* Main Services */}
       <ServiceSection />
+      <ImageVideoSlider />
+      <StatsSection stats={stats} />
 
       <WhyWorkWithUs />
+
       {/* CTA Section */}
-      <ImageVideoSlider />
       {/* Stats Section */}
       <IndustriesSection topRow={topRow} bottomRow={bottomRow} />
 
       {/* Industries Section */}
-      <StatsSection stats={stats} />
       {/* <CTASection /> */}
 
       {/* Testimonials */}
@@ -92,14 +93,14 @@ function Page() {
 
       {/* Contact Section */}
 
+
+      <ContactSection logos={logos} />
       {/* Animation */}
       <div className="flex justify-center items-end mt-10 h-full">
         <div className="w-4/5 sm:w-1/2 h-auto">
           <Player src={peoples} className="w-full h-full" loop autoplay />
         </div>
       </div>
-
-      <ContactSection logos={logos} />
       {/* Social Media */}
       <SocialMediaRow />
 

@@ -22,14 +22,14 @@ const sampleMedia: MediaItem[] = [
 
 export default function ImageVideoSlider() {
   return (
-    <div className="w-full py-12 md:py-20 bg-black">
+    <div className="w-full py-12 md:py-20 bg-white">
       <div className="container mx-auto px-4">
         {/* Simple Title */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             Our Work Highlights
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-purple-500 mx-auto rounded-full"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
         </div>
 
         {/* Carousel */}

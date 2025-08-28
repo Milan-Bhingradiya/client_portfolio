@@ -61,14 +61,14 @@ interface CarouselControlProps {
 const CarouselControl = ({ direction, handleClick }: CarouselControlProps) => {
   return (
     <button
-      className="w-14 h-14 flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 rounded-full focus:outline-none transition-all duration-300 backdrop-blur-md hover:scale-110 group"
+      className="w-14 h-14 flex items-center justify-center bg-white/80 hover:bg-white border border-gray-200 hover:border-gray-300 rounded-full focus:outline-none transition-all duration-300 shadow-lg hover:scale-110 group"
       onClick={handleClick}
       aria-label={`Go to ${direction === "left" ? "previous" : "next"} slide`}
     >
       {direction === "left" ? (
-        <FaChevronLeft className="text-white w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+        <FaChevronLeft className="text-gray-700 w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
       ) : (
-        <FaChevronRight className="text-white w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+        <FaChevronRight className="text-gray-700 w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
       )}
     </button>
   );
@@ -179,7 +179,7 @@ export function Carousel({ mediaItems }: CarouselProps) {
 
         {/* Mobile Swipe Indicator */}
         <div className="md:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2">
-          <div className="flex items-center space-x-2 text-white/60 text-sm">
+          <div className="flex items-center space-x-2 text-gray-600 text-sm bg-white/80 px-3 py-2 rounded-full shadow-sm">
             <span>←</span>
             <span className="text-xs">Swipe</span>
             <span>→</span>
@@ -194,8 +194,8 @@ export function Carousel({ mediaItems }: CarouselProps) {
             key={index}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               current === index 
-                ? "bg-white scale-125" 
-                : "bg-white/30 hover:bg-white/50"
+                ? "bg-blue-500 scale-125" 
+                : "bg-gray-300 hover:bg-gray-400"
             }`}
             onClick={() => handleSlideClick(index)}
             aria-label={`Go to slide ${index + 1}`}
