@@ -77,11 +77,11 @@ function Page() {
       {/* Main Services */}
       <ServiceSection />
 
-      {/* Stats Section */}
-      <IndustriesSection topRow={topRow} bottomRow={bottomRow} />
+      <WhyWorkWithUs />
       {/* CTA Section */}
       <ImageVideoSlider />
-      <WhyWorkWithUs />
+      {/* Stats Section */}
+      <IndustriesSection topRow={topRow} bottomRow={bottomRow} />
 
       {/* Industries Section */}
       <StatsSection stats={stats} />
