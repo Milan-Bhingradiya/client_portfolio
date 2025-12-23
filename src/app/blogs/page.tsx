@@ -1,44 +1,26 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-
-interface Blog {
-  _id: string;
-  title: string;
-  content: string; // markdown
-  imageUrl: string;
-}
+import { useQuery } from "@tanstack/react-query";
+import { fetchBlogs, type Blog } from "@/lib/api";
 
 export default function BlogsPage() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    fetch("  https://smit-shah-backend-80da1d71856d.herokuapp.com/blogs")
-      .then((res) => res.json())
-      .then((data) => {
-        setBlogs(data.blogs || []);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError("Failed to load blogs.");
-        setLoading(false);
-      });
-  }, []);
+  const { data: blogs = [], isLoading, error } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: fetchBlogs,
+  });
 
   return (
     <div className="max-w-7xl mx-auto py-20 px-4">
-      <h1 className="text-5xl font-extrabold mb-20 text-center  drop-shadow-lg tracking-tight">
+      <h1 className="text-5xl font-extrabold mb-20 text-center drop-shadow-lg tracking-tight">
         Our Blogs
       </h1>
-      {loading && (
+      {isLoading && (
         <div className="text-center text-lg text-gray-500">Loading...</div>
       )}
-      {error && <div className="text-center text-red-500">{error}</div>}
+      {error && <div className="text-center text-red-500">Failed to load blogs.</div>}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-        {blogs.map((blog) => (
+        {blogs.map((blog: Blog) => (
           <Link key={blog._id} href={`/blogs/${blog._id}`} className="group">
             <div className="bg-white/90 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow h-[370px] flex flex-col border border-gray-100 hover:border-purple-400 duration-200">
               <div className="relative w-full h-48 rounded-t-3xl overflow-hidden">

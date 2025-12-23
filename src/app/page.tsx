@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 // Components
 import Section1 from "./work/component/Section1";
 import ServiceSection from "./component/ServiceSection";
 import WhyWorkWithUs from "./component/WhyWorkWithUs";
-import TestimonialSection from "./component/TestimonialSection";
 import SocialMediaRow from "./component/SocialMediaRow";
 import ClientsSection from "./component/ClientsSection";
 import AboutSection from "./component/AboutSection";
@@ -17,6 +17,16 @@ import IndustriesSection from "./component/IndustriesSection";
 import StatsSection from "./component/StatsSection";
 import CTASection from "./component/CTASection";
 import ContactSection from "./component/ContactUs";
+
+// Dynamic imports for client-only components
+const TestimonialSection = dynamic(
+  () => import("./component/TestimonialSection"),
+  { ssr: false }
+);
+const ExpoSlider = dynamic(() => import("./component/ExpoSlider"), {
+  ssr: false,
+  loading: () => <div className="h-[600px] bg-black" />,
+});
 
 // Assets
 import peoples from "../../public/peoples.json";
@@ -30,7 +40,7 @@ import six from "../../public/6.png";
 import seven from "../../public/7.png";
 import eight from "../../public/8.png";
 import nine from "../../public/9.png";
-import ImageVideoSlider from "./component/imageVideoSlider";
+// import ImageVideoSlider from "./component/imageVideoSlider";
 
 function Page() {
   const [stats, setStats] = useState({
@@ -76,7 +86,8 @@ function Page() {
 
       {/* Main Services */}
       <ServiceSection />
-      <ImageVideoSlider />
+      {/* <ImageVideoSlider /> */}
+      <ExpoSlider />
       <StatsSection stats={stats} />
 
       <WhyWorkWithUs />
@@ -92,7 +103,6 @@ function Page() {
       <TestimonialSection />
 
       {/* Contact Section */}
-
 
       <ContactSection logos={logos} />
       {/* Animation */}

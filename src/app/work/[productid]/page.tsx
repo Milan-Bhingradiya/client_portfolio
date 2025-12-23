@@ -2,101 +2,199 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
-import Loading from "@/app/component/Loading";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, ChevronDown } from "lucide-react";
-
-
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  ChevronDown,
+  Sparkles,
+  Target,
+  Lightbulb,
+  Trophy,
+  ExternalLink,
+} from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProject, fetchProjects, type Project } from "@/lib/api";
 
 interface RouteParams {
   params: {
-    [key: string]: string;
+    productid: string;
   };
 }
 
-interface IProject {
-  title: string;
-  client: string;
-  description: string;
-  images: string[];
-  industryName: string;
-  companyName: string;
-  solution: string;
-  show_in_home_page: boolean;
-  challenges: string[];
+// Color themes based on project - we'll cycle through these
+const projectThemes = [
+  {
+    primary: "from-violet-600 to-purple-700",
+    secondary: "from-violet-500/20 to-purple-500/20",
+    accent: "violet",
+    glow: "rgba(139, 92, 246, 0.4)",
+    text: "text-violet-400",
+    bg: "bg-violet-500",
+    border: "border-violet-500/30",
+  },
+  {
+    primary: "from-rose-600 to-pink-700",
+    secondary: "from-rose-500/20 to-pink-500/20",
+    accent: "rose",
+    glow: "rgba(244, 63, 94, 0.4)",
+    text: "text-rose-400",
+    bg: "bg-rose-500",
+    border: "border-rose-500/30",
+  },
+  {
+    primary: "from-amber-500 to-orange-600",
+    secondary: "from-amber-500/20 to-orange-500/20",
+    accent: "amber",
+    glow: "rgba(245, 158, 11, 0.4)",
+    text: "text-amber-400",
+    bg: "bg-amber-500",
+    border: "border-amber-500/30",
+  },
+  {
+    primary: "from-emerald-500 to-teal-600",
+    secondary: "from-emerald-500/20 to-teal-500/20",
+    accent: "emerald",
+    glow: "rgba(16, 185, 129, 0.4)",
+    text: "text-emerald-400",
+    bg: "bg-emerald-500",
+    border: "border-emerald-500/30",
+  },
+  {
+    primary: "from-cyan-500 to-blue-600",
+    secondary: "from-cyan-500/20 to-blue-500/20",
+    accent: "cyan",
+    glow: "rgba(6, 182, 212, 0.4)",
+    text: "text-cyan-400",
+    bg: "bg-cyan-500",
+    border: "border-cyan-500/30",
+  },
+];
+
+// Loading skeleton
+function LoadingState() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#030014]">
+      <div className="relative">
+        <motion.div
+          className="w-24 h-24 rounded-full border-2 border-violet-500/30"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute inset-0 w-24 h-24 rounded-full border-t-2 border-fuchsia-500"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+        />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Sparkles className="w-8 h-8 text-violet-400" />
+        </div>
+      </div>
+    </div>
+  );
 }
 
-function ProjectPage({ params }: RouteParams) {
-  const [project, setProject] = useState<IProject | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [activeSection, setActiveSection] = useState(0);
-  const { scrollYProgress } = useScroll();
+// Parallax image section - simplified without useScroll for SSR compatibility
+function ParallaxImage({
+  src,
+  alt,
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+}) {
+  return (
+    <motion.div 
+      className="relative h-[60vh] md:h-[80vh] overflow-hidden rounded-3xl"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+    >
+      <div className="absolute inset-0 w-full h-full">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover transition-transform duration-700 hover:scale-105"
+          priority={priority}
+          sizes="100vw"
+        />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-[#030014]/30" />
+    </motion.div>
+  );
+}
 
-  // Parallax effects
-  const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
-  const headerY = useTransform(scrollYProgress, [0, 0.1], [0, -50]);
-
-  // Color animation
-  const gradientColors = [
-    ["#FF5F6D", "#FFC371"],
-    ["#4158D0", "#C850C0"],
-    ["#3EECAC", "#EE74E1"],
-    ["#FA8BFF", "#2BD2FF"],
-    ["#FF3CAC", "#784BA0"],
-  ];
-
-  const [colorIndex, setColorIndex] = useState(0);
+export default function ProjectPage({ params }: RouteParams) {
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [theme, setTheme] = useState(projectThemes[0]);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setColorIndex((prev) => (prev + 1) % gradientColors.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [gradientColors.length]);
+    setIsClient(true);
+  }, []);
 
+  const {
+    data: project,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["project", params.productid],
+    queryFn: () => fetchProject(params.productid),
+  });
+
+  const { data: allProjects = [] } = useQuery({
+    queryKey: ["projects"],
+    queryFn: fetchProjects,
+  });
+
+  // Set theme based on project index
   useEffect(() => {
-    const getOneProject = async (id: string) => {
-      try {
-        setLoading(true);
-        const res = await fetch(
-          `https://smit-shah-backend-80da1d71856d.herokuapp.com/getproject/${id}`,
-          {
-            cache: "no-store",
-          }
-        );
-        if (!res.ok) {
-          setLoading(false);
-          return;
-        }
-        const data = await res.json();
-        setProject(data.project as IProject);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching project:", error);
-        setLoading(false);
-      }
-    };
+    if (project && allProjects.length > 0) {
+      const projectIndex = allProjects.findIndex(
+        (p: Project) => p._id === project._id
+      );
+      const themeIndex = projectIndex % projectThemes.length;
+      setTheme(projectThemes[themeIndex >= 0 ? themeIndex : 0]);
+    }
+  }, [project, allProjects]);
 
-    getOneProject(params.productid);
-  }, [params.productid]);
+  // Get next/prev projects for navigation
+  const currentIndex = allProjects.findIndex(
+    (p: Project) => p._id === params.productid
+  );
+  const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
+  const nextProject =
+    currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (isLoading) return <LoadingState />;
 
-  if (!project) {
+  if (error || !project) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-3xl font-bold mb-4">Project not found</h1>
-        <Link href="/" className="text-blue-500 hover:underline">
-          Return to home
-        </Link>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#030014]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center"
+        >
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Project not found
+          </h1>
+          <p className="text-zinc-400 mb-8">
+            The project you&apos;re looking for doesn&apos;t exist.
+          </p>
+          <Link
+            href="/work"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-violet-600 text-white font-medium hover:bg-violet-500 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Work
+          </Link>
+        </motion.div>
       </div>
     );
   }
@@ -107,490 +205,574 @@ function ProjectPage({ params }: RouteParams) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="relative mx-5 sm:mx-20 md:mx-26 lg:mx-32"
+        className="min-h-screen bg-[#030014] overflow-hidden"
       >
-        {/* Animated gradient background */}
+        {/* Background Effects */}
+        <div className="fixed inset-0 pointer-events-none -z-10">
+          {/* Animated gradient orbs */}
+          <motion.div
+            className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full"
+            style={{
+              background: `radial-gradient(circle, ${theme.glow} 0%, transparent 70%)`,
+              filter: "blur(100px)",
+            }}
+            animate={{
+              x: ["10%", "-10%", "10%"],
+              y: ["-10%", "10%", "-10%"],
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full"
+            style={{
+              background: `radial-gradient(circle, ${theme.glow} 0%, transparent 70%)`,
+              filter: "blur(100px)",
+              opacity: 0.5,
+            }}
+            animate={{
+              x: ["-10%", "10%", "-10%"],
+              y: ["10%", "-10%", "10%"],
+            }}
+            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+
+        {/* Back Button */}
         <motion.div
-          className="fixed inset-0 -z-10"
-          transition={{ duration: 2 }}
-          style={{ opacity: 0.05 }}
-        />
+          className="fixed top-6 left-6 z-50"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <Link
+            href="/work"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white text-sm font-medium hover:bg-white/20 transition-all group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            All Projects
+          </Link>
+        </motion.div>
 
-        {/* Hero section */}
-        <section className="relative min-h-screen overflow-hidden">
-          {/* Animated background elements */}
-          <div className="absolute inset-0 overflow-hidden">
-            <motion.div
-              className="absolute -top-20 -right-20 w-96 h-96 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl"
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 180, 360],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
-            <motion.div
-              className="absolute -bottom-20 -left-20 w-96 h-96 bg-gradient-to-br from-pink-200/30 to-blue-200/30 rounded-full blur-3xl"
-              animate={{
-                scale: [1.2, 1, 1.2],
-                rotate: [360, 180, 0],
-              }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
-          </div>
+        {/* Hero Section */}
+        <section className="relative min-h-screen">
+          <motion.div
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          >
+            {/* Hero Image */}
+            <div className="absolute inset-0">
+              <Image
+                src={project.images?.[0] || "/projectbanner.jpg"}
+                alt={project.title || "Project"}
+                fill
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#030014]/60 via-[#030014]/40 to-[#030014]" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#030014]/80 to-transparent" />
+            </div>
+          </motion.div>
 
-          <div className="container mx-auto px-4 py-12 lg:py-20 relative z-10">
-            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 min-h-[90vh] lg:min-h-[80vh]">
-              {/* Left side - Text content */}
-              <motion.div
-                className="flex-1 lg:pr-16 w-full"
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
+          {/* Hero Content */}
+          <div className="relative z-10 min-h-screen flex items-end">
+            <div className="w-full px-6 md:px-12 lg:px-20 pb-24">
+              <div className="max-w-7xl mx-auto">
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 font-medium text-sm mb-6 border border-blue-200/50"
                 >
-                  Client
+                  {/* Industry Tag */}
+                  <motion.div
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <Sparkles className={`w-4 h-4 ${theme.text}`} />
+                    <span className={`text-sm font-medium ${theme.text}`}>
+                      {project.industryName || "Design"}
+                    </span>
+                  </motion.div>
+
+                  {/* Title */}
+                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight">
+                    <motion.span
+                      className="block"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                    >
+                      {project.title || project.client}
+                    </motion.span>
+                  </h1>
+
+                  {/* Description */}
+                  <motion.p
+                    className="text-lg md:text-xl text-zinc-300 max-w-2xl mb-8 leading-relaxed"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    {project.description}
+                  </motion.p>
+
+                  {/* Meta Info */}
+                  <motion.div
+                    className="flex flex-wrap gap-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                  >
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span className="text-sm text-zinc-300">
+                        {project.companyName}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
+                      <span className={`w-2 h-2 rounded-full ${theme.bg}`} />
+                      <span className="text-sm text-zinc-300">
+                        {project.client}
+                      </span>
+                    </div>
+                  </motion.div>
                 </motion.div>
 
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent leading-tight"
-                >
-                  {project.client || project.companyName}
-                </motion.h1>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="text-xl text-gray-600 leading-relaxed mb-8 max-w-xl"
-                >
-                  {project.description}
-                </motion.p>
-
+                {/* Scroll indicator */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="flex flex-wrap gap-4 mb-8"
+                  className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1 }}
                 >
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                    <span className="text-sm font-medium text-gray-700">
-                      UI UX
+                  <motion.div
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="flex flex-col items-center gap-2"
+                  >
+                    <span className="text-xs text-zinc-500 uppercase tracking-widest">
+                      Scroll
                     </span>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm">
-                    <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                    <span className="text-sm font-medium text-gray-700">
-                      Web
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm">
-                    <span className="w-2 h-2 bg-pink-500 rounded-full"></span>
-                    <span className="text-sm font-medium text-gray-700">
-                      Development
-                    </span>
-                  </div>
+                    <ChevronDown className="w-5 h-5 text-zinc-500" />
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-
-              {/* Right side - Full Image */}
-              <motion.div
-                className="flex-1 w-full h-full"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                <Image
-                  src="/projectbanner.jpg"
-                  alt="Project visual"
-                  width={800}
-                  height={600}
-                  className="w-full h-full object-cover rounded-2xl"
-                  priority
-                />
-              </motion.div>
+              </div>
             </div>
-
-            {/* Scroll indicator */}
-            <motion.div
-              className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-            >
-              <motion.div
-                animate={{ y: [0, 10, 0] }}
-                transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
-                className="flex flex-col items-center gap-2 text-gray-400"
-              >
-                <span className="text-xs font-medium tracking-wider uppercase">
-                  Scroll
-                </span>
-                <ChevronDown className="w-5 h-5" />
-              </motion.div>
-            </motion.div>
           </div>
         </section>
 
-        {/* Challenges section */}
-        <section className="py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="max-w-3xl mx-auto"
-            >
-              <div className="inline-block px-3 py-1 rounded-full bg-red-50 text-red-500 font-medium text-sm mb-6">
-                Challenges
+        {/* Image Gallery */}
+        {project.images && project.images.length > 1 && (
+          <section className="relative py-24 px-6 md:px-12 lg:px-20">
+            <div className="max-w-7xl mx-auto">
+              <motion.div
+                className="mb-12"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <span className={`text-sm font-medium ${theme.text} uppercase tracking-widest`}>
+                  Visual Journey
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
+                  Project Gallery
+                </h2>
+              </motion.div>
+
+              {/* Main Image */}
+              <motion.div
+                className="relative aspect-video rounded-3xl overflow-hidden mb-6"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeImageIndex}
+                    initial={{ opacity: 0, scale: 1.1 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0"
+                  >
+                    <Image
+                      src={project.images[activeImageIndex]}
+                      alt={`${project.title} - Image ${activeImageIndex + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Image navigation */}
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full bg-black/50 backdrop-blur-md">
+                  {project.images.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveImageIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        activeImageIndex === index
+                          ? `${theme.bg} w-6`
+                          : "bg-white/40 hover:bg-white/60"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Thumbnail strip */}
+              <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                {project.images.map((img, index) => (
+                  <motion.button
+                    key={index}
+                    onClick={() => setActiveImageIndex(index)}
+                    className={`relative flex-shrink-0 w-32 h-24 rounded-xl overflow-hidden transition-all ${
+                      activeImageIndex === index
+                        ? `ring-2 ring-offset-2 ring-offset-[#030014] ${
+                            theme.accent === "violet" ? "ring-violet-500" :
+                            theme.accent === "rose" ? "ring-rose-500" :
+                            theme.accent === "amber" ? "ring-amber-500" :
+                            theme.accent === "emerald" ? "ring-emerald-500" :
+                            "ring-cyan-500"
+                          }`
+                        : "opacity-60 hover:opacity-100"
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Image
+                      src={img}
+                      alt={`Thumbnail ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.button>
+                ))}
               </div>
+            </div>
+          </section>
+        )}
 
-              <h2 className="text-3xl md:text-4xl font-bold mb-12">
-                Overcoming obstacles to deliver exceptional results
-              </h2>
+        {/* Challenges Section */}
+        {project.challenges && project.challenges.length > 0 && (
+          <section className="relative py-24 px-6 md:px-12 lg:px-20">
+            <div className="max-w-7xl mx-auto">
+              <div className="grid lg:grid-cols-2 gap-16 items-start">
+                {/* Left: Header */}
+                <motion.div
+                  className="lg:sticky lg:top-32"
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}>
+                    <Target className={`w-4 h-4 ${theme.text}`} />
+                    <span className={`text-sm font-medium ${theme.text}`}>
+                      Challenges
+                    </span>
+                  </div>
+                  <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                    Obstacles We
+                    <br />
+                    <span className={`bg-gradient-to-r ${theme.primary} bg-clip-text text-transparent`}>
+                      Overcame
+                    </span>
+                  </h2>
+                  <p className="text-lg text-zinc-400">
+                    Every great project comes with its unique set of challenges.
+                    Here&apos;s how we tackled them head-on.
+                  </p>
+                </motion.div>
 
-              <div className="space-y-8">
-                {project.challenges &&
-                  project.challenges.map((challenge, index) => (
+                {/* Right: Challenges list */}
+                <div className="space-y-6">
+                  {project.challenges.map((challenge, index) => (
                     <motion.div
                       key={index}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex gap-6 group"
+                      className="group relative p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition-all"
                     >
-                      <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-red-400 to-pink-500 text-white font-bold">
-                          {String(index + 1).padStart(2, "0")}
-                        </div>
+                      {/* Number badge */}
+                      <div className={`absolute -left-3 -top-3 w-10 h-10 rounded-xl bg-gradient-to-br ${theme.primary} flex items-center justify-center font-bold text-white shadow-lg`}>
+                        {String(index + 1).padStart(2, "0")}
                       </div>
-                      <div className="flex-1">
-                        <p className="text-lg leading-relaxed">{challenge}</p>
-                        <motion.div
-                          className="h-px bg-gray-200 mt-6"
-                          initial={{ scaleX: 0 }}
-                          whileInView={{ scaleX: 1 }}
-                          viewport={{ once: true }}
-                          transition={{
-                            delay: index * 0.1 + 0.3,
-                            duration: 0.5,
-                          }}
-                        />
-                      </div>
+
+                      <p className="text-zinc-300 leading-relaxed pl-4">
+                        {challenge}
+                      </p>
+
+                      {/* Hover glow */}
+                      <div
+                        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"
+                        style={{
+                          background: `radial-gradient(ellipse at center, ${theme.glow} 0%, transparent 70%)`,
+                          filter: "blur(40px)",
+                        }}
+                      />
                     </motion.div>
                   ))}
+                </div>
               </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Image gallery section 1 */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row gap-6">
-              <motion.div
-                className="w-full md:w-1/2 h-[400px] relative rounded-2xl overflow-hidden"
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                {project.images && project.images[1] && (
-                  <Image
-                    src={project.images[1] || "/placeholder.svg"}
-                    alt="Project visual"
-                    layout="fill"
-                    objectFit="cover"
-                    className="transition-transform duration-700 hover:scale-105"
-                  />
-                )}
-              </motion.div>
-
-              <motion.div
-                className="w-full md:w-1/2 h-[400px] relative rounded-2xl overflow-hidden"
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                {project.images && project.images[2] && (
-                  <Image
-                    src={project.images[2] || "/placeholder.svg"}
-                    alt="Project visual"
-                    layout="fill"
-                    objectFit="cover"
-                    className="transition-transform duration-700 hover:scale-105"
-                  />
-                )}
-              </motion.div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* Solution section */}
-        <section className="py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="max-w-3xl mx-auto"
-            >
-              <div className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-500 font-medium text-sm mb-6">
-                Solution
-              </div>
+        {/* Parallax Image Break */}
+        {project.images && project.images[1] && (
+          <section className="py-12 px-6 md:px-12 lg:px-20">
+            <div className="max-w-7xl mx-auto">
+              <ParallaxImage
+                src={project.images[1]}
+                alt={`${project.title} showcase`}
+              />
+            </div>
+          </section>
+        )}
 
-              <h2 className="text-3xl md:text-4xl font-bold mb-8">
-                Our approach
-              </h2>
+        {/* Solution Section */}
+        {project.solution && (
+          <section className="relative py-24 px-6 md:px-12 lg:px-20">
+            <div className="max-w-7xl mx-auto">
+              <motion.div
+                className="max-w-4xl mx-auto text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}>
+                  <Lightbulb className={`w-4 h-4 ${theme.text}`} />
+                  <span className={`text-sm font-medium ${theme.text}`}>
+                    Our Approach
+                  </span>
+                </div>
 
-              <div className="prose prose-lg">
-                <p className="text-lg leading-relaxed text-gray-700">
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+                  The Solution
+                </h2>
+
+                <p className="text-xl text-zinc-300 leading-relaxed">
                   {project.solution}
                 </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Image gallery section 2 */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <motion.div
-              className="w-full h-[500px] relative rounded-2xl overflow-hidden"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              {project.images && project.images[3] && (
-                <Image
-                  src={project.images[3] || "/placeholder.svg"}
-                  alt="Project visual"
-                  layout="fill"
-                  objectFit="cover"
-                  className="transition-transform duration-700 hover:scale-105"
-                />
-              )}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Results section */}
-        <section className="py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <div className="inline-block px-3 py-1 rounded-full bg-green-50 text-green-500 font-medium text-sm mb-6">
-                Results
-              </div>
-
-              <h2 className="text-3xl md:text-4xl font-bold">
-                Measurable impact
-              </h2>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.div
-                className="flex flex-col items-center text-center p-8 rounded-2xl hover:shadow-xl transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="w-20 h-20 mb-6">
-                  <Image
-                    src="/m_1.png"
-                    alt="Brand Awareness"
-                    width={80}
-                    height={80}
-                  />
-                </div>
-                <h3 className="text-xl font-bold mb-2">
-                  Increased Brand Awareness
-                </h3>
-                <p className="text-gray-600">
-                  Significant growth in brand recognition and market presence
-                </p>
-              </motion.div>
-
-              <motion.div
-                className="flex flex-col items-center text-center p-8 rounded-2xl hover:shadow-xl transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="w-20 h-20 mb-6">
-                  <Image
-                    src="/m_2.png"
-                    alt="Improved Sales"
-                    width={80}
-                    height={80}
-                  />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Improved Sales</h3>
-                <p className="text-gray-600">
-                  Substantial increase in conversion rates and revenue
-                </p>
-              </motion.div>
-
-              <motion.div
-                className="flex flex-col items-center text-center p-8 rounded-2xl hover:shadow-xl transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="w-20 h-20 mb-6">
-                  <Image
-                    src="/m_3.png"
-                    alt="Better Value"
-                    width={80}
-                    height={80}
-                  />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Better Value</h3>
-                <p className="text-gray-600">
-                  Enhanced customer satisfaction and long-term loyalty
-                </p>
               </motion.div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* CTA section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
+        {/* Results Section */}
+        <section className="relative py-24 px-6 md:px-12 lg:px-20">
+          <div className="max-w-7xl mx-auto">
             <motion.div
-              className="relative overflow-hidden rounded-3xl"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-600" />
-
-              <motion.div
-                className="absolute inset-0"
-                animate={{
-                  backgroundPosition: ["0% 0%", "100% 100%"],
-                  opacity: [0.1, 0.3, 0.1],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Number.POSITIVE_INFINITY,
-                  repeatType: "reverse",
-                }}
-                style={{
-                  backgroundImage:
-                    'url("data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%23ffffff" fillOpacity="0.1" fillRule="evenodd"/%3E%3C/svg%3E")',
-                  backgroundSize: "30%",
-                }}
-              />
-
-              <div className="relative py-16 px-8 md:px-16 text-white">
-                <div className="max-w-3xl">
-                  <motion.h2
-                    className="text-3xl md:text-4xl font-bold mb-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 }}
-                  >
-                    Make the Move
-                  </motion.h2>
-
-                  <motion.h3
-                    className="text-xl font-semibold mb-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    REACH OUT
-                  </motion.h3>
-
-                  <motion.p
-                    className="text-lg mb-8 text-white/90 max-w-2xl"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    If you&apos;re looking for a holistic agency to work on your
-                    big dream, just say the magic words!
-                  </motion.p>
-
-                  <motion.button
-                    className="group flex items-center gap-2 bg-white text-pink-600 font-semibold py-3 px-6 rounded-full hover:bg-opacity-90 transition-all"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    LET&apos;S COLLABORATE
-                    <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* More projects section */}
-        <section className="py-24 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <motion.div
-              className="mb-16"
+              className="text-center mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-2xl font-bold">More</h2>
-              <h3 className="text-3xl text-gray-400 font-bold">Good Stuff</h3>
+              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}>
+                <Trophy className={`w-4 h-4 ${theme.text}`} />
+                <span className={`text-sm font-medium ${theme.text}`}>
+                  Impact
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white">
+                Measurable Results
+              </h2>
             </motion.div>
 
-            {/* Here you would add a carousel or grid of other projects */}
-            <div className="text-center py-8">
-              <Link href="/work">
-                <motion.button
-                  className="group flex items-center gap-2 mx-auto bg-black text-white font-semibold py-3 px-6 rounded-full hover:bg-gray-800 transition-all"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: "/m_1.png",
+                  title: "Brand Awareness",
+                  description: "Significant growth in brand recognition across target markets",
+                  stat: "150%",
+                  statLabel: "Increase",
+                },
+                {
+                  icon: "/m_2.png",
+                  title: "User Engagement",
+                  description: "Improved interaction rates and user satisfaction scores",
+                  stat: "3x",
+                  statLabel: "Higher",
+                },
+                {
+                  icon: "/m_3.png",
+                  title: "Business Growth",
+                  description: "Enhanced conversion rates leading to revenue growth",
+                  stat: "200%",
+                  statLabel: "ROI",
+                },
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="group relative p-8 rounded-3xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition-all text-center"
                 >
-                  View All Projects
-                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-                </motion.button>
+                  {/* Icon */}
+                  <div className="w-16 h-16 mx-auto mb-6 relative">
+                    <Image
+                      src={item.icon}
+                      alt={item.title}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+
+                  {/* Stat */}
+                  <div className="mb-4">
+                    <span className={`text-4xl font-bold bg-gradient-to-r ${theme.primary} bg-clip-text text-transparent`}>
+                      {item.stat}
+                    </span>
+                    <span className="text-zinc-500 text-sm ml-2">
+                      {item.statLabel}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-zinc-400">{item.description}</p>
+
+                  {/* Hover glow */}
+                  <div
+                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"
+                    style={{
+                      background: `radial-gradient(ellipse at center, ${theme.glow} 0%, transparent 70%)`,
+                      filter: "blur(60px)",
+                    }}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="relative py-24 px-6 md:px-12 lg:px-20">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              className="relative overflow-hidden rounded-3xl"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              {/* Background */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${theme.primary}`} />
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 50%),
+                                    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 40%)`,
+                }}
+              />
+
+              <div className="relative z-10 py-20 px-8 md:px-16 text-center">
+                <motion.h2
+                  className="text-4xl md:text-5xl font-bold text-white mb-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                >
+                  Ready to create something amazing?
+                </motion.h2>
+                <motion.p
+                  className="text-xl text-white/80 mb-10 max-w-2xl mx-auto"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                >
+                  Let&apos;s collaborate and bring your vision to life with the same
+                  passion and precision.
+                </motion.p>
+                <motion.div
+                  className="flex flex-wrap justify-center gap-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-gray-900 font-semibold hover:bg-white/90 transition-all hover:scale-105 active:scale-100 shadow-xl"
+                  >
+                    Start a Project
+                    <ExternalLink className="w-5 h-5" />
+                  </Link>
+                  <Link
+                    href="/work"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold hover:bg-white/20 transition-all"
+                  >
+                    View More Work
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Project Navigation */}
+        <section className="relative py-12 px-6 md:px-12 lg:px-20 border-t border-zinc-800">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-between items-center">
+              {/* Previous Project */}
+              <div>
+                {prevProject && (
+                  <Link
+                    href={`/work/${prevProject._id}`}
+                    className="group flex items-center gap-4"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center group-hover:bg-zinc-700 transition-colors">
+                      <ArrowLeft className="w-5 h-5 text-white group-hover:-translate-x-1 transition-transform" />
+                    </div>
+                    <div className="hidden md:block">
+                      <span className="text-sm text-zinc-500">Previous</span>
+                      <p className="text-white font-medium group-hover:text-violet-400 transition-colors">
+                        {prevProject.title}
+                      </p>
+                    </div>
+                  </Link>
+                )}
+              </div>
+
+              {/* All Projects */}
+              <Link
+                href="/work"
+                className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-800 text-white text-sm font-medium hover:bg-zinc-700 transition-colors"
+              >
+                <span className="hidden md:inline">All Projects</span>
+                <ArrowUpRight className="w-4 h-4" />
               </Link>
+
+              {/* Next Project */}
+              <div>
+                {nextProject && (
+                  <Link
+                    href={`/work/${nextProject._id}`}
+                    className="group flex items-center gap-4"
+                  >
+                    <div className="hidden md:block text-right">
+                      <span className="text-sm text-zinc-500">Next</span>
+                      <p className="text-white font-medium group-hover:text-violet-400 transition-colors">
+                        {nextProject.title}
+                      </p>
+                    </div>
+                    <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center group-hover:bg-zinc-700 transition-colors">
+                      <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         </section>
@@ -598,5 +780,3 @@ function ProjectPage({ params }: RouteParams) {
     </AnimatePresence>
   );
 }
-
-export default ProjectPage;

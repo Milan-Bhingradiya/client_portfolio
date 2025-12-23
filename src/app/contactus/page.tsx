@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Loading from "../utility/Loading";
+import { useMutation } from "@tanstack/react-query";
+import { sendMessage } from "@/lib/api";
 
 function Page() {
   const [formData, setFormData] = useState({
@@ -9,65 +11,56 @@ function Page() {
     message: "",
   });
 
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const [isLoading, setisLoading] = useState(false);
-  const handleSubmit = async (e: any) => {
+  const mutation = useMutation({
+    mutationFn: sendMessage,
+    onSuccess: () => {
+      alert("We will reach out to you soon");
+      setFormData({ title: "", email: "", message: "" });
+    },
+    onError: (error: Error) => {
+      alert("Try Again: " + error.message);
+    },
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      alert("Please enter a valid  email address");
+      alert("Please enter a valid email address");
       return;
     }
-    // Check if any field is empty
-    for (const key in formData) {
-      if (formData.hasOwnProperty(key)) {
-        if ((formData as any)[key].trim() === "") {
-          alert("Please fill in all fields");
-          return;
-        }
-      }
+    if (
+      !formData.title.trim() ||
+      !formData.email.trim() ||
+      !formData.message.trim()
+    ) {
+      alert("Please fill in all fields");
+      return;
     }
-    setisLoading(true);
-    try {
-      const res = await fetch(
-        "https://smit-shah-backend-80da1d71856d.herokuapp.com/message",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title: formData.title,
-            description: formData.message,
-            email: formData.email,
-          }),
-        }
-      );
-      const data = await res.json();
-      if (res.ok) {
-        alert("We will reach out to you soon");
-        setFormData({ title: "", email: "", message: "" });
-      } else {
-        alert("Try Again: " + (data.error || "Unknown error"));
-      }
-    } catch (error) {
-      alert("Try Again: " + error);
-    }
-    setisLoading(false);
+    mutation.mutate({
+      title: formData.title,
+      description: formData.message,
+      email: formData.email,
+    });
   };
 
   return (
     <div>
-      <section className="m-4  " id="contact">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 ">
+      <section className="m-4" id="contact">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="mb-4">
             <div className="mb-6 max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">
-              <h2 className="font-heading mb-4 font-bold tracking-tight text-gray-900  text-3xl sm:text-5xl">
+              <h2 className="font-heading mb-4 font-bold tracking-tight text-gray-900 text-3xl sm:text-5xl">
                 Get in Touch
               </h2>
-              <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600 ">
+              <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600">
                 In hac habitasse platea dictumst
               </p>
             </div>
@@ -75,10 +68,9 @@ function Page() {
           <div className="flex items-stretch justify-center">
             <div className="grid md:grid-cols-2">
               <div className="h-full pr-6">
-                <p className="mt-3 mb-12 text-lg text-gray-600 ">
+                <p className="mt-3 mb-12 text-lg text-gray-600">
                   Class aptent taciti sociosqu ad litora torquent per conubia
-                  nostra, per inceptos himenaeos. Duis nec ipsum orci. Ut
-                  scelerisque sagittis ante, ac tincidunt sem venenatis ut.
+                  nostra, per inceptos himenaeos.
                 </p>
                 <ul className="mb-6 md:mb-0">
                   <li className="flex">
@@ -100,13 +92,13 @@ function Page() {
                       </svg>
                     </div>
                     <div className="ml-4 mb-4">
-                      <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900 ">
+                      <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900">
                         Our Address
                       </h3>
-                      <p className="text-gray-600 ">
+                      <p className="text-gray-600">
                         1230 Maecenas Street Donec Road
                       </p>
-                      <p className="text-gray-600 ">New York, EEUU</p>
+                      <p className="text-gray-600">New York, EEUU</p>
                     </div>
                   </li>
                   <li className="flex">
@@ -129,13 +121,11 @@ function Page() {
                       </svg>
                     </div>
                     <div className="ml-4 mb-4">
-                      <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900 ">
+                      <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900">
                         Contact
                       </h3>
-                      <p className="text-gray-600 ">
-                        Mobile: +1 (123) 456-7890
-                      </p>
-                      <p className="text-gray-600 ">Mail: tailnext@gmail.com</p>
+                      <p className="text-gray-600">Mobile: +1 (123) 456-7890</p>
+                      <p className="text-gray-600">Mail: tailnext@gmail.com</p>
                     </div>
                   </li>
                   <li className="flex">
@@ -157,13 +147,13 @@ function Page() {
                       </svg>
                     </div>
                     <div className="ml-4 mb-4">
-                      <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900 ">
+                      <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900">
                         Working hours
                       </h3>
-                      <p className="text-gray-600 ">
+                      <p className="text-gray-600">
                         Monday - Friday: 08:00 - 17:00
                       </p>
-                      <p className="text-gray-600 ">
+                      <p className="text-gray-600">
                         Saturday &amp; Sunday: 08:00 - 12:00
                       </p>
                     </div>
@@ -171,69 +161,56 @@ function Page() {
                 </ul>
               </div>
               <div className="card h-fit max-w-6xl p-5 md:p-12" id="form">
-                <h2 className="mb-4 text-2xl font-bold ">
+                <h2 className="mb-4 text-2xl font-bold">
                   Ready to Get Started?
                 </h2>
-                {isLoading && <Loading></Loading>}
-                {!isLoading && (
-                  <div>
+                {mutation.isPending ? (
+                  <Loading />
+                ) : (
+                  <form onSubmit={handleSubmit}>
                     <div className="mb-6">
                       <div className="mx-0 mb-1 sm:mb-4">
-                        <div className="mx-0 mb-1 sm:mb-4">
-                          <label
-                            htmlFor="name"
-                            className="pb-1 text-xs uppercase tracking-wider"
-                          ></label>
-                          <input
-                            name="title"
-                            type="text"
-                            id="name"
-                            onChange={handleInputChange}
-                            placeholder="Your title"
-                            className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
-                          />
-                        </div>
-                        <div className="mx-0 mb-1 sm:mb-4">
-                          <label
-                            htmlFor="email"
-                            className="pb-1 text-xs uppercase tracking-wider"
-                          ></label>
-                          <input
-                            name="email"
-                            type="text"
-                            id="email"
-                            onChange={handleInputChange}
-                            placeholder="Your email address"
-                            className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
-                          />
-                        </div>
+                        <input
+                          name="title"
+                          type="text"
+                          value={formData.title}
+                          onChange={handleInputChange}
+                          placeholder="Your title"
+                          className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md sm:mb-0"
+                        />
                       </div>
                       <div className="mx-0 mb-1 sm:mb-4">
-                        <label
-                          htmlFor="textarea"
-                          className="pb-1 text-xs uppercase tracking-wider"
-                        ></label>
-                        <textarea
-                          id="textarea"
+                        <input
+                          name="email"
+                          type="email"
+                          value={formData.email}
                           onChange={handleInputChange}
+                          placeholder="Your email address"
+                          className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md sm:mb-0"
+                        />
+                      </div>
+                      <div className="mx-0 mb-1 sm:mb-4">
+                        <textarea
                           name="message"
+                          value={formData.message}
+                          onChange={handleInputChange}
                           cols={30}
                           rows={5}
                           placeholder="Write your message..."
-                          className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
+                          className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md sm:mb-0"
                         ></textarea>
                       </div>
                     </div>
                     <div className="text-center">
                       <button
                         type="submit"
-                        onClick={handleSubmit}
-                        className="w-full bg-blue-800 text-white px-6 py-3 font-xl rounded-md sm:mb-0"
+                        disabled={mutation.isPending}
+                        className="w-full bg-blue-800 text-white px-6 py-3 font-xl rounded-md sm:mb-0 disabled:opacity-50"
                       >
-                        Send Message
+                        {mutation.isPending ? "Sending..." : "Send Message"}
                       </button>
                     </div>
-                  </div>
+                  </form>
                 )}
               </div>
             </div>
