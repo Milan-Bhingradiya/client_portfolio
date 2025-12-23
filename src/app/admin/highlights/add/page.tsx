@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addHighlight } from "@/lib/api";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function AddHighlightPage() {
   const router = useRouter();
@@ -78,7 +79,7 @@ export default function AddHighlightPage() {
           />
           {preview && (
             <div className="mt-4">
-              <img
+              <Image
                 src={preview}
                 alt="Preview"
                 className="w-48 h-64 object-cover rounded-lg border border-zinc-600"

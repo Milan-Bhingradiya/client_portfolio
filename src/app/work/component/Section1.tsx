@@ -1,6 +1,13 @@
-import { Player } from "@lottiefiles/react-lottie-player";
+"use client";
+
+import dynamic from "next/dynamic";
 import triangle from "../../../../public/triangle.json";
 import Animated_text from "../../component/Animated_text";
+
+const Player = dynamic(
+  () => import("@lottiefiles/react-lottie-player").then((mod) => mod.Player),
+  { ssr: false }
+);
 
 function Section1() {
   return (

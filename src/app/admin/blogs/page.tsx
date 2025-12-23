@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchBlogs, deleteBlog, type Blog } from "@/lib/api";
+import Image from "next/image";
 
 export default function BlogsPage() {
   const queryClient = useQueryClient();
@@ -57,7 +58,7 @@ export default function BlogsPage() {
             >
               <div className="flex items-center gap-4">
                 {blog.imageUrl && (
-                  <img
+                  <Image
                     src={blog.imageUrl}
                     alt={blog.title}
                     className="w-20 h-20 object-cover rounded-lg"

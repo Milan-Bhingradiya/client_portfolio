@@ -1,4 +1,6 @@
-import { motion, useViewportScroll } from "framer-motion";
+"use client";
+
+import { motion } from "framer-motion";
 
 interface TextProps {
   text: string;
@@ -10,8 +12,6 @@ interface TextProps {
 }
 
 function AnimatedText({ text, mode, weight, size, space }: TextProps) {
-  const { scrollY } = useViewportScroll();
-
   let textSpans: React.ReactElement<any>[];
 
   if (mode === "single") {

@@ -1,8 +1,13 @@
 "use client";
 import React from "react";
+import dynamic from "next/dynamic";
 import Animated_text from "../component/Animated_text";
-import { Player } from "@lottiefiles/react-lottie-player";
 import client from "../../../public/client.json";
+
+const Player = dynamic(
+  () => import("@lottiefiles/react-lottie-player").then((mod) => mod.Player),
+  { ssr: false }
+);
 import { motion } from "framer-motion";
 import one from "../../../public/1.png";
 import two from "../../../public/2.png";

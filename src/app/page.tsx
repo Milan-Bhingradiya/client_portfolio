@@ -2,9 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Player } from "@lottiefiles/react-lottie-player";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+
+const Player = dynamic(
+  () => import("@lottiefiles/react-lottie-player").then((mod) => mod.Player),
+  { ssr: false }
+);
 
 import Section1 from "./work/component/Section1";
 import ServiceSection from "./component/ServiceSection";

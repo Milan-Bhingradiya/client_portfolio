@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchProject, deleteProject } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function AdminProjectDetailPage({
   params,
@@ -83,14 +84,16 @@ export default function AdminProjectDetailPage({
       {/* Project Header */}
       <div className="bg-zinc-800 rounded-xl overflow-hidden border border-zinc-700 mb-6">
         {project.images?.[0] && (
-          <img
+          <Image
             src={project.images[0]}
             alt={project.title}
             className="w-full h-64 object-cover"
           />
         )}
         <div className="p-6">
-          <h1 className="text-3xl font-bold text-white mb-2">{project.title}</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">
+            {project.title}
+          </h1>
           <div className="flex flex-wrap gap-2 mt-3">
             <span className="px-3 py-1 bg-blue-600/20 text-blue-400 rounded-full text-sm">
               {project.industryName}
@@ -116,7 +119,9 @@ export default function AdminProjectDetailPage({
 
       {/* Description */}
       <div className="bg-zinc-800 rounded-xl border border-zinc-700 p-6 mb-6">
-        <h2 className="text-lg font-semibold text-zinc-300 mb-3">Description</h2>
+        <h2 className="text-lg font-semibold text-zinc-300 mb-3">
+          Description
+        </h2>
         <p className="text-zinc-300 leading-relaxed">{project.description}</p>
       </div>
 
@@ -148,7 +153,7 @@ export default function AdminProjectDetailPage({
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {project.images?.map((img, index) => (
-            <img
+            <Image
               key={index}
               src={img}
               alt={`${project.title} - Image ${index + 1}`}
@@ -160,4 +165,3 @@ export default function AdminProjectDetailPage({
     </div>
   );
 }
-

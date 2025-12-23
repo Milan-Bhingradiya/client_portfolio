@@ -9,6 +9,7 @@ import {
   type Highlight,
 } from "@/lib/api";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function HighlightsPage() {
   const queryClient = useQueryClient();
@@ -153,7 +154,7 @@ export default function HighlightsPage() {
                 </div>
 
                 {/* Image */}
-                <img
+                <Image
                   src={highlight.image}
                   alt={highlight.title}
                   className="w-32 h-24 object-cover"

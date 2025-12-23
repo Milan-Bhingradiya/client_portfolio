@@ -3,12 +3,9 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  fetchHighlight,
-  updateHighlight,
-  deleteHighlight,
-} from "@/lib/api";
+import { fetchHighlight, updateHighlight, deleteHighlight } from "@/lib/api";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function EditHighlightPage({
   params,
@@ -35,8 +32,11 @@ export default function EditHighlightPage({
   }, [highlight]);
 
   const updateMutation = useMutation({
-    mutationFn: (data: { title: string; subtitle: string; isActive: boolean }) =>
-      updateHighlight(params.id, data),
+    mutationFn: (data: {
+      title: string;
+      subtitle: string;
+      isActive: boolean;
+    }) => updateHighlight(params.id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["highlights"] });
       queryClient.invalidateQueries({ queryKey: ["highlight", params.id] });
@@ -81,7 +81,10 @@ export default function EditHighlightPage({
     return (
       <div className="text-center py-10">
         <p className="text-red-400 mb-4">Highlight not found</p>
-        <Link href="/admin/highlights" className="text-amber-400 hover:underline">
+        <Link
+          href="/admin/highlights"
+          className="text-amber-400 hover:underline"
+        >
           ← Back to Highlights
         </Link>
       </div>
@@ -112,7 +115,7 @@ export default function EditHighlightPage({
       {/* Current Image */}
       <div className="mb-6">
         <label className="block text-zinc-300 mb-2">Current Image</label>
-        <img
+        <Image
           src={highlight.image}
           alt={highlight.title}
           className="w-48 h-64 object-cover rounded-lg border border-zinc-600"
@@ -169,4 +172,3 @@ export default function EditHighlightPage({
     </div>
   );
 }
-

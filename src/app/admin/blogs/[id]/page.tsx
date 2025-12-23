@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchBlog, deleteBlog } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import Image from "next/image";
 
 export default function AdminBlogDetailPage({
   params,
@@ -84,7 +85,7 @@ export default function AdminBlogDetailPage({
       {/* Blog Header */}
       <div className="bg-zinc-800 rounded-xl overflow-hidden border border-zinc-700 mb-8">
         {blog.imageUrl && (
-          <img
+          <Image
             src={blog.imageUrl}
             alt={blog.title}
             className="w-full h-64 object-cover"

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchProjects, deleteProject, type Project } from "@/lib/api";
+import Image from "next/image";
 
 export default function ProjectsPage() {
   const queryClient = useQueryClient();
@@ -46,7 +47,9 @@ export default function ProjectsPage() {
       </div>
 
       {projects.length === 0 ? (
-        <p className="text-zinc-400">No projects yet. Add your first project!</p>
+        <p className="text-zinc-400">
+          No projects yet. Add your first project!
+        </p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project: Project) => (
@@ -56,7 +59,7 @@ export default function ProjectsPage() {
               className="block bg-zinc-800 rounded-xl overflow-hidden border border-zinc-700 hover:border-amber-500 transition-colors"
             >
               {project.images[0] && (
-                <img
+                <Image
                   src={project.images[0]}
                   alt={project.title}
                   className="w-full h-48 object-cover"
