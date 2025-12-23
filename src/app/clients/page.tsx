@@ -42,7 +42,7 @@ const img = [
 ];
 function page() {
   return (
-    <div className="flex flex-col justify-center items-center  ">
+    <div className="flex flex-col justify-center items-center pt-24">
       <div className="  w-[70%]  my-10">
         <Animated_text
           text={

@@ -11,7 +11,7 @@ export default function BlogsPage() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto py-20 px-4">
+    <div className="max-w-7xl mx-auto pt-28 pb-20 px-4">
       <h1 className="text-5xl font-extrabold mb-20 text-center drop-shadow-lg tracking-tight">
         Our Blogs
       </h1>

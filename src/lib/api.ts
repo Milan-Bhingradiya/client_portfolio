@@ -1,5 +1,3 @@
-// API functions for TanStack Query
-
 export interface Project {
   _id: string;
   title: string;
@@ -147,7 +145,10 @@ export async function fetchHighlight(id: string): Promise<Highlight> {
 }
 
 export async function addHighlight(formData: FormData): Promise<Highlight> {
-  const res = await fetch("/api/highlights", { method: "POST", body: formData });
+  const res = await fetch("/api/highlights", {
+    method: "POST",
+    body: formData,
+  });
   if (!res.ok) {
     const data = await res.json();
     throw new Error(data.error || "Failed to add highlight");

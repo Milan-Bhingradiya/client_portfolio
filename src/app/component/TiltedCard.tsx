@@ -225,4 +225,3 @@ export default function TiltedCard({
     </motion.div>
   );
 }
-

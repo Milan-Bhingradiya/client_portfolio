@@ -203,8 +203,8 @@ export default function WorkPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
-              We&apos;ve designed experiences for over 260+ projects, helping brands
-              create meaningful connections with their audiences.
+              We&apos;ve designed experiences for over 260+ projects, helping
+              brands create meaningful connections with their audiences.
             </motion.p>
           </motion.div>
 
@@ -216,9 +216,7 @@ export default function WorkPage() {
             transition={{ delay: 0.6 }}
           >
             <div className="flex items-center gap-2 text-zinc-500">
-              <span className="text-sm">
-                {projects.length} Projects
-              </span>
+              <span className="text-sm">{projects.length} Projects</span>
             </div>
 
             <div className="flex items-center gap-2 p-1 rounded-xl bg-zinc-900/50 border border-zinc-800">
@@ -422,8 +420,8 @@ export default function WorkPage() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                Let&apos;s transform your vision into reality. We&apos;re here to help you
-                create something extraordinary.
+                Let&apos;s transform your vision into reality. We&apos;re here
+                to help you create something extraordinary.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -432,7 +430,7 @@ export default function WorkPage() {
                 transition={{ delay: 0.3 }}
               >
                 <Link
-                  href="/contact"
+                  href="/contactus"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-violet-600 font-semibold hover:bg-white/90 transition-all hover:scale-105 active:scale-100"
                 >
                   Start a Conversation

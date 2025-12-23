@@ -6,7 +6,6 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-// Components
 import Section1 from "./work/component/Section1";
 import ServiceSection from "./component/ServiceSection";
 import WhyWorkWithUs from "./component/WhyWorkWithUs";
@@ -15,10 +14,8 @@ import ClientsSection from "./component/ClientsSection";
 import AboutSection from "./component/AboutSection";
 import IndustriesSection from "./component/IndustriesSection";
 import StatsSection from "./component/StatsSection";
-import CTASection from "./component/CTASection";
 import ContactSection from "./component/ContactUs";
 
-// Dynamic imports for client-only components
 const TestimonialSection = dynamic(
   () => import("./component/TestimonialSection"),
   { ssr: false }
@@ -28,19 +25,16 @@ const ExpoSlider = dynamic(() => import("./component/ExpoSlider"), {
   loading: () => <div className="h-[600px] bg-black" />,
 });
 
-// Assets
 import peoples from "../../public/peoples.json";
 import one from "../../public/1.png";
 import two from "../../public/2.png";
 import three from "../../public/3.png";
 import four from "../../public/4.png";
 import five from "../../public/5.png";
-
 import six from "../../public/6.png";
 import seven from "../../public/7.png";
 import eight from "../../public/8.png";
 import nine from "../../public/9.png";
-// import ImageVideoSlider from "./component/imageVideoSlider";
 
 function Page() {
   const [stats, setStats] = useState({
@@ -50,11 +44,9 @@ function Page() {
     awards: 0,
   });
 
-  // Scroll progress
   const { scrollYProgress } = useScroll();
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  // Animate stats
   useEffect(() => {
     const timer = setTimeout(() => {
       setStats({ projects: 25, clients: 15, years: 8, awards: 5 });
@@ -68,53 +60,32 @@ function Page() {
   const logos = [one, two, three, four, five, six, seven, eight, nine];
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
-      {/* Progress bar */}
+    <div className="min-h-screen overflow-x-hidden pt-20">
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-purple-600 z-50 origin-left"
         style={{ scaleX }}
       />
-
-      {/* Hero Section */}
       <Section1 />
-
-      {/* Clients Section */}
       <ClientsSection logos={clientLogos} />
-
-      {/* About Section */}
       <AboutSection />
 
-      {/* Main Services */}
       <ServiceSection />
-      {/* <ImageVideoSlider /> */}
       <ExpoSlider />
       <StatsSection stats={stats} />
 
       <WhyWorkWithUs />
 
-      {/* CTA Section */}
-      {/* Stats Section */}
       <IndustriesSection topRow={topRow} bottomRow={bottomRow} />
-
-      {/* Industries Section */}
-      {/* <CTASection /> */}
-
-      {/* Testimonials */}
       <TestimonialSection />
 
-      {/* Contact Section */}
-
       <ContactSection logos={logos} />
-      {/* Animation */}
       <div className="flex justify-center items-end mt-10 h-full">
         <div className="w-4/5 sm:w-1/2 h-auto">
           <Player src={peoples} className="w-full h-full" loop autoplay />
         </div>
       </div>
-      {/* Social Media */}
       <SocialMediaRow />
 
-      {/* Footer */}
       <footer className="bg-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -125,9 +96,7 @@ function Page() {
                 targeted marketing, and seamless development for unparalleled
                 results.
               </p>
-              <div className="flex gap-4">
-                {/* Social media icons would go here */}
-              </div>
+              <div className="flex gap-4"></div>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">Services</h4>

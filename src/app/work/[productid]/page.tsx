@@ -107,7 +107,7 @@ function ParallaxImage({
   priority?: boolean;
 }) {
   return (
-    <motion.div 
+    <motion.div
       className="relative h-[60vh] md:h-[80vh] overflow-hidden rounded-3xl"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -169,7 +169,9 @@ export default function ProjectPage({ params }: RouteParams) {
   );
   const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
   const nextProject =
-    currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
+    currentIndex < allProjects.length - 1
+      ? allProjects[currentIndex + 1]
+      : null;
 
   if (isLoading) return <LoadingState />;
 
@@ -374,7 +376,9 @@ export default function ProjectPage({ params }: RouteParams) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <span className={`text-sm font-medium ${theme.text} uppercase tracking-widest`}>
+                <span
+                  className={`text-sm font-medium ${theme.text} uppercase tracking-widest`}
+                >
                   Visual Journey
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
@@ -432,11 +436,15 @@ export default function ProjectPage({ params }: RouteParams) {
                     className={`relative flex-shrink-0 w-32 h-24 rounded-xl overflow-hidden transition-all ${
                       activeImageIndex === index
                         ? `ring-2 ring-offset-2 ring-offset-[#030014] ${
-                            theme.accent === "violet" ? "ring-violet-500" :
-                            theme.accent === "rose" ? "ring-rose-500" :
-                            theme.accent === "amber" ? "ring-amber-500" :
-                            theme.accent === "emerald" ? "ring-emerald-500" :
-                            "ring-cyan-500"
+                            theme.accent === "violet"
+                              ? "ring-violet-500"
+                              : theme.accent === "rose"
+                              ? "ring-rose-500"
+                              : theme.accent === "amber"
+                              ? "ring-amber-500"
+                              : theme.accent === "emerald"
+                              ? "ring-emerald-500"
+                              : "ring-cyan-500"
                           }`
                         : "opacity-60 hover:opacity-100"
                     }`}
@@ -468,7 +476,9 @@ export default function ProjectPage({ params }: RouteParams) {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                 >
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}>
+                  <div
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}
+                  >
                     <Target className={`w-4 h-4 ${theme.text}`} />
                     <span className={`text-sm font-medium ${theme.text}`}>
                       Challenges
@@ -477,7 +487,9 @@ export default function ProjectPage({ params }: RouteParams) {
                   <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                     Obstacles We
                     <br />
-                    <span className={`bg-gradient-to-r ${theme.primary} bg-clip-text text-transparent`}>
+                    <span
+                      className={`bg-gradient-to-r ${theme.primary} bg-clip-text text-transparent`}
+                    >
                       Overcame
                     </span>
                   </h2>
@@ -499,7 +511,9 @@ export default function ProjectPage({ params }: RouteParams) {
                       className="group relative p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition-all"
                     >
                       {/* Number badge */}
-                      <div className={`absolute -left-3 -top-3 w-10 h-10 rounded-xl bg-gradient-to-br ${theme.primary} flex items-center justify-center font-bold text-white shadow-lg`}>
+                      <div
+                        className={`absolute -left-3 -top-3 w-10 h-10 rounded-xl bg-gradient-to-br ${theme.primary} flex items-center justify-center font-bold text-white shadow-lg`}
+                      >
                         {String(index + 1).padStart(2, "0")}
                       </div>
 
@@ -545,7 +559,9 @@ export default function ProjectPage({ params }: RouteParams) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}>
+                <div
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}
+                >
                   <Lightbulb className={`w-4 h-4 ${theme.text}`} />
                   <span className={`text-sm font-medium ${theme.text}`}>
                     Our Approach
@@ -573,7 +589,9 @@ export default function ProjectPage({ params }: RouteParams) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}>
+              <div
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}
+              >
                 <Trophy className={`w-4 h-4 ${theme.text}`} />
                 <span className={`text-sm font-medium ${theme.text}`}>
                   Impact
@@ -589,21 +607,24 @@ export default function ProjectPage({ params }: RouteParams) {
                 {
                   icon: "/m_1.png",
                   title: "Brand Awareness",
-                  description: "Significant growth in brand recognition across target markets",
+                  description:
+                    "Significant growth in brand recognition across target markets",
                   stat: "150%",
                   statLabel: "Increase",
                 },
                 {
                   icon: "/m_2.png",
                   title: "User Engagement",
-                  description: "Improved interaction rates and user satisfaction scores",
+                  description:
+                    "Improved interaction rates and user satisfaction scores",
                   stat: "3x",
                   statLabel: "Higher",
                 },
                 {
                   icon: "/m_3.png",
                   title: "Business Growth",
-                  description: "Enhanced conversion rates leading to revenue growth",
+                  description:
+                    "Enhanced conversion rates leading to revenue growth",
                   stat: "200%",
                   statLabel: "ROI",
                 },
@@ -628,7 +649,9 @@ export default function ProjectPage({ params }: RouteParams) {
 
                   {/* Stat */}
                   <div className="mb-4">
-                    <span className={`text-4xl font-bold bg-gradient-to-r ${theme.primary} bg-clip-text text-transparent`}>
+                    <span
+                      className={`text-4xl font-bold bg-gradient-to-r ${theme.primary} bg-clip-text text-transparent`}
+                    >
                       {item.stat}
                     </span>
                     <span className="text-zinc-500 text-sm ml-2">
@@ -665,7 +688,9 @@ export default function ProjectPage({ params }: RouteParams) {
               viewport={{ once: true }}
             >
               {/* Background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${theme.primary}`} />
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${theme.primary}`}
+              />
               <div
                 className="absolute inset-0"
                 style={{
@@ -691,8 +716,8 @@ export default function ProjectPage({ params }: RouteParams) {
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
                 >
-                  Let&apos;s collaborate and bring your vision to life with the same
-                  passion and precision.
+                  Let&apos;s collaborate and bring your vision to life with the
+                  same passion and precision.
                 </motion.p>
                 <motion.div
                   className="flex flex-wrap justify-center gap-4"
@@ -702,7 +727,7 @@ export default function ProjectPage({ params }: RouteParams) {
                   transition={{ delay: 0.3 }}
                 >
                   <Link
-                    href="/contact"
+                    href="/contactus"
                     className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-gray-900 font-semibold hover:bg-white/90 transition-all hover:scale-105 active:scale-100 shadow-xl"
                   >
                     Start a Project
