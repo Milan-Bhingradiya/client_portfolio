@@ -16,7 +16,12 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProject, fetchProjects, type Project } from "@/lib/api";
+import {
+  fetchProject,
+  fetchProjects,
+  getAllProjectImages,
+  type Project,
+} from "@/lib/api";
 
 interface RouteParams {
   params: {
@@ -24,7 +29,7 @@ interface RouteParams {
   };
 }
 
-// Color themes based on project - we'll cycle through these
+// Color themes
 const projectThemes = [
   {
     primary: "from-violet-600 to-purple-700",
@@ -73,7 +78,6 @@ const projectThemes = [
   },
 ];
 
-// Loading skeleton
 function LoadingState() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#030014]">
@@ -96,35 +100,49 @@ function LoadingState() {
   );
 }
 
-// Parallax image section - simplified without useScroll for SSR compatibility
-function ParallaxImage({
+// Single showcase image with cool hover effect
+function ShowcaseImage({
   src,
   alt,
-  priority = false,
+  index,
+  theme,
 }: {
   src: string;
   alt: string;
-  priority?: boolean;
+  index: number;
+  theme: (typeof projectThemes)[0];
 }) {
   return (
     <motion.div
-      className="relative h-[60vh] md:h-[80vh] overflow-hidden rounded-3xl"
+      className="relative group overflow-hidden rounded-3xl"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
     >
-      <div className="absolute inset-0 w-full h-full">
+      <div className="relative h-[50vh] md:h-[70vh]">
         <Image
           src={src}
           alt={alt}
           fill
-          className="object-cover transition-transform duration-700 hover:scale-105"
-          priority={priority}
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
           sizes="100vw"
         />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-transparent opacity-60" />
+
+        {/* Hover effect */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030014]/90 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
+
+        {/* Image number badge */}
+        <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
+          <span
+            className={`px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} text-sm font-medium ${theme.text}`}
+          >
+            #{String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-[#030014]/30" />
     </motion.div>
   );
 }
@@ -132,11 +150,6 @@ function ParallaxImage({
 export default function ProjectPage({ params }: RouteParams) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [theme, setTheme] = useState(projectThemes[0]);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const {
     data: project,
@@ -152,7 +165,6 @@ export default function ProjectPage({ params }: RouteParams) {
     queryFn: fetchProjects,
   });
 
-  // Set theme based on project index
   useEffect(() => {
     if (project && allProjects.length > 0) {
       const projectIndex = allProjects.findIndex(
@@ -163,7 +175,6 @@ export default function ProjectPage({ params }: RouteParams) {
     }
   }, [project, allProjects]);
 
-  // Get next/prev projects for navigation
   const currentIndex = allProjects.findIndex(
     (p: Project) => p._id === params.productid
   );
@@ -201,6 +212,8 @@ export default function ProjectPage({ params }: RouteParams) {
     );
   }
 
+  const allDisplayImages = getAllProjectImages(project);
+
   return (
     <AnimatePresence>
       <motion.div
@@ -211,7 +224,6 @@ export default function ProjectPage({ params }: RouteParams) {
       >
         {/* Background Effects */}
         <div className="fixed inset-0 pointer-events-none -z-10">
-          {/* Animated gradient orbs */}
           <motion.div
             className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full"
             style={{
@@ -263,11 +275,10 @@ export default function ProjectPage({ params }: RouteParams) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            {/* Hero Image */}
             <div className="absolute inset-0">
               <Image
-                src={project.images?.[0] || "/projectbanner.jpg"}
-                alt={project.title || "Project"}
+                src={project.heroImage || "/projectbanner.jpg"}
+                alt={project.title}
                 fill
                 className="object-cover"
                 priority
@@ -277,7 +288,6 @@ export default function ProjectPage({ params }: RouteParams) {
             </div>
           </motion.div>
 
-          {/* Hero Content */}
           <div className="relative z-10 min-h-screen flex items-end">
             <div className="w-full px-6 md:px-12 lg:px-20 pb-24">
               <div className="max-w-7xl mx-auto">
@@ -286,7 +296,6 @@ export default function ProjectPage({ params }: RouteParams) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  {/* Industry Tag */}
                   <motion.div
                     className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} mb-6`}
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -299,19 +308,10 @@ export default function ProjectPage({ params }: RouteParams) {
                     </span>
                   </motion.div>
 
-                  {/* Title */}
                   <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight">
-                    <motion.span
-                      className="block"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 }}
-                    >
-                      {project.title || project.client}
-                    </motion.span>
+                    {project.title || project.client}
                   </h1>
 
-                  {/* Description */}
                   <motion.p
                     className="text-lg md:text-xl text-zinc-300 max-w-2xl mb-8 leading-relaxed"
                     initial={{ opacity: 0, y: 20 }}
@@ -321,7 +321,6 @@ export default function ProjectPage({ params }: RouteParams) {
                     {project.description}
                   </motion.p>
 
-                  {/* Meta Info */}
                   <motion.div
                     className="flex flex-wrap gap-4"
                     initial={{ opacity: 0, y: 20 }}
@@ -343,7 +342,6 @@ export default function ProjectPage({ params }: RouteParams) {
                   </motion.div>
                 </motion.div>
 
-                {/* Scroll indicator */}
                 <motion.div
                   className="absolute bottom-8 left-1/2 -translate-x-1/2"
                   initial={{ opacity: 0 }}
@@ -366,12 +364,12 @@ export default function ProjectPage({ params }: RouteParams) {
           </div>
         </section>
 
-        {/* Image Gallery */}
-        {project.images && project.images.length > 1 && (
-          <section className="relative py-24 px-6 md:px-12 lg:px-20">
+        {/* Two Square Images Side by Side */}
+        {project.squareImages && project.squareImages.length === 2 && (
+          <section className="py-16 px-6 md:px-12 lg:px-20">
             <div className="max-w-7xl mx-auto">
               <motion.div
-                className="mb-12"
+                className="mb-10"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -379,85 +377,41 @@ export default function ProjectPage({ params }: RouteParams) {
                 <span
                   className={`text-sm font-medium ${theme.text} uppercase tracking-widest`}
                 >
-                  Visual Journey
+                  Featured Work
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
-                  Project Gallery
+                  Project Highlights
                 </h2>
               </motion.div>
 
-              {/* Main Image */}
-              <motion.div
-                className="relative aspect-video rounded-3xl overflow-hidden mb-6"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <AnimatePresence mode="wait">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {project.squareImages.map((img, index) => (
                   <motion.div
-                    key={activeImageIndex}
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.5 }}
-                    className="absolute inset-0"
-                  >
-                    <Image
-                      src={project.images[activeImageIndex]}
-                      alt={`${project.title} - Image ${activeImageIndex + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Image navigation */}
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full bg-black/50 backdrop-blur-md">
-                  {project.images.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setActiveImageIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        activeImageIndex === index
-                          ? `${theme.bg} w-6`
-                          : "bg-white/40 hover:bg-white/60"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Thumbnail strip */}
-              <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-                {project.images.map((img, index) => (
-                  <motion.button
                     key={index}
-                    onClick={() => setActiveImageIndex(index)}
-                    className={`relative flex-shrink-0 w-32 h-24 rounded-xl overflow-hidden transition-all ${
-                      activeImageIndex === index
-                        ? `ring-2 ring-offset-2 ring-offset-[#030014] ${
-                            theme.accent === "violet"
-                              ? "ring-violet-500"
-                              : theme.accent === "rose"
-                              ? "ring-rose-500"
-                              : theme.accent === "amber"
-                              ? "ring-amber-500"
-                              : theme.accent === "emerald"
-                              ? "ring-emerald-500"
-                              : "ring-cyan-500"
-                          }`
-                        : "opacity-60 hover:opacity-100"
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    className="relative aspect-square rounded-3xl overflow-hidden group"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.2 }}
                   >
                     <Image
                       src={img}
-                      alt={`Thumbnail ${index + 1}`}
+                      alt={`${project.title} - Feature ${index + 1}`}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
-                  </motion.button>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#030014]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                    {/* Badge */}
+                    <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span
+                        className={`px-4 py-2 rounded-full bg-gradient-to-r ${theme.secondary} border ${theme.border} text-sm font-medium ${theme.text}`}
+                      >
+                        Feature #{index + 1}
+                      </span>
+                    </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -469,7 +423,6 @@ export default function ProjectPage({ params }: RouteParams) {
           <section className="relative py-24 px-6 md:px-12 lg:px-20">
             <div className="max-w-7xl mx-auto">
               <div className="grid lg:grid-cols-2 gap-16 items-start">
-                {/* Left: Header */}
                 <motion.div
                   className="lg:sticky lg:top-32"
                   initial={{ opacity: 0, x: -30 }}
@@ -495,11 +448,9 @@ export default function ProjectPage({ params }: RouteParams) {
                   </h2>
                   <p className="text-lg text-zinc-400">
                     Every great project comes with its unique set of challenges.
-                    Here&apos;s how we tackled them head-on.
                   </p>
                 </motion.div>
 
-                {/* Right: Challenges list */}
                 <div className="space-y-6">
                   {project.challenges.map((challenge, index) => (
                     <motion.div
@@ -510,41 +461,18 @@ export default function ProjectPage({ params }: RouteParams) {
                       transition={{ delay: index * 0.1 }}
                       className="group relative p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition-all"
                     >
-                      {/* Number badge */}
                       <div
                         className={`absolute -left-3 -top-3 w-10 h-10 rounded-xl bg-gradient-to-br ${theme.primary} flex items-center justify-center font-bold text-white shadow-lg`}
                       >
                         {String(index + 1).padStart(2, "0")}
                       </div>
-
                       <p className="text-zinc-300 leading-relaxed pl-4">
                         {challenge}
                       </p>
-
-                      {/* Hover glow */}
-                      <div
-                        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"
-                        style={{
-                          background: `radial-gradient(ellipse at center, ${theme.glow} 0%, transparent 70%)`,
-                          filter: "blur(40px)",
-                        }}
-                      />
                     </motion.div>
                   ))}
                 </div>
               </div>
-            </div>
-          </section>
-        )}
-
-        {/* Parallax Image Break */}
-        {project.images && project.images[1] && (
-          <section className="py-12 px-6 md:px-12 lg:px-20">
-            <div className="max-w-7xl mx-auto">
-              <ParallaxImage
-                src={project.images[1]}
-                alt={`${project.title} showcase`}
-              />
             </div>
           </section>
         )}
@@ -567,15 +495,49 @@ export default function ProjectPage({ params }: RouteParams) {
                     Our Approach
                   </span>
                 </div>
-
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
                   The Solution
                 </h2>
-
                 <p className="text-xl text-zinc-300 leading-relaxed">
                   {project.solution}
                 </p>
               </motion.div>
+            </div>
+          </section>
+        )}
+
+        {/* Gallery Images - Individual Showcase */}
+        {project.galleryImages && project.galleryImages.length > 0 && (
+          <section className="py-12 px-6 md:px-12 lg:px-20">
+            <div className="max-w-7xl mx-auto">
+              <motion.div
+                className="mb-12"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <span
+                  className={`text-sm font-medium ${theme.text} uppercase tracking-widest`}
+                >
+                  Visual Journey
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
+                  Project Gallery
+                </h2>
+              </motion.div>
+
+              {/* Show each gallery image separately */}
+              <div className="space-y-8">
+                {project.galleryImages.map((img, index) => (
+                  <ShowcaseImage
+                    key={index}
+                    src={img}
+                    alt={`${project.title} - Gallery ${index + 1}`}
+                    index={index + 2}
+                    theme={theme}
+                  />
+                ))}
+              </div>
             </div>
           </section>
         )}
@@ -607,24 +569,21 @@ export default function ProjectPage({ params }: RouteParams) {
                 {
                   icon: "/m_1.png",
                   title: "Brand Awareness",
-                  description:
-                    "Significant growth in brand recognition across target markets",
+                  description: "Significant growth in brand recognition",
                   stat: "150%",
                   statLabel: "Increase",
                 },
                 {
                   icon: "/m_2.png",
                   title: "User Engagement",
-                  description:
-                    "Improved interaction rates and user satisfaction scores",
+                  description: "Improved interaction rates",
                   stat: "3x",
                   statLabel: "Higher",
                 },
                 {
                   icon: "/m_3.png",
                   title: "Business Growth",
-                  description:
-                    "Enhanced conversion rates leading to revenue growth",
+                  description: "Enhanced conversion rates",
                   stat: "200%",
                   statLabel: "ROI",
                 },
@@ -637,7 +596,6 @@ export default function ProjectPage({ params }: RouteParams) {
                   transition={{ delay: index * 0.1 }}
                   className="group relative p-8 rounded-3xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition-all text-center"
                 >
-                  {/* Icon */}
                   <div className="w-16 h-16 mx-auto mb-6 relative">
                     <Image
                       src={item.icon}
@@ -646,8 +604,6 @@ export default function ProjectPage({ params }: RouteParams) {
                       className="object-contain"
                     />
                   </div>
-
-                  {/* Stat */}
                   <div className="mb-4">
                     <span
                       className={`text-4xl font-bold bg-gradient-to-r ${theme.primary} bg-clip-text text-transparent`}
@@ -658,25 +614,139 @@ export default function ProjectPage({ params }: RouteParams) {
                       {item.statLabel}
                     </span>
                   </div>
-
                   <h3 className="text-xl font-bold text-white mb-2">
                     {item.title}
                   </h3>
                   <p className="text-zinc-400">{item.description}</p>
-
-                  {/* Hover glow */}
-                  <div
-                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"
-                    style={{
-                      background: `radial-gradient(ellipse at center, ${theme.glow} 0%, transparent 70%)`,
-                      filter: "blur(60px)",
-                    }}
-                  />
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
+
+        {/* Product Catalog - Interactive Gallery */}
+        {allDisplayImages.length > 1 && (
+          <section className="relative py-24 px-6 md:px-12 lg:px-20 bg-zinc-900/30">
+            <div className="max-w-7xl mx-auto">
+              <motion.div
+                className="mb-12 text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <span
+                  className={`text-sm font-medium ${theme.text} uppercase tracking-widest`}
+                >
+                  Product Catalog
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
+                  Browse All Images
+                </h2>
+                <p className="text-zinc-400 mt-4 max-w-xl mx-auto">
+                  Click on any thumbnail to view full size
+                </p>
+              </motion.div>
+
+              {/* Main Image Viewer */}
+              <motion.div
+                className="relative aspect-video rounded-3xl overflow-hidden mb-8 bg-zinc-900"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeImageIndex}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.4 }}
+                    className="absolute inset-0"
+                  >
+                    <Image
+                      src={allDisplayImages[activeImageIndex]}
+                      alt={`${project.title} - Image ${activeImageIndex + 1}`}
+                      fill
+                      className="object-contain bg-zinc-950"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Navigation arrows */}
+                <button
+                  onClick={() =>
+                    setActiveImageIndex((prev) =>
+                      prev === 0 ? allDisplayImages.length - 1 : prev - 1
+                    )
+                  }
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() =>
+                    setActiveImageIndex((prev) =>
+                      prev === allDisplayImages.length - 1 ? 0 : prev + 1
+                    )
+                  }
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+
+                {/* Image counter */}
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-md">
+                  <span className="text-white text-sm font-medium">
+                    {activeImageIndex + 1} / {allDisplayImages.length}
+                  </span>
+                </div>
+              </motion.div>
+
+              {/* Thumbnail Grid */}
+              <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+                {allDisplayImages.map((img, index) => (
+                  <motion.button
+                    key={index}
+                    onClick={() => setActiveImageIndex(index)}
+                    className={`relative aspect-square rounded-xl overflow-hidden transition-all ${
+                      activeImageIndex === index
+                        ? `ring-2 ring-offset-2 ring-offset-[#030014] ${
+                            theme.accent === "violet"
+                              ? "ring-violet-500"
+                              : theme.accent === "rose"
+                              ? "ring-rose-500"
+                              : theme.accent === "amber"
+                              ? "ring-amber-500"
+                              : theme.accent === "emerald"
+                              ? "ring-emerald-500"
+                              : "ring-cyan-500"
+                          }`
+                        : "opacity-60 hover:opacity-100"
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Image
+                      src={img}
+                      alt={`Thumbnail ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                    {activeImageIndex === index && (
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-t ${theme.secondary} opacity-30`}
+                      />
+                    )}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* CTA Section */}
         <section className="relative py-24 px-6 md:px-12 lg:px-20">
@@ -687,48 +757,27 @@ export default function ProjectPage({ params }: RouteParams) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              {/* Background */}
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${theme.primary}`}
               />
               <div
                 className="absolute inset-0"
                 style={{
-                  backgroundImage: `radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 50%),
-                                    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 40%)`,
+                  backgroundImage: `radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 50%)`,
                 }}
               />
 
               <div className="relative z-10 py-20 px-8 md:px-16 text-center">
-                <motion.h2
-                  className="text-4xl md:text-5xl font-bold text-white mb-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 }}
-                >
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                   Ready to create something amazing?
-                </motion.h2>
-                <motion.p
-                  className="text-xl text-white/80 mb-10 max-w-2xl mx-auto"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                >
-                  Let&apos;s collaborate and bring your vision to life with the
-                  same passion and precision.
-                </motion.p>
-                <motion.div
-                  className="flex flex-wrap justify-center gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                >
+                </h2>
+                <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
+                  Let&apos;s collaborate and bring your vision to life.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
                   <Link
                     href="/contactus"
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-gray-900 font-semibold hover:bg-white/90 transition-all hover:scale-105 active:scale-100 shadow-xl"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-gray-900 font-semibold hover:bg-white/90 transition-all hover:scale-105 shadow-xl"
                   >
                     Start a Project
                     <ExternalLink className="w-5 h-5" />
@@ -740,7 +789,7 @@ export default function ProjectPage({ params }: RouteParams) {
                     View More Work
                     <ArrowRight className="w-5 h-5" />
                   </Link>
-                </motion.div>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -750,7 +799,6 @@ export default function ProjectPage({ params }: RouteParams) {
         <section className="relative py-12 px-6 md:px-12 lg:px-20 border-t border-zinc-800">
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center">
-              {/* Previous Project */}
               <div>
                 {prevProject && (
                   <Link
@@ -770,7 +818,6 @@ export default function ProjectPage({ params }: RouteParams) {
                 )}
               </div>
 
-              {/* All Projects */}
               <Link
                 href="/work"
                 className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-800 text-white text-sm font-medium hover:bg-zinc-700 transition-colors"
@@ -779,7 +826,6 @@ export default function ProjectPage({ params }: RouteParams) {
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
 
-              {/* Next Project */}
               <div>
                 {nextProject && (
                   <Link

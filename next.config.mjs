@@ -3,12 +3,27 @@
 import path from "path";
 const nextConfig = {
   images: {
-    domains: [
-      "picsum.photos",
-      "imgs.search.brave.com",
-      "images.unsplash.com",
-      "firebasestorage.googleapis.com",
-      "res.cloudinary.com"
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+      },
+      {
+        protocol: "https",
+        hostname: "imgs.search.brave.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
 

@@ -143,7 +143,10 @@ export default function AboutUsPage() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Link
                     href="/contactus"
                     className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold rounded-full hover:shadow-lg hover:shadow-violet-200 transition-all"
@@ -152,7 +155,10 @@ export default function AboutUsPage() {
                     <ArrowRight className="w-5 h-5" />
                   </Link>
                 </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Link
                     href="/aboutteam"
                     className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 font-semibold rounded-full border border-gray-200 hover:border-violet-300 hover:shadow-lg transition-all"
@@ -192,7 +198,7 @@ export default function AboutUsPage() {
                     <TrendingUp className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-gray-900">260+</p>
+                    <p className="text-2xl font-bold text-gray-900">160+</p>
                     <p className="text-sm text-gray-500">Projects Delivered</p>
                   </div>
                 </div>
@@ -207,7 +213,7 @@ export default function AboutUsPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <StatCard
-              value="260+"
+              value="150+"
               label="Projects Completed"
               icon={Award}
               color="bg-gradient-to-br from-violet-500 to-purple-600"
@@ -434,7 +440,10 @@ export default function AboutUsPage() {
                 Let&apos;s work together to create something extraordinary. Get
                 in touch with us today.
               </p>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Link
                   href="/contactus"
                   className="inline-flex items-center gap-2 px-10 py-5 bg-white text-violet-600 font-semibold rounded-full hover:shadow-xl transition-all text-lg"

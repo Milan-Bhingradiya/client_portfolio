@@ -6,7 +6,7 @@ import { uploadImage } from "@/lib/cloudinary";
 export async function GET() {
   try {
     await connectDB();
-    const projects = await Project.find();
+    const projects = await Project.find().sort({ createdAt: -1 });
     return NextResponse.json({ projects });
   } catch (error) {
     console.error("GET /api/projects error:", error);
@@ -21,6 +21,19 @@ export async function POST(request: NextRequest) {
     await connectDB();
     const formData = await request.formData();
 
+    // Debug: Log all form data keys
+    console.log("=== Form Data Keys ===");
+    for (const key of formData.keys()) {
+      const value = formData.get(key);
+      if (value instanceof File) {
+        console.log(`${key}: File - ${value.name} (${value.size} bytes)`);
+      } else {
+        console.log(`${key}: ${value}`);
+      }
+    }
+    console.log("=== End Form Data ===");
+
+    // Get text fields
     const title = formData.get("title") as string;
     const client = formData.get("client") as string;
     const description = formData.get("description") as string;
@@ -29,6 +42,7 @@ export async function POST(request: NextRequest) {
     const solution = formData.get("solution") as string;
     const challengesRaw = formData.getAll("challenges[]") as string[];
 
+    // Validate required text fields
     if (
       !title ||
       !client ||
@@ -38,7 +52,7 @@ export async function POST(request: NextRequest) {
       !solution
     ) {
       return NextResponse.json(
-        { error: "All fields are required" },
+        { error: "All text fields are required" },
         { status: 400 }
       );
     }
@@ -51,31 +65,87 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const imageFiles = formData.getAll("images") as File[];
-    if (!imageFiles.length) {
+    // Get image files
+    const thumbnailFile = formData.get("thumbnail") as File | null;
+    const heroImageFile = formData.get("heroImage") as File | null;
+    const squareImageFiles = formData.getAll("squareImages") as File[];
+    const galleryImageFiles = formData.getAll("galleryImages") as File[];
+
+    // Validate required images
+    if (!thumbnailFile || thumbnailFile.size === 0) {
       return NextResponse.json(
-        { error: "At least one image is required" },
+        { error: "Thumbnail image is required (400×500 portrait)" },
         { status: 400 }
       );
     }
 
-    const imageUrls = await Promise.all(
-      imageFiles.map(async (file) => {
+    if (!heroImageFile || heroImageFile.size === 0) {
+      return NextResponse.json(
+        { error: "Hero image is required (1920×1080 horizontal)" },
+        { status: 400 }
+      );
+    }
+
+    // Filter valid square images
+    const validSquareImages = squareImageFiles.filter((f) => f.size > 0);
+    if (validSquareImages.length !== 2) {
+      return NextResponse.json(
+        { error: "Exactly 2 square images are required (800×800)" },
+        { status: 400 }
+      );
+    }
+
+    // Upload thumbnail
+    const thumbBuffer = Buffer.from(await thumbnailFile.arrayBuffer());
+    const thumbnailUrl = await uploadImage(thumbBuffer, "smit_shah_projects");
+
+    // Upload hero image
+    const heroBuffer = Buffer.from(await heroImageFile.arrayBuffer());
+    const heroImageUrl = await uploadImage(heroBuffer, "smit_shah_projects");
+
+    // Upload square images (exactly 2)
+    const squareImageUrls = await Promise.all(
+      validSquareImages.map(async (file) => {
         const buffer = Buffer.from(await file.arrayBuffer());
-        return uploadImage(buffer, "smit_shah");
+        return uploadImage(buffer, "smit_shah_projects");
       })
     );
+
+    // Upload gallery images
+    const galleryImageUrls = await Promise.all(
+      galleryImageFiles
+        .filter((file) => file.size > 0)
+        .map(async (file) => {
+          const buffer = Buffer.from(await file.arrayBuffer());
+          return uploadImage(buffer, "smit_shah_projects");
+        })
+    );
+
+    console.log("=== Uploaded Image URLs ===");
+    console.log("Thumbnail:", thumbnailUrl);
+    console.log("Hero:", heroImageUrl);
+    console.log("Square:", squareImageUrls);
+    console.log("Gallery:", galleryImageUrls);
+    console.log("=== End URLs ===");
 
     const project = new Project({
       title,
       client,
       description,
-      images: imageUrls,
+      thumbnail: thumbnailUrl,
+      heroImage: heroImageUrl,
+      squareImages: squareImageUrls,
+      galleryImages: galleryImageUrls,
       industryName,
       companyName,
       solution,
       challenges,
     });
+    
+    console.log("=== Project to Save ===");
+    console.log(JSON.stringify(project.toObject(), null, 2));
+    console.log("=== End Project ===");
+    
     await project.save();
 
     return NextResponse.json({
@@ -83,7 +153,7 @@ export async function POST(request: NextRequest) {
       project,
     });
   } catch (error) {
-    console.error(error);
+    console.error("POST /api/projects error:", error);
     return NextResponse.json(
       { error: "Failed to add project" },
       { status: 500 }

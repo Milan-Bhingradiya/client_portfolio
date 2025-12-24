@@ -25,7 +25,8 @@ export async function POST(request: NextRequest) {
 
     const title = formData.get("title") as string;
     const subtitle = formData.get("subtitle") as string;
-    const imageFile = formData.get("image") as File | null;
+    const imageDesktopFile = formData.get("imageDesktop") as File | null;
+    const imageMobileFile = formData.get("imageMobile") as File | null;
     const order = parseInt(formData.get("order") as string) || 0;
 
     if (!title || !subtitle) {
@@ -35,16 +36,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    let imageUrl = "";
-    if (imageFile) {
-      const buffer = Buffer.from(await imageFile.arrayBuffer());
-      imageUrl = await uploadImage(buffer, "smit_shah_highlights");
-    } else {
-      return NextResponse.json({ error: "Image is required" }, { status: 400 });
+    if (!imageDesktopFile || !imageMobileFile) {
+      return NextResponse.json(
+        { error: "Both desktop and mobile images are required" },
+        { status: 400 }
+      );
     }
 
+    // Upload desktop image (horizontal/landscape)
+    const desktopBuffer = Buffer.from(await imageDesktopFile.arrayBuffer());
+    const imageDesktopUrl = await uploadImage(
+      desktopBuffer,
+      "smit_shah_highlights"
+    );
+
+    // Upload mobile image (vertical/portrait)
+    const mobileBuffer = Buffer.from(await imageMobileFile.arrayBuffer());
+    const imageMobileUrl = await uploadImage(
+      mobileBuffer,
+      "smit_shah_highlights"
+    );
+
     const highlight = new Highlight({
-      image: imageUrl,
+      imageDesktop: imageDesktopUrl,
+      imageMobile: imageMobileUrl,
       title,
       subtitle,
       order,

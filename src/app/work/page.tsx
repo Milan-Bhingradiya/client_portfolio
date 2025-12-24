@@ -203,7 +203,7 @@ export default function WorkPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
-              We&apos;ve designed experiences for over 260+ projects, helping
+              We&apos;ve designed experiences for over 150+ projects, helping
               brands create meaningful connections with their audiences.
             </motion.p>
           </motion.div>
@@ -274,8 +274,12 @@ export default function WorkPage() {
                     >
                       <Link href={`/work/${project._id}`}>
                         <TiltedCard
-                          imageSrc={project.images?.[0] || "/placeholder.png"}
-                          title={project.title || "Untitled Project"}
+                          imageSrc={
+                            project.thumbnail ||
+                            project.heroImage ||
+                            "/projectbanner.jpg"
+                          }
+                          title={project.title}
                           subtitle={project.description}
                           captionText={project.industryName}
                           containerHeight="420px"
@@ -326,8 +330,12 @@ export default function WorkPage() {
                           {/* Project Image */}
                           <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden flex-shrink-0">
                             <Image
-                              src={project.images?.[0] || "/placeholder.png"}
-                              alt={project.title || "Project"}
+                              src={
+                                project.thumbnail ||
+                                project.heroImage ||
+                                "/projectbanner.jpg"
+                              }
+                              alt={project.title}
                               fill
                               className="object-cover transition-transform duration-500 group-hover:scale-110"
                             />

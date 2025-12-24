@@ -85,11 +85,14 @@ export default function AdminBlogDetailPage({
       {/* Blog Header */}
       <div className="bg-zinc-800 rounded-xl overflow-hidden border border-zinc-700 mb-8">
         {blog.imageUrl && (
-          <Image
-            src={blog.imageUrl}
-            alt={blog.title}
-            className="w-full h-64 object-cover"
-          />
+          <div className="relative w-full h-64">
+            <Image
+              src={blog.imageUrl}
+              alt={blog.title}
+              fill
+              className="object-cover"
+            />
+          </div>
         )}
         <div className="p-6">
           <h1 className="text-3xl font-bold text-white mb-2">{blog.title}</h1>

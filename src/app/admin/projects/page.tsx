@@ -58,19 +58,47 @@ export default function ProjectsPage() {
               href={`/admin/projects/${project._id}`}
               className="block bg-zinc-800 rounded-xl overflow-hidden border border-zinc-700 hover:border-amber-500 transition-colors"
             >
-              {project.images[0] && (
+              <div className="relative w-full h-48">
                 <Image
-                  src={project.images[0]}
+                  src={
+                    project.thumbnail ||
+                    project.heroImage ||
+                    "/projectbanner.jpg"
+                  }
                   alt={project.title}
-                  className="w-full h-48 object-cover"
+                  fill
+                  className="object-cover"
                 />
-              )}
+                <div className="absolute top-2 right-2 flex gap-1">
+                  <span className="bg-amber-500/90 text-zinc-900 text-xs px-2 py-1 rounded font-semibold">
+                    Thumb
+                  </span>
+                  <span className="bg-violet-500/90 text-white text-xs px-2 py-1 rounded font-semibold">
+                    {project.squareImages?.length || 0}×□
+                  </span>
+                  <span className="bg-emerald-500/90 text-white text-xs px-2 py-1 rounded font-semibold">
+                    {project.galleryImages?.length || 0}×📷
+                  </span>
+                </div>
+              </div>
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-white truncate">
                   {project.title}
                 </h3>
                 <p className="text-zinc-400 text-sm">{project.companyName}</p>
                 <p className="text-zinc-500 text-sm">{project.industryName}</p>
+
+                {/* Image counts */}
+                <div className="flex flex-wrap gap-2 mt-2 text-xs text-zinc-500">
+                  {project.heroImage && <span>🖼️ Hero</span>}
+                  {project.squareImages && project.squareImages.length > 0 && (
+                    <span>◻️ {project.squareImages.length} Square</span>
+                  )}
+                  {project.galleryImages &&
+                    project.galleryImages.length > 0 && (
+                      <span>📸 {project.galleryImages.length} Gallery</span>
+                    )}
+                </div>
 
                 <div className="mt-4 flex gap-2">
                   <button

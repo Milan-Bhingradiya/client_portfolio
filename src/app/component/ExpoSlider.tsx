@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   EffectCreative,
@@ -23,22 +24,28 @@ import "swiper/css/pagination";
 const fallbackSlides = [
   {
     _id: "1",
-    image:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=1000&fit=crop",
+    imageDesktop:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop",
+    imageMobile:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1080&h=1920&fit=crop",
     title: "Mountain Dreams",
     subtitle: "Confidence is the best outfit. Wear it and own it!",
   },
   {
     _id: "2",
-    image:
-      "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=1000&fit=crop",
+    imageDesktop:
+      "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1920&h=1080&fit=crop",
+    imageMobile:
+      "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1080&h=1920&fit=crop",
     title: "Ocean Vibes",
     subtitle: "Glow differently. Shine unapologetically.",
   },
   {
     _id: "3",
-    image:
-      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=1000&fit=crop",
+    imageDesktop:
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1920&h=1080&fit=crop",
+    imageMobile:
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1080&h=1920&fit=crop",
     title: "Tech Innovation",
     subtitle: "Elegance is an attitude.",
   },
@@ -48,6 +55,7 @@ export default function ExpoSlider() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isClient, setIsClient] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const { data: highlights = [], isLoading } = useQuery({
     queryKey: ["highlights"],
@@ -56,6 +64,11 @@ export default function ExpoSlider() {
 
   useEffect(() => {
     setIsClient(true);
+    // Check if mobile on mount
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Use highlights if available, otherwise use fallback
@@ -89,11 +102,64 @@ export default function ExpoSlider() {
       </div>
 
       {/* Header */}
-      <div className="relative z-10 text-center mb-12">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-          Our Work Highlights
-        </h2>
-        <div className="w-24 h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 mx-auto rounded-full" />
+      <div className="relative z-10 text-center mb-16">
+        {/* Decorative elements */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="absolute left-1/2 -translate-x-1/2 -top-4 w-32 h-32 bg-gradient-to-r from-violet-600/30 via-fuchsia-500/30 to-cyan-400/30 rounded-full blur-3xl"
+        />
+
+        {/* Main Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative"
+        >
+          <span className="block text-sm md:text-base font-semibold tracking-[0.3em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 mb-4">
+            ✦ Featured Work ✦
+          </span>
+          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-violet-200 to-white">
+              Spot
+            </span>
+            <span className="relative">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-500 to-cyan-400">
+                lights
+              </span>
+              {/* Sparkle effect */}
+              <motion.span
+                className="absolute -top-2 -right-6 text-2xl"
+                animate={{
+                  rotate: [0, 15, -15, 0],
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                ✨
+              </motion.span>
+            </span>
+          </h2>
+
+          {/* Animated underline */}
+          <motion.div
+            className="flex items-center justify-center gap-2 mt-6"
+            initial={{ opacity: 0, width: 0 }}
+            whileInView={{ opacity: 1, width: "auto" }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-violet-500" />
+            <div className="w-2 h-2 rounded-full bg-fuchsia-500 animate-pulse" />
+            <div className="h-1 w-20 rounded-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-400" />
+            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-cyan-400" />
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Loading State */}
@@ -128,8 +194,8 @@ export default function ExpoSlider() {
             }}
             grabCursor={true}
             centeredSlides={true}
-            slidesPerView={1.4}
-            spaceBetween={30}
+            slidesPerView={1.15}
+            spaceBetween={15}
             speed={600}
             loop={slides.length > 1}
             autoplay={{
@@ -144,16 +210,20 @@ export default function ExpoSlider() {
             }}
             breakpoints={{
               640: {
-                slidesPerView: 1.6,
-                spaceBetween: 40,
+                slidesPerView: 1.25,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 1.35,
+                spaceBetween: 30,
               },
               1024: {
-                slidesPerView: 1.8,
-                spaceBetween: 60,
+                slidesPerView: 1.45,
+                spaceBetween: 40,
               },
               1280: {
-                slidesPerView: 2,
-                spaceBetween: 80,
+                slidesPerView: 1.5,
+                spaceBetween: 50,
               },
             }}
             className="expo-swiper !overflow-visible"
@@ -161,19 +231,28 @@ export default function ExpoSlider() {
             {slides.map((slide, index) => (
               <SwiperSlide key={slide._id} className="!h-auto">
                 <div
-                  className={`relative w-full aspect-[3/4] md:aspect-[4/5] rounded-3xl overflow-hidden transition-all duration-500 ${
+                  className={`relative w-full rounded-3xl overflow-hidden transition-all duration-500 ${
                     activeIndex === index
                       ? "shadow-[0_0_80px_rgba(59,130,246,0.4)]"
                       : "shadow-2xl"
                   }`}
+                  style={{
+                    // Mobile: Portrait (9:16), Desktop: Big Landscape (16:10 for bigger cards)
+                    aspectRatio: isMobile ? "9/16" : "16/10",
+                    minHeight: isMobile ? "auto" : "500px",
+                  }}
                 >
+                  {/* Desktop Image - Horizontal/Landscape */}
                   <Image
-                    src={slide.image}
+                    src={isMobile ? slide.imageMobile : slide.imageDesktop}
                     alt={slide.title}
                     fill
-                    className={`object-cover transition-all duration-500 ${
+                    className={`object-contain bg-black transition-all duration-500 ${
                       activeIndex === index ? "" : "grayscale"
                     }`}
+                    sizes={
+                      isMobile ? "100vw" : "(max-width: 1024px) 80vw, 60vw"
+                    }
                     priority={index < 3}
                   />
 

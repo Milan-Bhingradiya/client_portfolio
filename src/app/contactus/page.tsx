@@ -17,6 +17,7 @@ import {
   Linkedin,
   Twitter,
   Instagram,
+  Loader2,
 } from "lucide-react";
 import smit from "../../../public/smit.jpeg";
 
@@ -237,7 +238,9 @@ function ContactInfoCard({
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    title: "",
+    fullName: "",
+    companyName: "",
+    phone: "",
     email: "",
     message: "",
   });
@@ -252,8 +255,14 @@ export default function ContactPage() {
   const mutation = useMutation({
     mutationFn: sendMessage,
     onSuccess: () => {
-      alert("We will reach out to you soon!");
-      setFormData({ title: "", email: "", message: "" });
+      alert("Thank you! We will reach out to you soon.");
+      setFormData({
+        fullName: "",
+        companyName: "",
+        phone: "",
+        email: "",
+        message: "",
+      });
     },
     onError: (error: Error) => {
       alert("Something went wrong: " + error.message);
@@ -262,25 +271,37 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate required fields
+    if (
+      !formData.fullName.trim() ||
+      !formData.companyName.trim() ||
+      !formData.email.trim() ||
+      !formData.message.trim()
+    ) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       alert("Please enter a valid email address");
       return;
     }
-    if (
-      !formData.title.trim() ||
-      !formData.email.trim() ||
-      !formData.message.trim()
-    ) {
-      alert("Please fill in all fields");
-      return;
-    }
+
     mutation.mutate({
-      title: formData.title,
-      description: formData.message,
+      fullName: formData.fullName,
+      companyName: formData.companyName,
+      phone: formData.phone,
       email: formData.email,
+      message: formData.message,
+      source: "contact",
     });
   };
+
+  const inputBase =
+    "w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-violet-500 focus:ring-2 focus:ring-violet-200 outline-none transition-all";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 pt-24">
@@ -326,7 +347,7 @@ export default function ContactPage() {
               <div className="flex gap-8">
                 {[
                   { value: "24h", label: "Response Time" },
-                  { value: "260+", label: "Projects Done" },
+                  { value: "160+", label: "Projects Done" },
                   { value: "99%", label: "Client Satisfaction" },
                 ].map((stat, idx) => (
                   <motion.div
@@ -405,67 +426,121 @@ export default function ContactPage() {
               className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100"
             >
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                Send us a Message
+                Discuss Your Project With Us
               </h2>
               <p className="text-gray-600 mb-8">
                 Fill out the form below and we&apos;ll get back to you shortly.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Your Name
-                  </label>
-                  <input
-                    name="title"
-                    type="text"
-                    value={formData.title}
-                    onChange={handleInputChange}
-                    placeholder="John Doe"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-violet-500 focus:ring-2 focus:ring-violet-200 outline-none transition-all"
-                  />
+                <div className="grid md:grid-cols-2 gap-4">
+                  {/* Full Name */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Full Name *
+                    </label>
+                    <input
+                      name="fullName"
+                      type="text"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      placeholder="John Doe"
+                      className={inputBase}
+                    />
+                  </div>
+
+                  {/* Company Name */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Company Name *
+                    </label>
+                    <input
+                      name="companyName"
+                      type="text"
+                      value={formData.companyName}
+                      onChange={handleInputChange}
+                      placeholder="Your Company"
+                      className={inputBase}
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="john@example.com"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-violet-500 focus:ring-2 focus:ring-violet-200 outline-none transition-all"
-                  />
+                <div className="grid md:grid-cols-2 gap-4">
+                  {/* Phone */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Phone Number
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm flex items-center gap-1">
+                        🇮🇳 +91
+                      </span>
+                      <input
+                        name="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="9876543210"
+                        className={`${inputBase} pl-20`}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address *
+                    </label>
+                    <input
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="john@example.com"
+                      className={inputBase}
+                    />
+                  </div>
                 </div>
 
+                {/* Message */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Your Message
+                    About Your Project *
                   </label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
                     rows={5}
-                    placeholder="Tell us about your project..."
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-violet-500 focus:ring-2 focus:ring-violet-200 outline-none transition-all resize-none"
+                    placeholder="Tell us about your project, goals, and timeline..."
+                    className={`${inputBase} resize-none`}
                   />
                 </div>
+
+                {/* Privacy Policy */}
+                <p className="text-xs text-gray-500">
+                  By sending this form, I confirm that I have read & accept the{" "}
+                  <a href="#" className="text-violet-600 hover:underline">
+                    privacy policy
+                  </a>
+                  .
+                </p>
 
                 <motion.button
                   type="submit"
                   disabled={mutation.isPending}
-                  className="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold py-4 px-8 rounded-xl hover:shadow-lg hover:shadow-violet-200 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold py-4 px-8 rounded-xl hover:shadow-lg hover:shadow-violet-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   {mutation.isPending ? (
-                    "Sending..."
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Sending...
+                    </>
                   ) : (
                     <>
-                      Send Message
+                      Start Your Project
                       <Send className="w-5 h-5" />
                     </>
                   )}

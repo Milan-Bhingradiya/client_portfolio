@@ -1,18 +1,82 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useMutation } from "@tanstack/react-query";
+import { sendMessage } from "@/lib/api";
 
 interface ContactUsProps {
   logos: any[];
 }
 
 export default function ContactUs({ logos }: ContactUsProps) {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    companyName: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
+
   const inputBase =
     "w-full h-12 rounded-full bg-white/5 border border-white/10 px-5 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-emerald-400/70 focus:border-transparent transition";
-  const tileBase =
-    "flex items-center justify-center h-20 rounded-2xl bg-white/5 border border-white/10";
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const mutation = useMutation({
+    mutationFn: sendMessage,
+    onSuccess: () => {
+      alert("Thank you! We will reach out to you soon.");
+      setFormData({
+        fullName: "",
+        companyName: "",
+        phone: "",
+        email: "",
+        message: "",
+      });
+    },
+    onError: (error: Error) => {
+      alert("Something went wrong: " + error.message);
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validate required fields
+    if (
+      !formData.fullName.trim() ||
+      !formData.companyName.trim() ||
+      !formData.email.trim() ||
+      !formData.message.trim()
+    ) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    mutation.mutate({
+      fullName: formData.fullName,
+      companyName: formData.companyName,
+      phone: formData.phone,
+      email: formData.email,
+      message: formData.message,
+      source: "home",
+    });
+  };
 
   return (
     <section className="w-full bg-black py-8 sm:py-12 text-white">
@@ -29,7 +93,7 @@ export default function ContactUs({ logos }: ContactUsProps) {
                 Discuss Your Project With Us
               </h2>
 
-              <form className="mt-6 grid gap-4 md:grid-cols-2">
+              <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
                 {/* Full Name */}
                 <div className="md:col-span-1">
                   <label htmlFor="fullName" className="sr-only">
@@ -39,6 +103,8 @@ export default function ContactUs({ logos }: ContactUsProps) {
                     id="fullName"
                     name="fullName"
                     type="text"
+                    value={formData.fullName}
+                    onChange={handleInputChange}
                     placeholder="Full Name *"
                     className={inputBase}
                     aria-required="true"
@@ -54,6 +120,8 @@ export default function ContactUs({ logos }: ContactUsProps) {
                     id="companyName"
                     name="companyName"
                     type="text"
+                    value={formData.companyName}
+                    onChange={handleInputChange}
                     placeholder="Company Name *"
                     className={inputBase}
                     aria-required="true"
@@ -75,7 +143,9 @@ export default function ContactUs({ logos }: ContactUsProps) {
                     id="phone"
                     name="phone"
                     type="tel"
-                    placeholder=" "
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="Phone Number"
                     className={`${inputBase} pl-16`}
                   />
                 </div>
@@ -89,6 +159,8 @@ export default function ContactUs({ logos }: ContactUsProps) {
                     id="email"
                     name="email"
                     type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="Email *"
                     className={inputBase}
                     aria-required="true"
@@ -97,14 +169,16 @@ export default function ContactUs({ logos }: ContactUsProps) {
 
                 {/* About Project */}
                 <div className="md:col-span-2">
-                  <label htmlFor="about" className="sr-only">
+                  <label htmlFor="message" className="sr-only">
                     About Your Project
                   </label>
                   <textarea
-                    id="about"
-                    name="about"
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     placeholder="About Your Project *"
-                    className={`${inputBase} min-h-[52px] py-3 resize-none`}
+                    className={`${inputBase} min-h-[52px] py-3 resize-none rounded-2xl`}
                     aria-required="true"
                   />
                 </div>
@@ -122,10 +196,20 @@ export default function ContactUs({ logos }: ContactUsProps) {
 
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 rounded-full bg-white text-neutral-900 px-5 py-3 font-medium hover:bg-emerald-400 hover:text-neutral-900 transition"
+                    disabled={mutation.isPending}
+                    className="inline-flex items-center gap-2 rounded-full bg-white text-neutral-900 px-5 py-3 font-medium hover:bg-emerald-400 hover:text-neutral-900 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <span>Start Your Project</span>
-                    <ArrowRight className="h-4 w-4" />
+                    {mutation.isPending ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Start Your Project</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </>
+                    )}
                   </button>
                 </div>
               </form>

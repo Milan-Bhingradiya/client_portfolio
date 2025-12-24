@@ -92,7 +92,7 @@ export default function EditHighlightPage({
   }
 
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-4xl">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
           <Link
@@ -112,40 +112,93 @@ export default function EditHighlightPage({
         </button>
       </div>
 
-      {/* Current Image */}
-      <div className="mb-6">
-        <label className="block text-zinc-300 mb-2">Current Image</label>
-        <Image
-          src={highlight.image}
-          alt={highlight.title}
-          className="w-48 h-64 object-cover rounded-lg border border-zinc-600"
-        />
-        <p className="text-zinc-500 text-sm mt-2">
-          To change the image, delete this highlight and create a new one.
-        </p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block text-zinc-300 mb-2">Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            className="w-full bg-zinc-800 text-white rounded-lg p-3 border border-zinc-700 focus:border-amber-500 outline-none"
-          />
+      {/* Current Images */}
+      <div className="grid md:grid-cols-2 gap-6 mb-8">
+        {/* Desktop Image */}
+        <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xl">🖥️</span>
+            <label className="text-white font-semibold">
+              Desktop Image (Horizontal)
+            </label>
+          </div>
+          {highlight.imageDesktop ? (
+            <div className="relative">
+              <Image
+                src={highlight.imageDesktop}
+                alt={`${highlight.title} - Desktop`}
+                width={400}
+                height={225}
+                className="w-full h-48 object-contain rounded-lg border border-zinc-600 bg-zinc-800"
+              />
+              <span className="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                Landscape
+              </span>
+            </div>
+          ) : (
+            <div className="w-full h-48 bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-500">
+              No desktop image
+            </div>
+          )}
         </div>
 
-        <div>
-          <label className="block text-zinc-300 mb-2">Subtitle</label>
-          <input
-            type="text"
-            value={subtitle}
-            onChange={(e) => setSubtitle(e.target.value)}
-            required
-            className="w-full bg-zinc-800 text-white rounded-lg p-3 border border-zinc-700 focus:border-amber-500 outline-none"
-          />
+        {/* Mobile Image */}
+        <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xl">📱</span>
+            <label className="text-white font-semibold">
+              Mobile Image (Vertical)
+            </label>
+          </div>
+          {highlight.imageMobile ? (
+            <div className="relative flex justify-center">
+              <Image
+                src={highlight.imageMobile}
+                alt={`${highlight.title} - Mobile`}
+                width={200}
+                height={355}
+                className="h-48 w-auto object-contain rounded-lg border border-zinc-600 bg-zinc-800"
+              />
+              <span className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+                Portrait
+              </span>
+            </div>
+          ) : (
+            <div className="w-full h-48 bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-500">
+              No mobile image
+            </div>
+          )}
+        </div>
+      </div>
+
+      <p className="text-zinc-500 text-sm mb-6 bg-zinc-900 p-3 rounded-lg">
+        💡 To change images, delete this highlight and create a new one with
+        updated images.
+      </p>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-zinc-300 mb-2">Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="w-full bg-zinc-800 text-white rounded-lg p-3 border border-zinc-700 focus:border-amber-500 outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-zinc-300 mb-2">Subtitle</label>
+            <input
+              type="text"
+              value={subtitle}
+              onChange={(e) => setSubtitle(e.target.value)}
+              required
+              className="w-full bg-zinc-800 text-white rounded-lg p-3 border border-zinc-700 focus:border-amber-500 outline-none"
+            />
+          </div>
         </div>
 
         <div className="flex items-center gap-3">

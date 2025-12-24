@@ -3,12 +3,26 @@ export interface Project {
   title: string;
   client: string;
   description: string;
-  images: string[];
+  thumbnail: string; // Card thumbnail (4:5, 400x500)
+  heroImage: string; // Main horizontal image (16:9, 1920x1080)
+  squareImages: string[]; // Exactly 2 square images (1:1, 800x800)
+  galleryImages: string[]; // Additional gallery images
   industryName: string;
   companyName: string;
   solution: string;
   show_in_home_page: boolean;
   challenges: string[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+// Helper to get all project images for gallery
+export function getAllProjectImages(project: Project): string[] {
+  return [
+    project.heroImage,
+    ...(project.squareImages || []),
+    ...(project.galleryImages || []),
+  ].filter(Boolean);
 }
 
 export interface Blog {
@@ -21,9 +35,12 @@ export interface Blog {
 
 export interface Message {
   _id: string;
-  title: string;
-  description: string;
+  fullName: string;
+  companyName: string;
+  phone?: string;
   email: string;
+  message: string;
+  source: "home" | "contact";
   createdAt: string;
 }
 
@@ -95,11 +112,16 @@ export async function fetchMessages(): Promise<Message[]> {
   return data.messages || [];
 }
 
-export async function sendMessage(data: {
-  title: string;
-  description: string;
+export interface SendMessageData {
+  fullName: string;
+  companyName: string;
+  phone?: string;
   email: string;
-}): Promise<void> {
+  message: string;
+  source?: "home" | "contact";
+}
+
+export async function sendMessage(data: SendMessageData): Promise<void> {
   const res = await fetch("/api/messages", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -122,7 +144,8 @@ export async function fetchHomeProjects(): Promise<Project[]> {
 // Highlights
 export interface Highlight {
   _id: string;
-  image: string;
+  imageDesktop: string; // Horizontal/Landscape for laptop
+  imageMobile: string; // Vertical/Portrait for mobile
   title: string;
   subtitle: string;
   order: number;

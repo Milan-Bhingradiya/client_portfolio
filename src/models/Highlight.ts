@@ -1,7 +1,8 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IHighlight extends Document {
-  image: string;
+  imageDesktop: string; // Horizontal/Landscape for laptop
+  imageMobile: string; // Vertical/Portrait for mobile
   title: string;
   subtitle: string;
   order: number;
@@ -10,7 +11,8 @@ export interface IHighlight extends Document {
 }
 
 const HighlightSchema = new Schema<IHighlight>({
-  image: { type: String, required: true },
+  imageDesktop: { type: String, required: true },
+  imageMobile: { type: String, required: true },
   title: { type: String, required: true },
   subtitle: { type: String, required: true },
   order: { type: Number, default: 0 },
@@ -18,5 +20,9 @@ const HighlightSchema = new Schema<IHighlight>({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.models.Highlight ||
-  mongoose.model<IHighlight>("Highlight", HighlightSchema);
+// Delete the cached model if it exists to pick up schema changes
+if (mongoose.models.Highlight) {
+  delete mongoose.models.Highlight;
+}
+
+export default mongoose.model<IHighlight>("Highlight", HighlightSchema);

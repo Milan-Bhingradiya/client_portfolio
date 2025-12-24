@@ -153,12 +153,35 @@ export default function HighlightsPage() {
                   </button>
                 </div>
 
-                {/* Image */}
-                <Image
-                  src={highlight.image}
-                  alt={highlight.title}
-                  className="w-32 h-24 object-cover"
-                />
+                {/* Images - Desktop and Mobile */}
+                <div className="flex gap-2 p-2">
+                  {/* Desktop Image Preview */}
+                  <div className="relative">
+                    <Image
+                      src={highlight.imageDesktop}
+                      alt={`${highlight.title} - Desktop`}
+                      width={120}
+                      height={68}
+                      className="w-28 h-16 object-contain bg-zinc-900 rounded border border-zinc-600"
+                    />
+                    <span className="absolute -top-1 -left-1 bg-blue-500 text-white text-[10px] px-1 rounded">
+                      🖥️
+                    </span>
+                  </div>
+                  {/* Mobile Image Preview */}
+                  <div className="relative">
+                    <Image
+                      src={highlight.imageMobile}
+                      alt={`${highlight.title} - Mobile`}
+                      width={45}
+                      height={80}
+                      className="w-10 h-16 object-contain bg-zinc-900 rounded border border-zinc-600"
+                    />
+                    <span className="absolute -top-1 -left-1 bg-green-500 text-white text-[10px] px-1 rounded">
+                      📱
+                    </span>
+                  </div>
+                </div>
 
                 {/* Content */}
                 <div className="flex-1 p-4">
@@ -197,7 +220,11 @@ export default function HighlightsPage() {
         <ul className="text-zinc-400 text-sm space-y-1">
           <li>• Use the arrows to reorder highlights</li>
           <li>• First highlight appears first in the slider</li>
-          <li>• Recommended image size: 800x1000 pixels (portrait)</li>
+          <li>
+            • 🖥️ Desktop image: Horizontal (16:9) - Recommended: 1920x1080
+          </li>
+          <li>• 📱 Mobile image: Vertical (9:16) - Recommended: 1080x1920</li>
+          <li>• Images are shown 100% without cropping</li>
         </ul>
       </div>
     </div>

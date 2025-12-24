@@ -58,11 +58,14 @@ export default function BlogsPage() {
             >
               <div className="flex items-center gap-4">
                 {blog.imageUrl && (
-                  <Image
-                    src={blog.imageUrl}
-                    alt={blog.title}
-                    className="w-20 h-20 object-cover rounded-lg"
-                  />
+                  <div className="relative w-20 h-20 flex-shrink-0">
+                    <Image
+                      src={blog.imageUrl}
+                      alt={blog.title}
+                      fill
+                      className="object-cover rounded-lg"
+                    />
+                  </div>
                 )}
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-white">
