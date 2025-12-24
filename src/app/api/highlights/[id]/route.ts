@@ -70,9 +70,12 @@ export async function DELETE(
       );
     }
 
-    // Delete image from Cloudinary
-    if (highlight.image) {
-      await deleteImage(highlight.image);
+    // Delete images from Cloudinary
+    if (highlight.imageDesktop) {
+      await deleteImage(highlight.imageDesktop);
+    }
+    if (highlight.imageMobile) {
+      await deleteImage(highlight.imageMobile);
     }
 
     return NextResponse.json({ message: "Highlight deleted successfully" });

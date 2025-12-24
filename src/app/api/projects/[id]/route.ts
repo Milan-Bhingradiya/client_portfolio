@@ -64,9 +64,13 @@ export async function DELETE(
     }
 
     // Delete images from Cloudinary
-    if (project.images && Array.isArray(project.images)) {
-      await Promise.all(project.images.map((url: string) => deleteImage(url)));
-    }
+    const imagesToDelete: string[] = [];
+    if (project.thumbnail) imagesToDelete.push(project.thumbnail);
+    if (project.heroImage) imagesToDelete.push(project.heroImage);
+    if (project.squareImages) imagesToDelete.push(...project.squareImages);
+    if (project.galleryImages) imagesToDelete.push(...project.galleryImages);
+    
+    await Promise.all(imagesToDelete.map((url: string) => deleteImage(url)));
 
     return NextResponse.json({ message: "Project deleted successfully" });
   } catch (error) {

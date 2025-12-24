@@ -228,36 +228,6 @@ export default function AdminProjectDetailPage({
           </div>
         </div>
       )}
-
-      {/* Legacy Images (old projects) */}
-      {project.images && project.images.length > 0 && !project.heroImage && (
-        <div className="bg-zinc-800 rounded-xl border border-zinc-700 p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Images className="w-5 h-5 text-amber-400" />
-            <h2 className="text-lg font-semibold text-zinc-300">
-              All Images - Legacy Format ({project.images.length})
-            </h2>
-          </div>
-          <p className="text-amber-400 text-sm mb-4">
-            ⚠️ This project uses the old image format. Consider re-uploading with the new structure.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {project.images.map((img, index) => (
-              <div key={index} className="relative w-full h-40">
-                <Image
-                  src={img}
-                  alt={`${project.title} - Image ${index + 1}`}
-                  fill
-                  className="object-cover rounded-lg border border-zinc-600"
-                />
-                <div className="absolute top-2 left-2 bg-amber-500/90 text-zinc-900 text-xs px-2 py-1 rounded">
-                  #{index + 1}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

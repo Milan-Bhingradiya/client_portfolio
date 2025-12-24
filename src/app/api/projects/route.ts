@@ -21,18 +21,6 @@ export async function POST(request: NextRequest) {
     await connectDB();
     const formData = await request.formData();
 
-    // Debug: Log all form data keys
-    console.log("=== Form Data Keys ===");
-    for (const key of formData.keys()) {
-      const value = formData.get(key);
-      if (value instanceof File) {
-        console.log(`${key}: File - ${value.name} (${value.size} bytes)`);
-      } else {
-        console.log(`${key}: ${value}`);
-      }
-    }
-    console.log("=== End Form Data ===");
-
     // Get text fields
     const title = formData.get("title") as string;
     const client = formData.get("client") as string;
@@ -121,13 +109,6 @@ export async function POST(request: NextRequest) {
         })
     );
 
-    console.log("=== Uploaded Image URLs ===");
-    console.log("Thumbnail:", thumbnailUrl);
-    console.log("Hero:", heroImageUrl);
-    console.log("Square:", squareImageUrls);
-    console.log("Gallery:", galleryImageUrls);
-    console.log("=== End URLs ===");
-
     const project = new Project({
       title,
       client,
@@ -141,10 +122,6 @@ export async function POST(request: NextRequest) {
       solution,
       challenges,
     });
-    
-    console.log("=== Project to Save ===");
-    console.log(JSON.stringify(project.toObject(), null, 2));
-    console.log("=== End Project ===");
     
     await project.save();
 
